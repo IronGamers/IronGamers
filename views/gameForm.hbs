@@ -1,0 +1,52 @@
+{{!-- HAY QUE PASARLE LOS GÉNEROS Y EL JUEGO PARA SU EDICIÓN --}}
+
+<form action="/" method="POST" enctype="multipart/form-data">
+
+  {{!-- NAME --}}
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input name="name" type="text" class="form-control {{#if error.name }}is-invalid{{/if}}" id="name"
+      value="{{ game.name }}" placeholder="Game name..."></input>
+  </div>
+
+  {{!-- IMAGE --}}
+  <div class="form-group">
+    <label for="image">Image:</label>
+    <input name="image" type="file" class="form-control {{#if error.image }}is-invalid{{/if}}" id="image"
+      placeholder="Game image" value="{{ game.image }}">
+  </div>
+
+  {{!-- DESCRIPTION --}}
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <input name="description" type="text" class="form-control {{#if error.description }}is-invalid{{/if}}"
+      id="description" value="{{ game.description }}" placeholder="Game description"></input>
+  </div>
+
+  {{!-- RELEASE DATE --}}
+  <div class="form-group">
+    <label for="releaseDate">Release date:</label>
+    <input name="releaseDate" type="date" class="form-control {{#if error.releaseDate }}is-invalid{{/if}}"
+      id="releaseDate" value="{{ game.releaseDate }}" min="1980-01-01" max="2020-01-01"></input>
+  </div>
+
+  {{!-- SCORE --}}
+  <div class="form-group">
+    <label for="score">Score:</label>
+    <input name="score" type="number" class="form-control {{#if error.score }}is-invalid{{/if}}" id="score"
+      value="{{ game.score }}" min="0" max="10" step="any"></input>
+  </div>
+
+  {{!-- MULTI-GENDER (NO SÉ SI FUNCIONARÁ ASÍ)--}}
+  <div class="form-group">
+    <label>Genders</label>
+    {{#each genders as |gender|}}
+      <input type="checkbox" name="{{gender.name}}" value="{{gender.id}}">{{gender.name}}</input>
+    {{/each}}
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-outline btn-sm">
+    Create game file!
+  </button>
+
+</form>
