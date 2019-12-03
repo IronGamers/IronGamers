@@ -1,0 +1,12 @@
+body {
+  font-family: 'Roboto';
+  font-weight: 200;
+}
+
+strong {
+  font-weight: 500;
+}
+
+label {
+  font-weight: 400;
+}
