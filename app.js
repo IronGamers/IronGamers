@@ -1,11 +1,8 @@
-// require('dotenv').config()
-
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-// const slackConfig = require('./config/slack.config')
 
 // const alertMiddleware = require('./middlewares/alert.middleware')
 /**
@@ -28,7 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session);
 
-// app.use(slackConfig)
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.user
@@ -49,11 +45,6 @@ app.set('view engine', 'hbs');
  */
 const router = require('./config/routes.js');
 app.use('/', router);
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
 
 // error handler
 app.use(function (err, req, res, next) {
