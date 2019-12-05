@@ -1,4 +1,4 @@
-<form action="/genders" method="POST" enctype="multipart/form-data">
+<form action="/genders/new" method="POST" enctype="multipart/form-data">
 
   {{!-- NAME --}}
   <div class="form-group">
@@ -10,13 +10,13 @@
   {{!-- IMAGE --}}
   <div class="form-group">
     <label for="image">Image:</label>
-    <input name="image" type="file" class="form-control {{#if error.image }}is-invalid{{/if}}" id="image"
+    <input name="image" type="file" class="form-control-file {{#if error.image }}is-invalid{{/if}}" id="image"
       placeholder="Gender image" value="{{ gender.image }}">
   </div>
 
   {{!-- DESCRIPTION --}}
   <div class="form-group">
-    <label for="description">Name:</label>
+    <label for="description">Description:</label>
     <input name="description" type="text" class="form-control {{#if error.description }}is-invalid{{/if}}" 
       id="description" value="{{ gender.description }}" placeholder="Gender description"></input>
   </div>

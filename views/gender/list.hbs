@@ -1,0 +1,10 @@
+{{#each genders as |gender|}}
+<div>
+  <a href="/genders/{{gender.id}}">{{gender.name}}</a>
+  <image src="{{gender.image}}"></image>
+</div>
+{{/each}}
+
+<form action="/genders/new">
+  <button type="submit" class="btn btn-primary">Create gender!</button>
+</form>

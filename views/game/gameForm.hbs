@@ -1,6 +1,6 @@
 {{!-- HAY QUE PASARLE LOS GÉNEROS Y EL JUEGO PARA SU EDICIÓN --}}
 
-<form action="/" method="POST" enctype="multipart/form-data">
+<form action="/games/new" method="POST" enctype="multipart/form-data">
 
   {{!-- NAME --}}
   <div class="form-group">
@@ -39,9 +39,10 @@
 
   {{!-- MULTI-GENDER (NO SÉ SI FUNCIONARÁ ASÍ)--}}
   <div class="form-group">
-    <label>Genders</label>
+    <label>Genders:</label>
     {{#each genders as |gender|}}
-      <input type="checkbox" name="{{gender.name}}" value="{{gender.id}}">{{gender.name}}</input>
+      {{!-- <input type="checkbox" name="{{gender.name}}" value="{{gender.id}}">{{gender.name}}</input> --}}
+    <input type="checkbox" name="gender[]" value="{{gender.id}}">{{gender.name}}</input>
     {{/each}}
   </div>
 
