@@ -7,7 +7,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 // const slackConfig = require('./config/slack.config')
 
-const alertMiddleware = require('./middlewares/alert.middleware')
+// const alertMiddleware = require('./middlewares/alert.middleware')
 /**
  * Handlebars and Mongoose config
  */
@@ -36,7 +36,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(alertMiddleware)
+// app.use(alertMiddleware)
 
 /**
  * View engine setup
