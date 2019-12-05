@@ -1,11 +1,11 @@
-require('dotenv').config()
+// require('dotenv').config()
 
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-const slackConfig = require('./config/slack.config')
+// const slackConfig = require('./config/slack.config')
 
 const alertMiddleware = require('./middlewares/alert.middleware')
 /**
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session);
 
-app.use(slackConfig)
+// app.use(slackConfig)
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.session.user

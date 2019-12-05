@@ -1,0 +1,7 @@
+{{#each games as |game|}}
+<a href="/games/{{game.id}}">{{game.name}}</a>
+{{/each}}
+
+<form action="/games/new">
+  <button type="submit" class="btn btn-primary">Create game!</button>
+</form>
