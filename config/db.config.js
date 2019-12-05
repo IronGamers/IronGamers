@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const MONGODB_URI = 'mongodb://localhost:27017/twitter-hack';
+const MONGODB_URI = 'mongodb://localhost:27017/ironGamers';
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true })
     .then(() => console.info(`Successfully connected to the database ${MONGODB_URI}`))
