@@ -48,7 +48,7 @@ const userSchema = new Schema({
     },
     validated: {
         type: Boolean,
-        default: false
+        default: true
     },
     userToken: {
         type: String,

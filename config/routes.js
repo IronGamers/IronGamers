@@ -11,7 +11,10 @@ const upload = multer({ dest: './public/uploads/' });
 
 router.get('/', baseController.home)
 router.get('/user/login', usersController.login)
+router.post('/login', usersController.doLogin)
 router.get('/user/new', usersController.new)
+router.post('/user/new', usersController.create)
+router.post('/user/logout', usersController.logout)
 
 
 // GENDER ROUTES (PENDIENTE PONER MIDDLEWARE)

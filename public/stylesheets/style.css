@@ -13,6 +13,11 @@ label {
 }
 /* Configuration */
 
+.user-tips{
+  display: flex;
+  justify-content: space-between;
+}
+
 .blue-light {
   background-color: #0ca5ec;
   color: #fff;
@@ -96,7 +101,7 @@ label {
 
 
 
-.login-box a {
+.a-text {
   text-decoration: none;
   font-size: 12px;
   line-height: 20px;

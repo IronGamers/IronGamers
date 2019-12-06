@@ -1,16 +1,16 @@
 <div class="login-box border-blue-light">
       <img src="/img/logo.png" class="avatar border-blue-light" alt="Avatar Image">
       <h1>Login Here</h1>
-      <form method="POST" action="/login" autocomplete="off">
+      <form method="post" action="/login" autocomplete="off">
         <!-- USERNAME INPUT -->
         <label for="username" >Username</label>
-        <input type="text" placeholder="Enter Username" name="nickname" >
+        <input type="text" placeholder="Enter Username" name="nickName" class="input-style input-100" value="{{user.nickName}}">
         <!-- PASSWORD INPUT -->
         <label for="password">Password</label>
-        <input type="password" placeholder="Enter Password" name="password" >
+        <input type="password" placeholder="Enter Password" name="password" class="input-style input-100" >
         <button type="submit" class="login-submit blue-light hover-blue-dark">Log In</button>
         <div class="mt-2">
-          <a href="#">Don't have An account?</a>
+          <a href="/user/new" class="a-text">Don't have An account?</a>
         </div>
         
                

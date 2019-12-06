@@ -1,7 +1,16 @@
 
 <nav class="navbar navbar-dark blue-light">
   <a class="navbar-brand" href="/">
-    <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-    Bootstrap
+    <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
+    IronGames
   </a>
+
+  <div class="user-tips">
+      {{#if currentUser}}
+        <img class="rounded-circle" width="35" height="35" src="{{currentUser.avatar}}" alt="avatar">
+        <form action="/user/logout" method="post">
+          <button type="submit" class="btn btn-danger btn-sm ml-4">Logout</button>
+        </form>
+      {{/if}}
+    </div>
 </nav>
