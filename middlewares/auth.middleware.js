@@ -3,7 +3,7 @@ module.exports.isAuthenticated = (req, res, next) => {
     next()
   } else {
     req.session.genericError = 'User is not authenticated!'
-    res.redirect('/login');
+    res.redirect('/user/login');
   }
 }
 

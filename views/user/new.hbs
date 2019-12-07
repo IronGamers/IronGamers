@@ -1,0 +1,29 @@
+<div class="create-box border-blue-light mt-20">
+      <img src="/img/logo.png" class="avatar border-blue-light" alt="Avatar Image">
+      <h1>Create you user</h1>
+      <form method="post" action="/user/new" autocomplete="off">
+        
+        <label for="username" >Name *</label>
+        <input type="text" placeholder="Enter name" name="name" class="input-style input-100" >
+
+        <label for="username" >Last name</label>
+        <input type="text" placeholder="Enter Last name" name="lastname" class="input-style input-100" >
+
+        <label for="username" >Username *</label>
+        <input type="text" placeholder="Enter Username" name="nickname" class="input-style input-100" >
+
+        <label for="username" >Email *</label>
+        <input type="text" placeholder="Enter email" name="email" class="input-style input-100" >
+        
+        <label for="password">Password *</label>
+        <input type="password" placeholder="Enter Password" name="password" class="input-style input-100">
+
+        <label for="username" >Avatar</label>
+        <input type="file" class="input-100" name="avatar">
+
+        <button type="submit" class="login-submit blue-light hover-blue-dark">Create user</button>
+      </form>
+      <div class="mt-2">
+          <a href="/user/login" class="a-text">Back to login</a>
+        </div>
+    </div>
