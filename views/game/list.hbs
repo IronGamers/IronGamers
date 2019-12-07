@@ -1,7 +1,21 @@
-{{#each games as |game|}}
-<a href="/games/{{game.id}}">{{game.name}}</a>
-{{/each}}
-
 <form action="/games/new">
   <button type="submit" class="btn btn-primary">Create game!</button>
 </form>
+
+<div class="gender-container">
+  {{#each games as |game|}}
+  <div class="gender m-10">
+    <img src="{{game.image}}" class="gender-image" alt="cannot display image">
+    <div class="gender-body">
+      <h5 class="gender-name">{{game.name}} ({{game.score}})</h5>
+      <h6 class="text-muted">Release date => {{date game.releaseDate}}</h6>
+      <p class="gender-description">{{game.description}}</p>
+      <div>
+        <a class="gender-games" href="/games/{{game.id}}">>> Join room</a>
+        <span> || </span>
+        <a class="gender-games" href="/games/{{game.id}}/edit">>> Edit game</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

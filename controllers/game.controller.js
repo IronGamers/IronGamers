@@ -6,7 +6,7 @@ const Gender = require('../models/gender-model')
 module.exports.newGame = (_, res, next) => {
   Gender.find()
     .then(genders => {
-      res.render('game/gameForm', {genders})
+      res.render('game/gameForm', { genders })
     })
     .catch(error => console.log("Error in finding genders => ", error))
 }
@@ -31,12 +31,28 @@ module.exports.createGame = (req, res, next) => {
     .catch(error => console.log("Error in creating game => ", error))
 }
 
-// MOSTRAR DATOS DEL JUEGO
-module.exports.gameDetail = (req, res, next) => {
+//  EDIT GAME
+module.exports.edit = (req, res, next) => {
   const gameID = req.params.gameID
   Game.findById(gameID)
     .then(game => {
-      res.render('game/detail', { game })
+      Gender.find()
+        .then(genders => {
+          res.render('game/gameForm', {
+            game: game,
+            genders: genders,
+            edit: true
+          })
+        })
     })
     .catch(error => console.log("Error in finding games => ", error))
+}
+
+module.exports.doEdit = (req, res, next) => {
+  const gameID = req.params.gameID
+  Game.findByIdAndUpdate(gameID, req.body)
+    .then(game => {
+      res.redirect('/genders')
+    })
+    .catch(error => console.log("Error in editing game => ", error))
 }

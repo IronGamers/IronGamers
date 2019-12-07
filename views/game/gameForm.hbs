@@ -1,6 +1,10 @@
-{{!-- HAY QUE PASARLE LOS GÉNEROS Y EL JUEGO PARA SU EDICIÓN --}}
+<div class="container mt-5 pb-5">
 
-<form action="/games/new" method="POST" enctype="multipart/form-data">
+  {{#if edit}}
+  <form id="game-form" action="/games/{{game.id}}/edit" method="POST" enctype="multipart/form-data">
+  {{else}}
+  <form id="game-form" action="/games/new" method="POST" enctype="multipart/form-data">
+  {{/if}}
 
   {{!-- NAME --}}
   <div class="form-group">
@@ -13,14 +17,14 @@
   <div class="form-group">
     <label for="image">Image:</label>
     <input name="image" type="file" class="form-control {{#if error.image }}is-invalid{{/if}}" id="image"
-      placeholder="Game image" value="{{ game.image }}">
+      placeholder="Game image" accept=".png,.jpg" value="{{ game.image }}">
   </div>
 
   {{!-- DESCRIPTION --}}
   <div class="form-group">
     <label for="description">Description:</label>
     <input name="description" type="text" class="form-control {{#if error.description }}is-invalid{{/if}}"
-      id="description" value="{{ game.description }}" placeholder="Game description"></input>
+      id="description" maxlength="100" value="{{ game.description }}" placeholder="Game description"></input>
   </div>
 
   {{!-- RELEASE DATE --}}
@@ -37,17 +41,22 @@
       value="{{ game.score }}" min="0" max="10" step="any"></input>
   </div>
 
-  {{!-- MULTI-GENDER (NO SÉ SI FUNCIONARÁ ASÍ)--}}
+  {{!-- MULTI-GENDER PENDIENTE, NO SE PONE CHECKED--}}
   <div class="form-group">
     <label>Genders:</label>
     {{#each genders as |gender|}}
-      {{!-- <input type="checkbox" name="{{gender.name}}" value="{{gender.id}}">{{gender.name}}</input> --}}
-    <input type="checkbox" name="gender[]" value="{{gender.id}}">{{gender.name}}</input>
+    <input class="m-10" type="checkbox" name="gender[]" value="{{gender.id}}"
+    {{#equals gender.id ../game.gender}}checked{{/equals}}>{{gender.name}}</input>
     {{/each}}
   </div>
 
   <button type="submit" class="btn btn-primary btn-outline btn-sm">
+    {{#if edit}}
+    Edit game
+    {{else}}
     Create game file!
+    {{/if}}
   </button>
 
-</form>
+  </form>
+</div>
