@@ -12,11 +12,11 @@
     <li class="nav-item">
       <a class="nav-link hover-blue-dark" href="#">Games</a>
     </li>
-    {{#if currentUser.rol}}
+    {{#equals currentUser.rol 'Admin'}}
     <li class="nav-item">
       <a class="nav-link hover-blue-dark" href="#">Users</a>
     </li>
-    {{/if}}
+    {{/equals}}
   </ul>
 
 
