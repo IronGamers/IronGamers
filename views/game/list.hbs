@@ -16,7 +16,7 @@
         <a class="gender-games" href="/games/{{game.id}}/edit">>> Edit game</a>
         <span> || </span>
         <button type="button" id="like-btn" class="fa fa-thumbs-up" onclick="like('{{game.id}}')"></button>
-        <span id="{{game.id}}">{{game.likes}}</span>
+        <span id="{{game.id}}">{{game.likes.length}}</span>
       </div>
     </div>
   </div>
@@ -28,7 +28,8 @@
   function like(id) {
     axios.post(`/games/${id}/like`)
       .then(response => {
-        alert(response.data.likes)
+        let likes = document.getElementById(id)
+        likes.innerText = (parseInt(likes.innerText) + parseInt(response.data.likes)).toString()
       })
   }
 </script>

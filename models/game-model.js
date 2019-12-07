@@ -39,7 +39,7 @@ const gameSchema = new Schema({
 gameSchema.virtual('likes', {
   ref: 'Like',
   localField: '_id',
-  foreignField: 'game',
+  foreignField: 'gameID',
   justOne: false,
 });
 
