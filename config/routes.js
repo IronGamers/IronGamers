@@ -11,7 +11,6 @@ const upload = multer({
 });
 
 // USER ROUTES
-
 router.get('/', authMiddelware.isAuthenticated, baseController.home)
 router.get('/user/login', authMiddelware.isNotAuthenticated, usersController.login)
 router.post('/login', authMiddelware.isNotAuthenticated, usersController.doLogin)
@@ -34,6 +33,8 @@ router.get('/games/new', gameController.newGame)
 router.post('/games/new', upload.single('image'), gameController.createGame)
 router.get('/games/:gameID/edit', gameController.edit)
 router.post('/games/:gameID/edit', gameController.doEdit)
+router.get('/games/:gameID', gameController.join) // Pendiente
+router.post('/games/:gameID/like', gameController.like)
 
 
 

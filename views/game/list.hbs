@@ -10,12 +10,25 @@
       <h5 class="gender-name">{{game.name}} ({{game.score}})</h5>
       <h6 class="text-muted">Release date => {{date game.releaseDate}}</h6>
       <p class="gender-description">{{game.description}}</p>
-      <div>
+      <div class="game-actions">
         <a class="gender-games" href="/games/{{game.id}}">>> Join room</a>
         <span> || </span>
         <a class="gender-games" href="/games/{{game.id}}/edit">>> Edit game</a>
+        <span> || </span>
+        <button type="button" id="like-btn" class="fa fa-thumbs-up" onclick="like('{{game.id}}')"></button>
+        <span id="{{game.id}}">{{game.likes}}</span>
       </div>
     </div>
   </div>
   {{/each}}
 </div>
+
+{{!-- FALTA EL POPULATE --}}
+<script>
+  function like(id) {
+    axios.post(`/games/${id}/like`)
+      .then(response => {
+        alert(response.data.likes)
+      })
+  }
+</script>

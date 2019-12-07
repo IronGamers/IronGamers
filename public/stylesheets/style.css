@@ -43,7 +43,7 @@ label {
   flex-direction: column;
   justify-content: center;
   width: 23%;
-  height: 50%;
+  /* height: 50%; */
   border: 2px solid #30A8F7;
 }
 
@@ -98,6 +98,19 @@ label {
   background-image: linear-gradient( #fff, #B1D3EC);
   padding: 20px;
 }
+
+#like-btn{
+  border: none;
+  background: none;
+}
+
+.game-actions {
+  display: flex;
+  /* justify-content: space-evenly; */
+}
+
+
+
 /* Configuration */
 
 .user-tips{
