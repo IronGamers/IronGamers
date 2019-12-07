@@ -18,6 +18,7 @@ router.post('/login', authMiddelware.isNotAuthenticated, usersController.doLogin
 router.get('/user/new', authMiddelware.isNotAuthenticated, usersController.new)
 router.post('/user/new', authMiddelware.isNotAuthenticated, usersController.create)
 router.post('/user/logout', authMiddelware.isAuthenticated, usersController.logout)
+router.get('/admin/users', authMiddelware.isAuthenticated, usersController.userList)
 
 
 // GENDER ROUTES (PENDIENTE PONER MIDDLEWARE)

@@ -10,7 +10,6 @@ module.exports.new = (_, res) => {
 }
 
 module.exports.create = (req, res, next) => {
-    console.log(req.body)
     const user = new User({
         name: req.body.name,
         lastname: req.body.lastname,
@@ -19,6 +18,10 @@ module.exports.create = (req, res, next) => {
         password: req.body.password,
         avatar: req.body.avatar
     })
+
+    if(!req.body.avatar){
+        user.avatar = 'https://picsum.photos/200'
+    }
 
     user.save()
         .then((user) => {
@@ -103,4 +106,12 @@ module.exports.doLogin = (req, res, next) => {
 module.exports.logout = (req, res, next) => {
     req.session.destroy()
     res.redirect('/user/login')
+}
+
+module.exports.userList = (req, res, next) => {
+    User.find()
+        .then(users => {
+            res.render('admin/userList', {users})
+        })
+        .catch( error => next(error))
 }

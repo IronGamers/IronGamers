@@ -111,9 +111,9 @@ label {
 }
 
 .border-blue-light{
-  border: 2px groove #0ca5ec;
-  
+  border: 2px groove #0ca5ec;  
 }
+
 
 .hover-blue-dark:hover{
   cursor: pointer;
@@ -187,6 +187,7 @@ label {
   font-size: 22px;
 }
 
+
 .login-box label {
   margin: 0;
   padding: 0;
@@ -243,4 +244,36 @@ label {
   padding: 0 0 20px;
   text-align: center;
   font-size: 22px;
+}
+
+
+/* users list */
+
+.user-detail{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 0;
+  background: rgb(70, 69, 69);
+  color: #fff;
+}
+
+.user-detail>img{
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+.ban{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.light-text{
+  color: #fff;
+}
+
+.user-info{
+  width: 30%
 }
