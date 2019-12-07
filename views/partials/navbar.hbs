@@ -12,16 +12,18 @@
     <li class="nav-item">
       <a class="nav-link hover-blue-dark" href="#">Games</a>
     </li>
+    {{#if currentUser.rol}}
     <li class="nav-item">
       <a class="nav-link hover-blue-dark" href="#">Users</a>
     </li>
+    {{/if}}
   </ul>
-
 
 
 
   <div class="user-tips">
     {{#if currentUser}}
+    
     <img class="rounded-circle" width="35" height="35" src="{{currentUser.avatar}}" alt="avatar">
     <form action="/user/logout" method="post">
       <button type="submit" class="btn btn-danger btn-sm ml-4">Logout</button>
