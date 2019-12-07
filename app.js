@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
+const hbs = require('hbs');
 
 // const alertMiddleware = require('./middlewares/alert.middleware')
 /**
@@ -39,6 +40,8 @@ app.use((req, res, next) => {
  */
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+const equalsHelper = require('./helpers/equals');
+hbs.registerHelper('equals', equalsHelper);
 
 /**
  * Configure routes

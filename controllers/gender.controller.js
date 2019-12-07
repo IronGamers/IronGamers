@@ -41,3 +41,25 @@ module.exports.listGames = (req, res, next) => {
     })
     .catch(error => console.log("Error in finding games => ", error))
 }
+
+// EDIT
+module.exports.edit = (req, res, next) => {
+  const genderID = req.params.genderID
+  Gender.findById(genderID)
+    .then(gender => {
+      res.render('gender/genderForm', {
+        gender: gender,
+        edit: true
+      })
+    })
+    .catch(error => console.log("Error in finding gender => ", error))
+}
+
+module.exports.doEdit = (req, res, next) => {
+  const genderID = req.params.genderID
+  Gender.findByIdAndUpdate(genderID, req.body)
+    .then(gender => {
+      res.redirect('/genders')
+    })
+    .catch(error => console.log("Error in editing gender => ", error))
+}

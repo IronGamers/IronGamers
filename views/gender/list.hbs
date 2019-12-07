@@ -1,10 +1,20 @@
-{{#each genders as |gender|}}
-<div>
-  <a href="/genders/{{gender.id}}">{{gender.name}}</a>
-  <image src="{{gender.image}}"></image>
-</div>
-{{/each}}
-
 <form action="/genders/new">
   <button type="submit" class="btn btn-primary">Create gender!</button>
 </form>
+
+<div class="gender-container">
+  {{#each genders as |gender|}}
+  <div class="gender m-10">
+    <img src="{{gender.image}}" class="gender-image" alt="cannot display image">
+    <div class="gender-body">
+      <h5 class="gender-name">{{gender.name}}</h5>
+      <p class="gender-description">{{gender.description}}</p>
+      <div>
+        <a class="gender-games" href="/genders/{{gender.id}}">>> View games</a>
+        <span> || </span>
+        <a class="gender-games" href="/genders/{{gender.id}}/edit">>> Edit gender</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
