@@ -277,3 +277,7 @@ label {
 .user-info{
   width: 30%
 }
+
+.secret{
+  display: none;
+}

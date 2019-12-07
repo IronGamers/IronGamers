@@ -3,9 +3,9 @@
     <div class="row user-detail mt-4 border-blue-light">
         <img src="{{user.avatar}}" alt="avatar">
         <div class="user-info ">
-                <h5 class="card-title">{{user.nickName}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{user.name}} {{user.lastname}}</h6>
-                <p>User created: {{date user.createdAt}}</p>
+            <h5 class="card-title">{{user.nickName}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{user.name}} {{user.lastname}}</h6>
+            <p>User created: {{date user.createdAt}}</p>
         </div>
         <div class="ban">
             <label class="light-text">Banned</label>
@@ -20,9 +20,13 @@
                 Moderator
             </label>
             <label class="btn btn-secondary blue-light {{#equals user.rol 'User'}} active {{/equals}}">
-                <input type="radio" name="options" id="option3" > User
+                <input type="radio" name="options" id="option3"> User
             </label>
         </div>
+        <form action="/admin/delete" method="post">
+            <input class="secret" type="text" name="nickName" value="{{user.nickName}}">
+            <button type="submit" class="btn btn-danger btn-sm ml-4">Delete</button>
+        </form>
     </div>
     {{/each}}
 </div>

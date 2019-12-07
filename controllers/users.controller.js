@@ -115,3 +115,12 @@ module.exports.userList = (req, res, next) => {
         })
         .catch( error => next(error))
 }
+
+module.exports.delete = (req, res, next) => {
+    const nickName = req.body.nickName
+    console.log(req.body)
+    User.findOneAndDelete({nickName: nickName})
+        .then(
+            res.redirect('/admin/users')
+        )
+}

@@ -36,6 +36,7 @@ module.exports.createGender = (req, res, next) => {
 module.exports.listGames = (req, res, next) => {
   const genderID = req.params.genderID
   Game.find({gender: genderID})
+    .populate('likes')
     .then(games => {
       res.render('game/list', {games})
     })
