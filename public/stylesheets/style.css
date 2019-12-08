@@ -23,6 +23,10 @@ label {
   margin: 10px;
 }
 
+.hp-5 {
+  padding: 0 5px;
+}
+
 /* GENDERS */
 #gender-form {
   color: black;
@@ -90,6 +94,8 @@ label {
 .gender-games:hover {
   color: #991616;
   text-decoration: underline;
+  font-size: 0.65rem;
+  text-shadow: 0 0 1px black;
 }
 
 /* GAMES */
@@ -104,9 +110,15 @@ label {
   background: none;
 }
 
+.game-date {
+  font-size: 0.7rem;
+}
+
 .game-actions {
-  /* display: flex; */
-  /* justify-content: space-evenly; */
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 

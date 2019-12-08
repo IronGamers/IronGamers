@@ -77,14 +77,10 @@ module.exports.like = (req, res, next) => {
   const gameID = req.params.gameID
   const userID = req.currentUser._id
 
-  //CAMBIAR FINDONE POR FINDONEANDELETE
-  Like.findOne({ gameID: gameID, userID: userID })
+  Like.findOneAndRemove({ gameID: gameID, userID: userID })
     .then(like => {
       if (like) {
-        Like.findByIdAndRemove(like._id)
-          .then(() => {
-            res.json({ likes: -1 })
-          })
+        res.json({ likes: -1 })
       } else {
         const newLike = new Like({
           userID: userID,
@@ -97,6 +93,30 @@ module.exports.like = (req, res, next) => {
       }
     })
     .catch(error => console.log("Error giving like => ", error))
-
-
 }
+
+// module.exports.like = (req, res, next) => {
+//   const gameID = req.params.gameID
+//   const userID = req.currentUser._id
+
+//   //CAMBIAR FINDONE POR FINDONEANDELETE
+//   Like.findOne({ gameID: gameID, userID: userID })
+//     .then(like => {
+//       if (like) {
+//         Like.findByIdAndRemove(like._id)
+//           .then(() => {
+//             res.json({ likes: -1 })
+//           })
+//       } else {
+//         const newLike = new Like({
+//           userID: userID,
+//           gameID: gameID
+//         })
+//         newLike.save()
+//           .then(() => {
+//             res.json({ likes: 1 })
+//           })
+//       }
+//     })
+//     .catch(error => console.log("Error giving like => ", error))
+// }
