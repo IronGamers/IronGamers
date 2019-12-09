@@ -38,6 +38,7 @@ module.exports.listGames = (req, res, next) => {
   Game.find({ gender: genderID })
     .populate('likes')
     .then(games => {
+      console.log(games)
       res.render('game/list', { games })
     })
     .catch(error => console.log("Error in finding games => ", error))

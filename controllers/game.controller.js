@@ -63,12 +63,39 @@ module.exports.doEdit = (req, res, next) => {
     .catch(error => console.log("Error in editing game => ", error))
 }
 
-// Esto estaría
 module.exports.join = (req, res, next) => {
   const gameID = req.params.gameID
-  ChatRoom.find({ game: gameID })
+  ChatRoom.findOne({ game: gameID })
+    .populate('gameDetail')
     .then(chatRoom => {
-      res.render('game/chatRoom', { chatRoom })
+
+      // No hace bien el populate, así que se hacen pruebas así
+      const msg = [
+        {
+          nickName: "fulatino",
+          msgTime: "2016/01/02",
+          text: "Probando el chat"
+        },
+        {
+          nickName: "fulanito",
+          msgTime: "2016/01/02",
+          text: "Probando el chat"
+        }
+      ]
+
+      // Se añade el usuario al array si no lo está ya
+      if (!chatRoom.users.includes(req.currentUser.nickName)) {
+        chatRoom.users.push(req.currentUser.nickName)
+        ChatRoom.findByIdAndUpdate(chatRoom.id, { users: chatRoom.users }, { new: true })
+          .then(chatRoom => {
+            res.render('game/chatRoom', { chatRoom })
+          })
+      } else {
+        res.render('game/chatRoom', { 
+          chatRoom: chatRoom,
+          msg: msg
+        })
+      }
     })
     .catch(error => console.log("Error in joining room => ", error))
 }
@@ -94,29 +121,3 @@ module.exports.like = (req, res, next) => {
     })
     .catch(error => console.log("Error giving like => ", error))
 }
-
-// module.exports.like = (req, res, next) => {
-//   const gameID = req.params.gameID
-//   const userID = req.currentUser._id
-
-//   //CAMBIAR FINDONE POR FINDONEANDELETE
-//   Like.findOne({ gameID: gameID, userID: userID })
-//     .then(like => {
-//       if (like) {
-//         Like.findByIdAndRemove(like._id)
-//           .then(() => {
-//             res.json({ likes: -1 })
-//           })
-//       } else {
-//         const newLike = new Like({
-//           userID: userID,
-//           gameID: gameID
-//         })
-//         newLike.save()
-//           .then(() => {
-//             res.json({ likes: 1 })
-//           })
-//       }
-//     })
-//     .catch(error => console.log("Error giving like => ", error))
-// }

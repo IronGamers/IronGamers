@@ -13,10 +13,9 @@ const chatRoomSchema = new Schema({
  
 }, { timestamps: true })
 
-// PENDIENTE
 chatRoomSchema.virtual('gameDetail', {
-  ref: 'Comment',
-  localField: 'tweet',
+  ref: 'Game',
+  localField: 'game',
   foreignField: '_id',
   justOne: false,
 });

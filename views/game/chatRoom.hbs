@@ -1,0 +1,30 @@
+<div class="chat-room">
+
+  {{!-- GAME INFO --}}
+  <div class="game-users">
+    <p>Users:</p>
+    {{#each chatRoom.users as |user|}}
+    <p>{{user}}</p>
+    {{/each}}
+  </div>
+
+  {{!-- CHAT --}}
+  <div class="game-chat">
+    <h1 class="hp-5">Game: {{gameDetail.name}}</h1>
+    <div class="chat-box">
+      {{#each msg as |ms|}}
+        <p>({{ms.msgTime}}) {{ms.nickName}}: {{ms.text}}</p>
+      {{/each}}
+    </div>
+
+    <div class="chat-message">
+      <form class="w-100" action="/" method="POST">
+        <input class="message" type="text" name="message" placeholder="Enter message...">
+        <button class="btn-send" type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+
+
+</div>
