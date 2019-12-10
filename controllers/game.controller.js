@@ -79,7 +79,7 @@ module.exports.join = (req, res, next) => {
         {
           nickName: "fulanito",
           msgTime: "2016/01/02",
-          text: "Probando el chat"
+          text: "Probando el chat oasjofsajdo aosdjsa dasodaosd adkasmdokmsdkoamdokamdoamdoasd asdkasmd asdk asdasd"
         }
       ]
 

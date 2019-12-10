@@ -27,6 +27,10 @@ label {
   padding: 0 5px;
 }
 
+.vm-10 {
+  margin: 10px 0;
+}
+
 /* GENDERS */
 #gender-form {
   color: black;
@@ -125,34 +129,84 @@ label {
 .chat-room {
   display: flex;
   height: 100%;
-  border: 3px solid red;
   color: white;
   /* width: 100%; */
 }
 
-.game-users{
+.game-users {
   display: flex;
   flex-direction: column;
-  width: 30%;
+  align-items: center;
+  width: 20%;
   height: 100%;
-  border: 3px solid blue;
 }
 
-.game-chat{
+.users-title {
+  background-image: linear-gradient( #0039e6, #80bfff);
+  font-weight: bold;
+  margin: 10px 0;
+  border-radius: 1rem;
+}
+
+.vertical-split {
+  height: 100%;
+  border: 2px solid #80bfff;
+  box-shadow: 0 0 10px white;
+}
+
+.user-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px solid #99e6ff;
+  border-radius: 1rem;
+}
+
+.user-detail:hover {
+  box-shadow: 0 0 10px black;
+}
+
+.users-message {
+  background-color: #b3fff0;
+  border-radius: 1rem;
+  padding: 5px;
+}
+
+.btn-send-private {
+  cursor: pointer;
+}
+
+/* Boostrap le pone un margin de 1rem. Para anularlo se usa esto */
+.user-detail p {
+  margin: 0;
+}
+
+.game-chat {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 70%;
+  width: 80%;
   height: 100%;
-  border: 3px solid green
 }
 
 .chat-box {
   width: 80%;
   height: 80%;
-  background-color: honeydew;
-  border: 3px solid yellow;
+  background-color: #e6faff;
+  border: 2px solid #80bfff;
+  border-radius: 1rem 0 0 1rem;
+  color: black;
+  overflow-y: auto;
+  box-shadow: 0 0 10px white;
+  padding: 10px;
+}
+
+.users-box {
+  width: 80%;
+  height: 90%;
+  background-color: #ffffe6;
+  border: 2px solid #80bfff;
   color: black;
   overflow-y: auto;
 }
@@ -161,7 +215,6 @@ label {
   display: flex;
   justify-content: space-evenly;
   width: 80%;
-  border: 3px solid red;
   font-size: 0.8rem;
 }
 
