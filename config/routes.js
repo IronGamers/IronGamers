@@ -20,7 +20,7 @@ router.post('/user/new', authMiddelware.isNotAuthenticated, usersController.crea
 router.post('/user/logout', authMiddelware.isAuthenticated, usersController.logout)
 router.get('/admin/users', authMiddelware.isAuthenticated, usersController.userList)
 router.post('/admin/delete', authMiddelware.isAuthenticated, usersController.delete)
-
+router.post('/user/:id/rol', authMiddelware.isAuthenticated, usersController.changeRol)
 
 // GENDER ROUTES (PENDIENTE PONER MIDDLEWARE)
 router.get('/genders', genderController.listGenders)
@@ -30,12 +30,12 @@ router.get('/genders/:genderID', genderController.listGames)
 router.get('/genders/:genderID/edit', genderController.edit)
 router.post('/genders/:genderID/edit', genderController.doEdit)
 
-
 // GAMES ROUTES (PENDIENTE PONER MIDDLEWARE)
 router.get('/games/new', gameController.newGame)
 router.post('/games/new', upload.single('image'), gameController.createGame)
 router.get('/games/:gameID/edit', gameController.edit)
 router.post('/games/:gameID/edit', gameController.doEdit)
+router.get('/games/list', gameController.genderList)
 
 
 

@@ -41,7 +41,7 @@ module.exports.create = (req, res, next) => {
                         ...user,
                         password: null
                     },
-                    genericError: 'User exists'
+                    genericError: 'El usuario ya existe'
                 })
             } else {
                 next(error);
@@ -123,4 +123,16 @@ module.exports.delete = (req, res, next) => {
         .then(
             res.redirect('/admin/users')
         )
+}
+
+module.exports.changeRol = (req, res, next) => {
+    const id = req.params.id
+    const rol = req.body.rol
+
+    User.findByIdAndUpdate(id, {rol: rol})
+        .then(user => {
+            res.json(user.rol)
+        })
+        .catch(error => next(error))
+
 }

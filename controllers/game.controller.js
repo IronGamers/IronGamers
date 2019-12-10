@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Game = require('../models/game-model')
 const Gender = require('../models/gender-model')
+const apicalypse = require('apicalypse').default
+
 
 // FORMULARIO GAME
 module.exports.newGame = (_, res, next) => {
@@ -55,4 +57,36 @@ module.exports.doEdit = (req, res, next) => {
       res.redirect('/genders')
     })
     .catch(error => console.log("Error in editing game => ", error))
+}
+
+
+// call API
+
+module.exports.genderList = (req, res, next) => {
+
+  const IGDB = apicalypse({
+    baseURL: "https://api-v3.igdb.com",
+    headers: {
+        'Accept': 'application/json',
+        'user-key': '2a79c904bd7921141480963f315e6afb'
+    },
+    responseType: 'json',
+    timeout: 5000
+});
+
+// const response1 = await IGDB
+//         .limit(50)
+//         .request('/games');
+
+//         console.log(response1)
+
+const response2 = IGDB
+.fields('name, summary')
+        .limit(1)
+        .request('/games')
+        .then(res => {
+          console.log(res.data)
+        })
+        .catch( error => next(error))
+ 
 }
