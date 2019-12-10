@@ -81,12 +81,16 @@ module.exports.genderList = (req, res, next) => {
 //         console.log(response1)
 
 const response2 = IGDB
-.fields('name, summary')
-        .limit(1)
+        .fields('name, summary, total_rating, total_rating_count')
+        .limit(10)
+        
+        .where(`total_rating != null`)
         .request('/games')
-        .then(res => {
-          console.log(res.data)
+        .then(response => {
+          console.log(response.data)
+          res.redirect('/')  
         })
         .catch( error => next(error))
- 
+
+        
 }
