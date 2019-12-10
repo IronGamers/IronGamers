@@ -1,13 +1,17 @@
 <div class="chat-room">
 
-  {{!-- GAME INFO --}}
+  {{!-- USERS--}}
   <div class="game-users">
-    <p class="hp-5 users-title">Users in the room</p>
+    <p class="users-title">Users in the room ({{usersCount}})</p>
     <div class="users-box hp-5">
       {{#each chatRoom.users as |user|}}
       <div class="vm-10 user-detail">
         <p class="hp-5 font-weight-bold">{{user}}</p>
-        <a class="hp-5 btn-send-private fa fa-envelope"></a>
+        <div>
+          <a href="#" class="hp-5 fa fa-user-plus"></a>
+          <a href="#" class="hp-5 fa fa-info-circle"></a>
+          <a href="#" class="hp-5 fa fa-envelope"></a>
+        </div>
       </div>
       {{/each}}
     </div>
@@ -17,7 +21,10 @@
 
   {{!-- CHAT --}}
   <div class="game-chat">
-    <h1 class="hp-5">Game: {{gameDetail.name}}</h1>
+    <div class="game-title hp-10">
+      <img class="hp-10" src="{{chatRoom.game.image}}">
+      <h1 class="hp-10"> {{chatRoom.game.name}}</h1>
+    </div>
     <div class="chat-box">
       {{#each msg as |ms|}}
       <p><span class="font-italic">({{date ms.msgTime}}) <span class="font-weight-bold">{{ms.nickName}}: </span></span>
@@ -33,6 +40,5 @@
       </form>
     </div>
   </div>
-
 
 </div>

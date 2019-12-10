@@ -66,8 +66,10 @@ module.exports.doEdit = (req, res, next) => {
 module.exports.join = (req, res, next) => {
   const gameID = req.params.gameID
   ChatRoom.findOne({ game: gameID })
-    .populate('gameDetail')
+    .populate('game')
     .then(chatRoom => {
+
+      console.log(chatRoom)
 
       // No hace bien el populate, así que se hacen pruebas así
       const msg = [
@@ -91,9 +93,10 @@ module.exports.join = (req, res, next) => {
             res.render('game/chatRoom', { chatRoom })
           })
       } else {
-        res.render('game/chatRoom', { 
+        res.render('game/chatRoom', {
           chatRoom: chatRoom,
-          msg: msg
+          msg: msg,
+          usersCount: chatRoom.users.length
         })
       }
     })

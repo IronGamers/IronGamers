@@ -5,6 +5,7 @@ const Schema = mongoose.Schema
 const chatRoomSchema = new Schema({
   game: {
     type: Schema.Types.ObjectId,
+    ref: "Game",
     unique: true,
   },
   users: {
