@@ -19,14 +19,14 @@ const chatSchema = new Schema({
   }
 }, { timestamps: true })
 
-chatSchema.virtual('chatRoom', {
-  ref: 'ChatRoom',
-  localField: 'room',
-  foreignField: '_id',
-  justOne: false,
-});
+// chatSchema.virtual('chatRoom', {
+//   ref: 'ChatRoom',
+//   localField: 'room',
+//   foreignField: '_id',
+//   justOne: false,
+// });  
 
-chatSchema.virtual('user', {
+chatSchema.virtual('userDetail', {
   ref: 'User',
   localField: 'user',
   foreignField: '_id',

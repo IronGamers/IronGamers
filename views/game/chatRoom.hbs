@@ -26,15 +26,15 @@
       <h1 class="hp-10"> {{chatRoom.game.name}}</h1>
     </div>
     <div class="chat-box">
-      {{#each msg as |ms|}}
-      <p><span class="font-italic">({{date ms.msgTime}}) <span class="font-weight-bold">{{ms.nickName}}: </span></span>
-        <span class="users-message">{{ms.text}}</span></p>
+      {{#each chats as |chat|}}
+      <p><span class="font-italic">({{date chat.createdAt}}) <span class="font-weight-bold">{{chat.user.nickName}}: </span></span>
+        <span class="users-message">{{chat.userMsg}}</span></p>
       {{/each}}
     </div>
 
     {{!-- SEND MESSAGE TO CHAT --}}
     <div class="chat-message">
-      <form class="w-100" action="/" method="POST" autocomplete="off">
+      <form class="w-100" action="/games/{{chatRoom.id}}/{{chatRoom.game._id}}/newMessage" method="POST" autocomplete="off">
         <input class="message" type="text" name="message" placeholder="Enter message...">
         <button class="btn-send" type="submit">Send</button>
       </form>

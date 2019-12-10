@@ -4,6 +4,7 @@ const baseController = require('../controllers/base.controller')
 const usersController = require('../controllers/users.controller')
 const genderController = require('../controllers/gender.controller')
 const gameController = require('../controllers/game.controller')
+const chatRoomController = require('../controllers/chatRoom.controller')
 const authMiddelware = require('../middlewares/auth.middleware')
 const multer = require('multer');
 const upload = multer({
@@ -19,7 +20,7 @@ router.post('/user/new', authMiddelware.isNotAuthenticated, usersController.crea
 router.post('/user/logout', authMiddelware.isAuthenticated, usersController.logout)
 
 
-// GENDER ROUTES (PENDIENTE PONER MIDDLEWARE)
+// GENDER ROUTES
 router.get('/genders', authMiddelware.isAuthenticated, genderController.listGenders)
 router.get('/genders/new', authMiddelware.isAuthenticated, genderController.newGender)
 router.post('/genders/new', authMiddelware.isAuthenticated, upload.single('image'), genderController.createGender)
@@ -28,7 +29,7 @@ router.get('/genders/:genderID/edit', authMiddelware.isAuthenticated, genderCont
 router.post('/genders/:genderID/edit', authMiddelware.isAuthenticated, genderController.doEdit)
 
 
-// GAMES ROUTES (PENDIENTE PONER MIDDLEWARE)
+// GAMES ROUTES
 router.get('/games/new', authMiddelware.isAuthenticated, gameController.newGame)
 router.post('/games/new', authMiddelware.isAuthenticated, upload.single('image'), gameController.createGame)
 router.get('/games/:gameID/edit', authMiddelware.isAuthenticated, gameController.edit)
@@ -36,6 +37,8 @@ router.post('/games/:gameID/edit', authMiddelware.isAuthenticated, gameControlle
 router.get('/games/:gameID', authMiddelware.isAuthenticated, gameController.join)
 router.post('/games/:gameID/like', authMiddelware.isAuthenticated, gameController.like)
 
+// CHAT ROUTES
+router.post('/games/:chatRoomID/:gameID/newMessage', authMiddelware.isAuthenticated, chatRoomController.sendMessage)
 
 
 module.exports = router;

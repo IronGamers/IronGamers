@@ -3,6 +3,7 @@ const Game = require('../models/game-model')
 const Gender = require('../models/gender-model')
 const ChatRoom = require('../models/chatRoom-model')
 const Like = require('../models/like-model')
+const Chat = require('../models/chat-model')
 
 // FORMULARIO GAME
 module.exports.newGame = (_, res, next) => {
@@ -68,37 +69,47 @@ module.exports.join = (req, res, next) => {
   ChatRoom.findOne({ game: gameID })
     .populate('game')
     .then(chatRoom => {
-
-      console.log(chatRoom)
-
-      // No hace bien el populate, así que se hacen pruebas así
-      const msg = [
-        {
-          nickName: "fulatino",
-          msgTime: "2016/01/02",
-          text: "Probando el chat"
-        },
-        {
-          nickName: "fulanito",
-          msgTime: "2016/01/02",
-          text: "Probando el chat oasjofsajdo aosdjsa dasodaosd adkasmdokmsdkoamdokamdoamdoasd asdkasmd asdk asdasd"
-        }
-      ]
-
-      // Se añade el usuario al array si no lo está ya
-      if (!chatRoom.users.includes(req.currentUser.nickName)) {
-        chatRoom.users.push(req.currentUser.nickName)
-        ChatRoom.findByIdAndUpdate(chatRoom.id, { users: chatRoom.users }, { new: true })
-          .then(chatRoom => {
-            res.render('game/chatRoom', { chatRoom })
-          })
-      } else {
-        res.render('game/chatRoom', {
-          chatRoom: chatRoom,
-          msg: msg,
-          usersCount: chatRoom.users.length
+      Chat.find({ room: chatRoom.id, user: req.currentUser._id })
+      .populate('user')
+        .then(chats => {
+          // Se añade el usuario al array si no lo está ya
+          if (!chatRoom.users.includes(req.currentUser.nickName)) {
+            chatRoom.users.push(req.currentUser.nickName)
+            ChatRoom.findByIdAndUpdate(chatRoom.id, { users: chatRoom.users }, { new: true })
+              .then(chatRoom => {
+                res.render('game/chatRoom', {
+                  chatRoom: chatRoom,
+                  chats: chats,
+                  userCount: chatRoom.users.length
+                })
+              })
+          } else {
+            res.render('game/chatRoom', {
+              chatRoom: chatRoom,
+              chats: chats,
+              userCount: chatRoom.users.length
+            })
+          }
         })
-      }
+
+
+
+
+      // // FALTA COGER LOS CHATS
+      // const msg = [
+      //   {
+      //     nickName: "fulatino",
+      //     msgTime: "2016/01/02",
+      //     text: "Probando el chat"
+      //   },
+      //   {
+      //     nickName: "fulanito",
+      //     msgTime: "2016/01/02",
+      //     text: "Probando el chat oasjofsajdo aosdjsa dasodaosd adkasmdokmsdkoamdokamdoamdoasd asdkasmd asdk asdasd"
+      //   }
+      // ]
+
+
     })
     .catch(error => console.log("Error in joining room => ", error))
 }
