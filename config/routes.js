@@ -35,7 +35,7 @@ router.get('/games/new', gameController.newGame)
 router.post('/games/new', upload.single('image'), gameController.createGame)
 router.get('/games/:gameID/edit', gameController.edit)
 router.post('/games/:gameID/edit', gameController.doEdit)
-router.get('/games/list', gameController.genderList)
+router.get('/l', gameController.genderList)
 
 
 

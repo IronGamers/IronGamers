@@ -81,16 +81,52 @@ module.exports.genderList = (req, res, next) => {
 //         console.log(response1)
 
 const response2 = IGDB
-        .fields('name, summary, total_rating, total_rating_count')
+        .fields('name, summary, total_rating, total_rating_count, screenshots.url')
         .limit(10)
-        
-        .where(`total_rating != null`)
+        .where(`screenshots != null`)
         .request('/games')
         .then(response => {
-          console.log(response.data)
+          console.log(response.data[0])
           res.redirect('/')  
         })
         .catch( error => next(error))
 
         
+}
+
+        
+module.exports.response3 = (req, res, next) => {
+
+  const IGDB = apicalypse({
+    baseURL: "https://api-v3.igdb.com",
+    headers: {
+        'Accept': 'application/json',
+        'user-key': '2a79c904bd7921141480963f315e6afb'
+    },
+    responseType: 'json',
+    timeout: 5000
+});
+const now = Date.now();
+
+  const response3 = IGDB
+.multi([
+  apicalypse()
+      .query('games', 'latest-games')
+      .fields('name')
+      .where(`created_at < ${now}`)
+      .sort('created_at desc'),
+  apicalypse()
+      .query('games', 'coming-soon')
+      .fields('name')
+      .where(`created_at > ${now}`)
+      .sort('created_at asc')
+])
+.request('/multiquery')
+.then(response => {
+    console.log(response.data)
+          res.redirect('/')  
+    })
+        .catch( error => next(error))
+
+
 }
