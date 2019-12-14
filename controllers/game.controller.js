@@ -119,114 +119,20 @@ module.exports.like = (req, res, next) => {
     .catch(error => console.log("Error giving like => ", error))
 }
 
-// FUNCIONES
-function getGameDetails(gameName) {
 
-  const IGDB = apicalypse({
-    baseURL: "https://api-v3.igdb.com",
-    headers: {
-      'Accept': 'application/json',
-      'user-key': '2a79c904bd7921141480963f315e6afb'
-    },
-    responseType: 'json',
-    timeout: 60000
-  });
-
-  // platforms.platform_logos.url
-  const response = IGDB
-    .fields(`name,cover.url,
-          first_release_date,
-          franchise.name,
-          genres.name,
-          platforms.name,
-          platforms.platform_logo.url,
-          screenshots.url,
-          summary,
-          total_rating,
-          total_rating_count,
-          videos.video_id`)
-    .search(`${gameName}`)
-    // .limit(1)
-    .request('/games')
-    .then(res => {
-      const data = res.data[0]
-
-      // Unix timestamp to normal date
-      let releaseDate = new Date(res.data[0].first_release_date * 1000)
-
-      // Distinto de Invalid Date y se pasa a dd-mm-yyyy
-      if (!isNaN(releaseDate)) {
-        releaseDate = releaseDate.getDate() + '/' + (releaseDate.getMonth() + 1) + '/' + releaseDate.getFullYear()
-      } else {
-        releaseDate = undefined
-      }
-
-      // Cover
-      const cover = () => {
-        if (data.cover) {
-          return data.cover.url
-        }
-      }
-
-      // Genres
-      const genres = () => {
-        if (data.genres) {
-          return data.genres.map(genre => genre.name)
-        }
-      }
-
-      // Platform names
-      const platformNames = () => {
-        if (data.platforms) {
-          return data.platforms.map(platform => platform.name)
-        }
-      }
-
-      // Platform logo
-      const platformLogo = () => {
-        if (data.platform && data.platform.platform_logo) {
-          return data.platforms
-            .map(platform => platform.platform_logo)
-            .map(logo => logo.url)
-        }
-      }
-
-      // Screenshots
-      const screenshots = () => {
-        if (data.screenshots) {
-          return data.screenshots.map(screenshot => screenshot.url)
-        }
-      }
-
-      // Videos
-      const videos = () => {
-        if (data.videos) {
-          return data.videos.map(video => video.video_id)
-        }
-      }
-
-      const gameInfo = {
-        name: data.name,
-        cover: cover(),
-        first_release_date: releaseDate,
-        genres: genres(),
-        platforms_name: platformNames(),
-        platforms_logo: platformLogo(),
-        screenshots: screenshots(),
-        summary: data.summary,
-        total_rating: data.total_rating,
-        total_rating_count: data.total_rating_count,
-        videos: videos()
-      }
-      console.log(gameInfo)
-    })
-    .catch(error => console.log(error))
-
+module.exports.gameDetail = (req, res, _) => {
+  const gameName = req.params.gameName
+  getGameDetails(`${gameName}`, 0, 1)
+  .then(game => {
+    console.log(game)
+    res.render('game/gameDetail', {game: game[0]})
+  })
+  .catch(error => console.log("Error in getting details of game => ", error))
 }
 
 
-
-function getGameDetails2(gameName) {
+// ===== FUNCIONES ======
+function getGameDetails(gameName, offset, limit) {
 
   const IGDB = apicalypse({
     baseURL: "https://api-v3.igdb.com",
@@ -252,7 +158,8 @@ function getGameDetails2(gameName) {
           total_rating_count,
           videos.video_id`)
     .search(`${gameName}`)
-    //.limit(6)
+    .offset(offset || 0)
+    .limit(limit || 2)
     .request('/games')
     .then(res => {
 
@@ -260,7 +167,7 @@ function getGameDetails2(gameName) {
 
         // Unix timestamp to normal date
         let releaseDate = new Date(data.first_release_date * 1000)
-        
+
         // Distinto de Invalid Date y se pasa a dd-mm-yyyy
         if (!isNaN(releaseDate)) {
           releaseDate = releaseDate.getDate() + '/' + (releaseDate.getMonth() + 1) + '/' + releaseDate.getFullYear()
@@ -331,18 +238,36 @@ function getGameDetails2(gameName) {
       })
 
       return result
-
     })
-
     .catch(error => console.log(error))
 }
 
+function getGenres() {
+  const IGDB = apicalypse({
+    baseURL: "https://api-v3.igdb.com",
+    headers: {
+      'Accept': 'application/json',
+      'user-key': '2a79c904bd7921141480963f315e6afb'
+    },
+    responseType: 'json',
+    timeout: 60000
+  });
+
+  // platforms.platform_logos.url
+  return IGDB
+    .fields(`name`)
+    .request('/genres')
+    .then(res => {
+      return res.data.map(data => data.name)
+    })
+    .catch(error => console.log(error))
+  }
 
 module.exports.genderList = (req, res, next) => {
   const search = req.body.searchData
   console.log(req.body, 'req.body')
   // Tiger Woods PGA Tour 14
-  getGameDetails2(search)
+  getGameDetails(search,0 ,5)
     .then(data => {
       console.log(data)
       res.render('game/detailGames', {games: data})

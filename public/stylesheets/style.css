@@ -133,6 +133,10 @@ label {
   align-items: center;
 }
 
+.game-detail {
+  color: white;
+}
+
 /* CHAT ROOM */
 .chat-room {
   display: flex;
