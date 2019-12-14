@@ -1,0 +1,41 @@
+<div class="game-detail">
+
+  <h1>name => {{game.name}}</h1>
+
+  {{#each game.cover as |cover|}}
+  <h1>Cover => {{cover}}</h1>
+  {{/each}}
+
+  <h1>release date => {{game.first_release_date}}</h1>
+
+  {{#each game.genres as |genre|}}
+  <h1>Genre => {{genre}}</h1>
+  {{/each}}
+
+  {{#each game.platforms_name as |platform_name|}}
+  <h1>platforms_name => {{platform_name}}</h1>
+  {{/each}}
+
+  <h1>PLATFORMS LOGO</h1>
+  {{#each game.platforms_logo as |platform_logo|}}
+  <img src={{platform_logo}}>
+  {{/each}}
+
+  <H1>SCREENSHOTS</H1>
+  {{#each game.screenshots as |screenshot|}}
+  <img src={{screenshot}}>
+  {{/each}}
+
+  <h1>Summary => {{game.summary}}</h1>
+
+  <h1>Total rating => {{game.total_rating}}</h1>
+
+  <h1>Total rating count => {{game.total_rating_count}}</h1>
+
+  <h1>VIDEOS</h1>
+  {{#each game.videos as |video|}}
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video}}" frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  {{/each}}
+
+</div>
