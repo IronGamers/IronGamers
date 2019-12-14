@@ -40,5 +40,7 @@ router.post('/games/:gameID/like', authMiddelware.isAuthenticated, gameControlle
 // CHAT ROUTES
 router.post('/games/:chatRoomID/:gameID/newMessage', authMiddelware.isAuthenticated, chatRoomController.sendMessage)
 
+// API TEST
+router.get('/list', gameController.genderList)
 
 module.exports = router;

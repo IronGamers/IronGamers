@@ -15,7 +15,6 @@ module.exports.sendMessage = (req, res) => {
 
     newChat.save()
       .then(chat => {
-        
         res.redirect(`/games/${gameID}`)
       })
       .catch(error => console.log("Error saving new chat => ", error))
