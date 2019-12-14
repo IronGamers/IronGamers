@@ -1,6 +1,10 @@
+{{#equals currentUser.rol 'Admin'}}
 <form action="/genders/new">
   <button type="submit" class="btn btn-primary">Create gender!</button>
 </form>
+{{/equals}}
+
+
 
 <div class="gender-container">
   {{#each genders as |gender|}}

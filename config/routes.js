@@ -18,7 +18,9 @@ router.post('/login', authMiddelware.isNotAuthenticated, usersController.doLogin
 router.get('/user/new', authMiddelware.isNotAuthenticated, usersController.new)
 router.post('/user/new', authMiddelware.isNotAuthenticated, usersController.create)
 router.post('/user/logout', authMiddelware.isAuthenticated, usersController.logout)
-
+router.get('/admin/users', authMiddelware.isAuthenticated, usersController.userList)
+router.post('/admin/delete', authMiddelware.isAuthenticated, usersController.delete)
+router.post('/user/:id/rol', authMiddelware.isAuthenticated, usersController.changeRol)
 
 // GENDER ROUTES
 router.get('/genders', authMiddelware.isAuthenticated, genderController.listGenders)
@@ -32,6 +34,7 @@ router.post('/genders/:genderID/edit', authMiddelware.isAuthenticated, genderCon
 // GAMES ROUTES
 router.get('/games/new', authMiddelware.isAuthenticated, gameController.newGame)
 router.post('/games/new', authMiddelware.isAuthenticated, upload.single('image'), gameController.createGame)
+router.get('/games/list', authMiddelware.isAuthenticated, gameController.gameList)
 router.get('/games/:gameID/edit', authMiddelware.isAuthenticated, gameController.edit)
 router.post('/games/:gameID/edit', authMiddelware.isAuthenticated, gameController.doEdit)
 router.get('/games/:gameID', authMiddelware.isAuthenticated, gameController.join)
@@ -42,6 +45,6 @@ router.get('/games/:gameName/detail', authMiddelware.isAuthenticated, gameContro
 router.post('/games/:chatRoomID/:gameID/newMessage', authMiddelware.isAuthenticated, chatRoomController.sendMessage)
 
 // API TEST
-router.get('/list', gameController.genderList)
+router.post('/list', gameController.genderList)
 
 module.exports = router;

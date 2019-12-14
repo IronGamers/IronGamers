@@ -25,7 +25,7 @@ module.exports.createGame = (req, res, next) => {
     releaseDate: req.body.releaseDate,
     score: req.body.score,
     gender: req.body.gender
-  })
+  })       
 
   newGame.save()
     .then(game => {
@@ -131,21 +131,6 @@ module.exports.gameDetail = (req, res, _) => {
 }
 
 
-module.exports.genderList = (req, res, next) => {
-
-  // getGenres()
-  //   .then(response => {
-  //     console.log(response)
-  //   })
-
-  getGameDetails('Diablo III: Rise of the Necromancer',0, 15)
-    .then(response => {
-      console.log(response)
-    })
-    .catch(error => console.log("Error getting game details => ", error))
-
-}
-
 // ===== FUNCIONES ======
 function getGameDetails(gameName, offset, limit) {
 
@@ -194,6 +179,8 @@ function getGameDetails(gameName, offset, limit) {
         const cover = () => {
           if (data.cover) {
             return data.cover.url
+          }else{
+            return 'http://www.thebristolarms.com.au/wp-content/uploads/2018/03/img-not-found.png'
           }
         }
 
@@ -274,4 +261,20 @@ function getGenres() {
       return res.data.map(data => data.name)
     })
     .catch(error => console.log(error))
+  }
+  
+module.exports.genderList = (req, res, next) => {
+  const search = req.body.searchData
+  console.log(req.body, 'req.body')
+  // Tiger Woods PGA Tour 14
+  getGameDetails2(search)
+    .then(data => {
+      console.log(data)
+      res.render('game/detailGames', {games: data})
+    })
+}
+
+
+module.exports.gameList = (req, res, next) => {
+  res.render('game/detailGames')
 }
