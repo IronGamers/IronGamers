@@ -161,7 +161,7 @@ function getGameDetails(gameName) {
         releaseDate = undefined
       }
 
-       // Cover
+      // Cover
       const cover = () => {
         if (data.cover) {
           return data.cover.url
@@ -197,7 +197,7 @@ function getGameDetails(gameName) {
           return data.screenshots.map(screenshot => screenshot.url)
         }
       }
-      
+
       // Videos
       const videos = () => {
         if (data.videos) {
@@ -224,41 +224,10 @@ function getGameDetails(gameName) {
 
 }
 
-module.exports.genderList = (req, res, next) => {
-
-  // Tiger Woods PGA Tour 14
-  getGameDetails('wood')
-  return
 
 
-  // Datos que necesitamos
-  /*
-  
-   == NECESARIAS (devuelve array de objetos) ==
-  cover => la carátula del juego
-  first_release_date => cuando salió el juego (unix time stamp, https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript)
-  franchise => franquicia principal (franchise ID, luego coger name que es un string)
-  genres => géneros del juego (genre ID, luego coger name que es un string)
-  name => nombre del juego (String)
-  platforms => (no se ven bien)plataformas para las que salió (platforms ID, luego coger name que es un string y platform_logo que es otro ID)
-  screenshots => imágenes del juego (screenshot ID => coger url)
-  summary => la descripción del juego (String)
-  total_rating => rating sobre 100 (double)
-  total_rating_count => cuántos han votado (integer)
-  videos => videos del juego (game-video ID, luego coger video_ID, se busca en youtube: https://www.youtube.com/watch?v=video_ID)
-  
-  == BUSCAR POR UN CAMPO ==
-  en fields pones el campo que quieras buscar y luego en search lo que estás buscando
-  
-  == OPCIONALES ==
-  themes => themes del juego (theme ID)
-  time_to_beat => cuanto se tarda en pasarse el juego (time-to-beat ID)
-  dlcs => dlcs
-  expansions => expansiones
-  follows => cuánta gente lo sigue en IGDB
-  websites => webs asociadas al game (website ID, luego coger URL (string))
-  
-  */
+function getGameDetails2(gameName) {
+
   const IGDB = apicalypse({
     baseURL: "https://api-v3.igdb.com",
     headers: {
@@ -266,31 +235,112 @@ module.exports.genderList = (req, res, next) => {
       'user-key': '2a79c904bd7921141480963f315e6afb'
     },
     responseType: 'json',
-    timeout: 5000
+    timeout: 60000
   });
 
-  // JOIN THINGS
-  const response2 = IGDB
-    .fields('genres.name')
-    .limit(10)
-    // .where(`screenshots != null`)
+  // platforms.platform_logos.url
+  return IGDB
+    .fields(`name,cover.url,
+          first_release_date,
+          franchise.name,
+          genres.name,
+          platforms.name,
+          platforms.platform_logo.url,
+          screenshots.url,
+          summary,
+          total_rating,
+          total_rating_count,
+          videos.video_id`)
+    .search(`${gameName}`)
+    .limit(2)
     .request('/games')
-    .then(response => {
-      console.log(response.data)
-      // res.redirect('/')
+    .then(res => {
+
+      const result = res.data.map(data => {
+
+        // Unix timestamp to normal date
+        let releaseDate = new Date(data.first_release_date * 1000)
+        
+        // Distinto de Invalid Date y se pasa a dd-mm-yyyy
+        if (!isNaN(releaseDate)) {
+          releaseDate = releaseDate.getDate() + '/' + (releaseDate.getMonth() + 1) + '/' + releaseDate.getFullYear()
+        } else {
+          releaseDate = undefined
+        }
+
+        // Cover
+        const cover = () => {
+          if (data.cover) {
+            return data.cover.url
+          }
+        }
+
+        // Genres
+        const genres = () => {
+          if (data.genres) {
+            return data.genres.map(genre => genre.name)
+          }
+        }
+
+        // Platform names
+        const platformNames = () => {
+          if (data.platforms) {
+            return data.platforms.map(platform => platform.name)
+          }
+        }
+
+        // Platform logo
+        const platformLogo = () => {
+          if (data.platform && data.platform.platform_logo) {
+            return data.platforms
+              .map(platform => platform.platform_logo)
+              .map(logo => logo.url)
+          }
+        }
+
+        // Screenshots
+        const screenshots = () => {
+          if (data.screenshots) {
+            return data.screenshots.map(screenshot => screenshot.url)
+          }
+        }
+
+        // Videos
+        const videos = () => {
+          if (data.videos) {
+            return data.videos.map(video => video.video_id)
+          }
+        }
+
+        const gameInfo = {
+          name: data.name,
+          cover: cover(),
+          first_release_date: releaseDate,
+          genres: genres(),
+          platforms_name: platformNames(),
+          platforms_logo: platformLogo(),
+          screenshots: screenshots(),
+          summary: data.summary,
+          total_rating: data.total_rating,
+          total_rating_count: data.total_rating_count,
+          videos: videos()
+        }
+        return gameInfo
+      })
+
+      return result
+
     })
-    .catch(error => next(error))
+
+    .catch(error => console.log(error))
 }
 
-    // const response2 = IGDB
 
-  //   .fields('name')
-  //   .limit(5)
-  //   // .where(`name != null`)
-  //   // .search('diablo')
-  //   .request('/games')
-  //   .then(response => {
-  //     console.log(response.data)
-  //     // res.redirect('/')
-  //   })
-  //   .catch(error => next(error))
+module.exports.genderList = (req, res, next) => {
+
+  // Tiger Woods PGA Tour 14
+  getGameDetails2('wood')
+    .then(res => {
+      console.log(res)
+    })
+}
