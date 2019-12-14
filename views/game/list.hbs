@@ -8,14 +8,29 @@
     <img src="{{game.image}}" class="gender-image" alt="cannot display image">
     <div class="gender-body">
       <h5 class="gender-name">{{game.name}} ({{game.score}})</h5>
-      <h6 class="text-muted">Release date => {{date game.releaseDate}}</h6>
-      <p class="gender-description">{{game.description}}</p>
-      <div>
-        <a class="gender-games" href="/games/{{game.id}}">>> Join room</a>
+      <h6 class="hp-5 text-muted game-date">Release date => {{date game.releaseDate}}</h6>
+      <p class="hp-5 gender-description">{{game.description}}</p>
+      <div class="game-actions">
+        <a class="gender-games" href="/games/{{game.id}}">Join room</a>
         <span> || </span>
-        <a class="gender-games" href="/games/{{game.id}}/edit">>> Edit game</a>
+        <a class="gender-games" href="/games/{{game.id}}/edit">Edit game</a>
+        <span> || </span>
+        <div>
+          <button type="button" id="like-btn" class="fa fa-thumbs-up" onclick="like('{{game.id}}')"></button>
+          <span id="{{game.id}}">{{game.likes.length}}</span>
+        </div>
       </div>
     </div>
   </div>
   {{/each}}
 </div>
+
+<script>
+  function like(id) {
+    axios.post(`/games/${id}/like`)
+      .then(response => {
+        let likes = document.getElementById(id)
+        likes.innerText = (parseInt(likes.innerText) + parseInt(response.data.likes)).toString()
+      })
+  }
+</script>

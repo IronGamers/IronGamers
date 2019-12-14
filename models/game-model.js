@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+require('./like-model')
 
 //  SE CREA EL MODELO
 const gameSchema = new Schema({
@@ -34,6 +35,13 @@ const gameSchema = new Schema({
   }]
 
 }, { timestamps: true })
+
+gameSchema.virtual('likes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'gameID',
+  justOne: false,
+});
 
 //  SE EXPORTA EL MODELO
 const Game = mongoose.model('Game', gameSchema)

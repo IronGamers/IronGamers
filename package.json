@@ -21,6 +21,7 @@
   "homepage": "https://github.com/IronGamers/IronGamers#readme",
   "dependencies": {
     "apicalypse": "^0.1.6",
+    "axios": "^0.19.0",
     "bcrypt": "^3.0.7",
     "cloudinary": "^1.17.0",
     "connect-mongo": "^3.2.0",

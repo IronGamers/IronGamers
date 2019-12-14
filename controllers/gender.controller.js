@@ -26,7 +26,7 @@ module.exports.createGender = (req, res, next) => {
 
   newGender.save()
     .then(gender => {
-      console.log('New gender created => ' , gender.name)
+      console.log('New gender created => ', gender.name)
       res.redirect('/genders')
     })
     .catch(error => console.log("Error in creating gender => ", error))
@@ -35,10 +35,10 @@ module.exports.createGender = (req, res, next) => {
 // MOSTRAR JUEGOS DEL GÉNERO
 module.exports.listGames = (req, res, next) => {
   const genderID = req.params.genderID
-  Game.find({gender: genderID})
+  Game.find({ gender: genderID })
     .populate('likes')
     .then(games => {
-      res.render('game/list', {games})
+      res.render('game/list', { games })
     })
     .catch(error => console.log("Error in finding games => ", error))
 }

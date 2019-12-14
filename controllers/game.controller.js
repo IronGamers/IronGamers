@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Game = require('../models/game-model')
 const Gender = require('../models/gender-model')
+const ChatRoom = require('../models/chatRoom-model')
+const Like = require('../models/like-model')
+const Chat = require('../models/chat-model')
 const apicalypse = require('apicalypse').default
 
 
@@ -8,14 +11,13 @@ const apicalypse = require('apicalypse').default
 module.exports.newGame = (_, res, next) => {
   Gender.find()
     .then(genders => {
-      res.render('game/gameForm', { genders })
+      res.render('game/gameForm', { genders, game: new Game() })
     })
     .catch(error => console.log("Error in finding genders => ", error))
 }
 
 // CREAR GAME
 module.exports.createGame = (req, res, next) => {
-  console.log("EHHHHH => ", req.body)
   const newGame = new Game({
     name: req.body.name,
     image: `/uploads/${req.file.filename}`,
@@ -23,12 +25,17 @@ module.exports.createGame = (req, res, next) => {
     releaseDate: req.body.releaseDate,
     score: req.body.score,
     gender: req.body.gender
-  })
+  })       
 
   newGame.save()
     .then(game => {
-      console.log('New game created => ', game.name)
-      res.redirect('/genders')
+      // SE CREA LA CHAT ROOM
+      const newChatRoom = new ChatRoom({
+        game: game.id,
+        users: []
+      })
+      newChatRoom.save()
+        .then(() => res.redirect('/genders'))
     })
     .catch(error => console.log("Error in creating game => ", error))
 }
@@ -59,74 +66,282 @@ module.exports.doEdit = (req, res, next) => {
     .catch(error => console.log("Error in editing game => ", error))
 }
 
+module.exports.join = (req, res, next) => {
+  const gameID = req.params.gameID
+  ChatRoom.findOne({ game: gameID })
+    .populate('game')
+    .then(chatRoom => {
+      Chat.find({ room: chatRoom.id, user: req.currentUser._id })
+        .populate('user')
+        .then(chats => {
+          // Se añade el usuario al array si no lo está ya
+          if (!chatRoom.users.includes(req.currentUser.nickName)) {
+            chatRoom.users.push(req.currentUser.nickName)
+            ChatRoom.findByIdAndUpdate(chatRoom.id, { users: chatRoom.users }, { new: true })
+              .then(chatRoom => {
+                res.render('game/chatRoom', {
+                  chatRoom: chatRoom,
+                  chats: chats,
+                  userCount: chatRoom.users.length
+                })
+              })
+          } else {
+            res.render('game/chatRoom', {
+              chatRoom: chatRoom,
+              chats: chats,
+              userCount: chatRoom.users.length
+            })
+          }
+        })
+    })
+    .catch(error => console.log("Error in joining room => ", error))
+}
 
-// call API
+module.exports.like = (req, res, next) => {
+  const gameID = req.params.gameID
+  const userID = req.currentUser._id
+
+  Like.findOneAndRemove({ gameID: gameID, userID: userID })
+    .then(like => {
+      if (like) {
+        res.json({ likes: -1 })
+      } else {
+        const newLike = new Like({
+          userID: userID,
+          gameID: gameID
+        })
+        newLike.save()
+          .then(() => {
+            res.json({ likes: 1 })
+          })
+      }
+    })
+    .catch(error => console.log("Error giving like => ", error))
+}
+
+// FUNCIONES
+function getGameDetails(gameName) {
+
+  const IGDB = apicalypse({
+    baseURL: "https://api-v3.igdb.com",
+    headers: {
+      'Accept': 'application/json',
+      'user-key': '2a79c904bd7921141480963f315e6afb'
+    },
+    responseType: 'json',
+    timeout: 60000
+  });
+
+  // platforms.platform_logos.url
+  const response = IGDB
+    .fields(`name,cover.url,
+          first_release_date,
+          franchise.name,
+          genres.name,
+          platforms.name,
+          platforms.platform_logo.url,
+          screenshots.url,
+          summary,
+          total_rating,
+          total_rating_count,
+          videos.video_id`)
+    .search(`${gameName}`)
+    // .limit(1)
+    .request('/games')
+    .then(res => {
+      const data = res.data[0]
+
+      // Unix timestamp to normal date
+      let releaseDate = new Date(res.data[0].first_release_date * 1000)
+
+      // Distinto de Invalid Date y se pasa a dd-mm-yyyy
+      if (!isNaN(releaseDate)) {
+        releaseDate = releaseDate.getDate() + '/' + (releaseDate.getMonth() + 1) + '/' + releaseDate.getFullYear()
+      } else {
+        releaseDate = undefined
+      }
+
+      // Cover
+      const cover = () => {
+        if (data.cover) {
+          return data.cover.url
+        }
+      }
+
+      // Genres
+      const genres = () => {
+        if (data.genres) {
+          return data.genres.map(genre => genre.name)
+        }
+      }
+
+      // Platform names
+      const platformNames = () => {
+        if (data.platforms) {
+          return data.platforms.map(platform => platform.name)
+        }
+      }
+
+      // Platform logo
+      const platformLogo = () => {
+        if (data.platform && data.platform.platform_logo) {
+          return data.platforms
+            .map(platform => platform.platform_logo)
+            .map(logo => logo.url)
+        }
+      }
+
+      // Screenshots
+      const screenshots = () => {
+        if (data.screenshots) {
+          return data.screenshots.map(screenshot => screenshot.url)
+        }
+      }
+
+      // Videos
+      const videos = () => {
+        if (data.videos) {
+          return data.videos.map(video => video.video_id)
+        }
+      }
+
+      const gameInfo = {
+        name: data.name,
+        cover: cover(),
+        first_release_date: releaseDate,
+        genres: genres(),
+        platforms_name: platformNames(),
+        platforms_logo: platformLogo(),
+        screenshots: screenshots(),
+        summary: data.summary,
+        total_rating: data.total_rating,
+        total_rating_count: data.total_rating_count,
+        videos: videos()
+      }
+      console.log(gameInfo)
+    })
+    .catch(error => console.log(error))
+
+}
+
+
+
+function getGameDetails2(gameName) {
+
+  const IGDB = apicalypse({
+    baseURL: "https://api-v3.igdb.com",
+    headers: {
+      'Accept': 'application/json',
+      'user-key': '2a79c904bd7921141480963f315e6afb'
+    },
+    responseType: 'json',
+    timeout: 60000
+  });
+
+  // platforms.platform_logos.url
+  return IGDB
+    .fields(`name,cover.url,
+          first_release_date,
+          franchise.name,
+          genres.name,
+          platforms.name,
+          platforms.platform_logo.url,
+          screenshots.url,
+          summary,
+          total_rating,
+          total_rating_count,
+          videos.video_id`)
+    .search(`${gameName}`)
+    .limit(2)
+    .request('/games')
+    .then(res => {
+
+      const result = res.data.map(data => {
+
+        // Unix timestamp to normal date
+        let releaseDate = new Date(data.first_release_date * 1000)
+        
+        // Distinto de Invalid Date y se pasa a dd-mm-yyyy
+        if (!isNaN(releaseDate)) {
+          releaseDate = releaseDate.getDate() + '/' + (releaseDate.getMonth() + 1) + '/' + releaseDate.getFullYear()
+        } else {
+          releaseDate = undefined
+        }
+
+        // Cover
+        const cover = () => {
+          if (data.cover) {
+            return data.cover.url
+          }
+        }
+
+        // Genres
+        const genres = () => {
+          if (data.genres) {
+            return data.genres.map(genre => genre.name)
+          }
+        }
+
+        // Platform names
+        const platformNames = () => {
+          if (data.platforms) {
+            return data.platforms.map(platform => platform.name)
+          }
+        }
+
+        // Platform logo
+        const platformLogo = () => {
+          if (data.platform && data.platform.platform_logo) {
+            return data.platforms
+              .map(platform => platform.platform_logo)
+              .map(logo => logo.url)
+          }
+        }
+
+        // Screenshots
+        const screenshots = () => {
+          if (data.screenshots) {
+            return data.screenshots.map(screenshot => screenshot.url)
+          }
+        }
+
+        // Videos
+        const videos = () => {
+          if (data.videos) {
+            return data.videos.map(video => video.video_id)
+          }
+        }
+
+        const gameInfo = {
+          name: data.name,
+          cover: cover(),
+          first_release_date: releaseDate,
+          genres: genres(),
+          platforms_name: platformNames(),
+          platforms_logo: platformLogo(),
+          screenshots: screenshots(),
+          summary: data.summary,
+          total_rating: data.total_rating,
+          total_rating_count: data.total_rating_count,
+          videos: videos()
+        }
+        return gameInfo
+      })
+
+      return result
+
+    })
+
+    .catch(error => console.log(error))
+}
+
 
 module.exports.genderList = (req, res, next) => {
 
-  const IGDB = apicalypse({
-    baseURL: "https://api-v3.igdb.com",
-    headers: {
-        'Accept': 'application/json',
-        'user-key': '2a79c904bd7921141480963f315e6afb'
-    },
-    responseType: 'json',
-    timeout: 5000
-});
-
-// const response1 = await IGDB
-//         .limit(50)
-//         .request('/games');
-
-//         console.log(response1)
-
-const response2 = IGDB
-        .fields('name, summary, total_rating, total_rating_count, screenshots.url')
-        .limit(10)
-        .where(`screenshots != null`)
-        .request('/games')
-        .then(response => {
-          console.log(response.data[0])
-          res.redirect('/')  
-        })
-        .catch( error => next(error))
-
-        
-}
-
-        
-module.exports.response3 = (req, res, next) => {
-
-  const IGDB = apicalypse({
-    baseURL: "https://api-v3.igdb.com",
-    headers: {
-        'Accept': 'application/json',
-        'user-key': '2a79c904bd7921141480963f315e6afb'
-    },
-    responseType: 'json',
-    timeout: 5000
-});
-const now = Date.now();
-
-  const response3 = IGDB
-.multi([
-  apicalypse()
-      .query('games', 'latest-games')
-      .fields('name')
-      .where(`created_at < ${now}`)
-      .sort('created_at desc'),
-  apicalypse()
-      .query('games', 'coming-soon')
-      .fields('name')
-      .where(`created_at > ${now}`)
-      .sort('created_at asc')
-])
-.request('/multiquery')
-.then(response => {
-    console.log(response.data)
-          res.redirect('/')  
+  // Tiger Woods PGA Tour 14
+  getGameDetails2('wood')
+    .then(data => {
+      console.log(data)
+      res.redirect('/')
     })
-        .catch( error => next(error))
-
-
 }
