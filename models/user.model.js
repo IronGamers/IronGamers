@@ -44,7 +44,7 @@ const userSchema = new Schema({
     },
     avatar: {
         type: String,
-        default: 'https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwim4caXiZ_mAhXFyIUKHdgvCkYQjRx6BAgBEAQ&url=https%3A%2F%2Fdocs.atlassian.com%2Faui%2F8.1.0%2Fdocs%2Favatars.html&psig=AOvVaw3L5I5auDpmDiOP-dlWQZSh&ust=1575654664635256'
+        default: 'https://picsum.photos/200'
     },
     validated: {
         type: Boolean,

@@ -1,6 +1,10 @@
+{{#equals currentUser.rol 'Admin'}}
 <form action="/genders/new">
   <button type="submit" class="btn btn-primary">Create gender!</button>
 </form>
+{{/equals}}
+
+
 
 <div class="gender-container">
   {{#each genders as |gender|}}
@@ -8,11 +12,11 @@
     <img src="{{gender.image}}" class="gender-image" alt="cannot display image">
     <div class="gender-body">
       <h5 class="gender-name">{{gender.name}}</h5>
-      <p class="gender-description">{{gender.description}}</p>
-      <div>
-        <a class="gender-games" href="/genders/{{gender.id}}">>> View games</a>
+      <p class="hp-5 gender-description">{{gender.description}}</p>
+      <div class="game-actions">
+        <a class="gender-games" href="/genders/{{gender.id}}">View games</a>
         <span> || </span>
-        <a class="gender-games" href="/genders/{{gender.id}}/edit">>> Edit gender</a>
+        <a class="gender-games" href="/genders/{{gender.id}}/edit">Edit gender</a>
       </div>
     </div>
   </div>

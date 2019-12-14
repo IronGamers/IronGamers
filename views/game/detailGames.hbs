@@ -1,0 +1,20 @@
+<form action="/list" method="post">
+    <input type="text" name="searchData">
+    <button type="submit">Search</button>
+</form>
+
+<div class="row row-cols-4">
+    {{#each games as |game|}}
+    <div class="col-3 mb-4">
+        <div class="card">
+            <img src="{{game.cover}}" class="card-img-top img-games" alt="cover">
+            <div class="card-body">
+                <h5 class="card-title">{{game.name}}</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
+                    content. This content is a little bit longer.</p>
+            </div>
+            <a href="/game/{{game.name}}/detail" type="button"  class="btn btn-primay">View Game</a>
+        </div>
+    </div>
+    {{/each}}
+</div>
