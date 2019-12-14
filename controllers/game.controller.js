@@ -262,12 +262,12 @@ function getGenres() {
     })
     .catch(error => console.log(error))
   }
-  
+
 module.exports.genderList = (req, res, next) => {
   const search = req.body.searchData
   console.log(req.body, 'req.body')
   // Tiger Woods PGA Tour 14
-  getGameDetails2(search)
+  getGameDetails(search,0 ,5)
     .then(data => {
       console.log(data)
       res.render('game/detailGames', {games: data})
