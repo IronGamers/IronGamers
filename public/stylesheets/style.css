@@ -428,3 +428,15 @@ label {
 .secret{
   display: none;
 }
+
+/* GameList  */
+
+.game-list{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img-games{
+  
+}

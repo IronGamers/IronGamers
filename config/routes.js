@@ -34,6 +34,7 @@ router.post('/genders/:genderID/edit', authMiddelware.isAuthenticated, genderCon
 // GAMES ROUTES
 router.get('/games/new', authMiddelware.isAuthenticated, gameController.newGame)
 router.post('/games/new', authMiddelware.isAuthenticated, upload.single('image'), gameController.createGame)
+router.get('/games/list', authMiddelware.isAuthenticated, gameController.gameList)
 router.get('/games/:gameID/edit', authMiddelware.isAuthenticated, gameController.edit)
 router.post('/games/:gameID/edit', authMiddelware.isAuthenticated, gameController.doEdit)
 router.get('/games/:gameID', authMiddelware.isAuthenticated, gameController.join)
@@ -43,6 +44,6 @@ router.post('/games/:gameID/like', authMiddelware.isAuthenticated, gameControlle
 router.post('/games/:chatRoomID/:gameID/newMessage', authMiddelware.isAuthenticated, chatRoomController.sendMessage)
 
 // API TEST
-router.get('/list', gameController.genderList)
+router.post('/list', gameController.genderList)
 
 module.exports = router;

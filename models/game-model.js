@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 require('./like-model')
+require('./chatRoom-model')
 
 //  SE CREA EL MODELO
 const gameSchema = new Schema({
