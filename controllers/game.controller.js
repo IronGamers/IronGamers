@@ -178,7 +178,8 @@ function getGameDetails(gameName, offset, limit) {
         // Cover
         const cover = () => {
           if (data.cover) {
-            return data.cover.url
+            const coverBig = data.cover.url.replace('t_thumb', 't_cover_big')
+            return coverBig
           }else{
             return 'http://www.thebristolarms.com.au/wp-content/uploads/2018/03/img-not-found.png'
           }
@@ -200,17 +201,23 @@ function getGameDetails(gameName, offset, limit) {
 
         // Platform logo
         const platformLogo = () => {
-          if (data.platform && data.platform.platform_logo) {
+          try {
             return data.platforms
               .map(platform => platform.platform_logo)
               .map(logo => logo.url)
+          }
+          catch (e){
+            return undefined
           }
         }
 
         // Screenshots
         const screenshots = () => {
           if (data.screenshots) {
-            return data.screenshots.map(screenshot => screenshot.url)
+            return data.screenshots.map(screenshot => {
+              const image = screenshot.url.replace('t_thumb', 't_screenshot_huge')
+              return image
+            })
           }
         }
 
@@ -267,7 +274,7 @@ module.exports.genderList = (req, res, next) => {
   const search = req.body.searchData
   console.log(req.body, 'req.body')
   // Tiger Woods PGA Tour 14
-  getGameDetails(search,0 ,5)
+  getGameDetails(search,0 ,20)
     .then(data => {
       console.log(data)
       res.render('game/detailGames', {games: data})

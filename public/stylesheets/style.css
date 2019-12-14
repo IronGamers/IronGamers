@@ -331,6 +331,27 @@ label {
   left: calc(50% - 50px);
 }
 
+.card {
+  height: 575px !important;
+}
+
+.card-body {
+  max-height: 235px;
+}
+
+.description-card-content {
+  max-height: 140px;
+  overflow-y: scroll;
+}
+
+.img-div-gamecard {
+  height: 300px;
+  width: 100%;
+  background-position: center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
 .login-box h1 {
   margin: 0;
   padding: 0 0 20px;
