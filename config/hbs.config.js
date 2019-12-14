@@ -23,3 +23,7 @@ hbs.registerHelper('includes', function (arg1, arg2, options) {
   return arg2.includes(arg1) ? options.fn(this) : options.inverse(this);
 });
 
+hbs.registerHelper('greaterThan', function(arg1, arg2, options) {
+  return (arg1 > arg2) ? options.fn(this) : options.inverse(this)
+})
+

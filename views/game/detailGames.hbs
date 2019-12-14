@@ -1,35 +1,60 @@
-<form action="/list" method="post">
-    <input type="text" name="searchData">
-    <button type="submit">Search</button>
+<form action="/list" method="post" class="pt-3 search-form">
+    <input type="text" class="game-search game-search-text" name="searchData" placeholder="Search a Game">
+    <input type="submit" class="game-search game-search-button" value="Search">
 </form>
 
-<div class="row row-cols-4">
+<div class="row row-cols-4 pt-3">
     {{#each games as |game|}}
     <div class="col-3 mb-4">
         <div class="card">
             <div class="img-div-gamecard" style="background: url({{game.cover}})">
             </div>
+             
             <div class="card-body">
-                <h5 class="card-title">{{game.name}}</h5>
+                <div class="first-details">
+                    <h6 class="card-title tittle-games">{{game.name}}</h6>
+                    <div class="subdetails">
+                        <p class="lauched">{{game.first_release_date}} </p>
+                        <ul class="stars">
+                            {{#if game.total_rating}}
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 30}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 50}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 65}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 80}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 90}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            {{/if}}
+                        </ul>
+                    </div>
+                </div>
+                
                 <div class="description-card-content">
-
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
+                    <p class="card-text description-game">{{game.summary}}</p>
                 </div>
+            </div>
+            <div class="games-more">
+                <a href="/games/{{game.name}}/detail" type="button" class="btn btn-game-info"><i class="fa fa-play"aria-hidden="true"></i> View Game</a>
+                <div class="links">
+                    <i class="fa fa-bookmark blue-color fa-1x" aria-hidden="true"></i>
+                    <i class="fa fa-share-alt blue-color fa-1x" aria-hidden="true"></i>
                 </div>
-            <a href="/games/{{game.name}}/detail" type="button"  class="btn btn-primay">View Game</a>
+            </div>
         </div>
     </div>
     {{/each}}
 </div>
 
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-  </ul>
+<nav aria-label="Page">
+    <ul class="pagination navigation-indexes">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
 </nav>
