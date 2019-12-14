@@ -7,16 +7,16 @@
       IronGames
     </a>
     <li class="nav-item">
-      <a class="nav-link hover-blue-dark" href="#">Genders</a>
+      <a class="nav-link hover-blue-dark" href="/genders">Genders</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link hover-blue-dark" href="#">Games</a>
+      <a class="nav-link hover-blue-dark" href="/games/new">Games</a>
     </li>
-    {{#if currentUser.rol}}
+    {{#equals currentUser.rol 'Admin'}}
     <li class="nav-item">
-      <a class="nav-link hover-blue-dark" href="#">Users</a>
+      <a class="nav-link hover-blue-dark" href="/admin/users">Users</a>
     </li>
-    {{/if}}
+    {{/equals}}
   </ul>
 
 

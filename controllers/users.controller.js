@@ -10,7 +10,6 @@ module.exports.new = (_, res) => {
 }
 
 module.exports.create = (req, res, next) => {
-    console.log(req.body)
     const user = new User({
         name: req.body.name,
         lastname: req.body.lastname,
@@ -19,6 +18,10 @@ module.exports.create = (req, res, next) => {
         password: req.body.password,
         avatar: req.body.avatar
     })
+
+    if(!req.body.avatar){
+        user.avatar = 'https://picsum.photos/200'
+    }
 
     user.save()
         .then((user) => {
@@ -38,7 +41,7 @@ module.exports.create = (req, res, next) => {
                         ...user,
                         password: null
                     },
-                    genericError: 'User exists'
+                    genericError: 'El usuario ya existe'
                 })
             } else {
                 next(error);
@@ -103,4 +106,33 @@ module.exports.doLogin = (req, res, next) => {
 module.exports.logout = (req, res, next) => {
     req.session.destroy()
     res.redirect('/user/login')
+}
+
+module.exports.userList = (req, res, next) => {
+    User.find()
+        .then(users => {
+            res.render('admin/userList', {users})
+        })
+        .catch( error => next(error))
+}
+
+module.exports.delete = (req, res, next) => {
+    const nickName = req.body.nickName
+    console.log(req.body)
+    User.findOneAndDelete({nickName: nickName})
+        .then(
+            res.redirect('/admin/users')
+        )
+}
+
+module.exports.changeRol = (req, res, next) => {
+    const id = req.params.id
+    const rol = req.body.rol
+
+    User.findByIdAndUpdate(id, {rol: rol})
+        .then(user => {
+            res.json(user.rol)
+        })
+        .catch(error => next(error))
+
 }
