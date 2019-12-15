@@ -121,11 +121,15 @@ module.exports.like = (req, res, next) => {
 
 
 module.exports.gameDetail = (req, res, _) => {
-  const gameName = req.params.gameName
-  functions.getGameDetails(`${gameName}`, 0, 1)
-  .then(game => {
-    console.log(game)
-    res.render('game/gameDetail', {game: game[0]})
+  const gameId = req.params.gameId
+  functions.getTotalDetail(gameId)
+  .then(company => {
+    functions.getGameDetails(gameId, company)
+    .then(data => {
+      console.log(data)
+      console.log(data.company)
+      res.render('game/gameDetail', {game: data[0]})
+    })
   })
   .catch(error => console.log("Error in getting details of game => ", error))
 }
@@ -138,14 +142,15 @@ module.exports.genderList = (req, res, next) => {
   const {init, items} = req.body
   console.log(req.body, 'req.body')
 
-  functions.getGameDetails(search,0 ,items)
+  functions.getGameList(search,0 ,items)
     .then(data => {
       console.log(data)
       res.render('game/detailGames', {games: data, items, search})
     })
 }
 
-
 module.exports.gameList = (req, res, next) => {
+
+  
   res.render('game/detailGames')
 }

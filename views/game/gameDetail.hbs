@@ -1,30 +1,92 @@
-<div class="game-detail">
+<div class="game-detail pt-4">
+  <div class="container-card-resume">
+    <div class="left" style="background: url({{game.cover}})">
+    </div>
+    <div class="right">
+      <div class="principal-details mt-2">
+        <h4>{{game.name}}</h4>
+        <div class="launched-stars">
+          <p class="lauched"><span>Release day:</span> {{game.first_release_date}} </p>
+          <ul class="stars">
+            {{#if game.total_rating}}
+            <li><i class="fa fa-star {{#greaterThan  game.total_rating 30}} blue-color {{/greaterThan}}"
+                aria-hidden="true"></i></li>
+            <li><i class="fa fa-star {{#greaterThan  game.total_rating 50}} blue-color {{/greaterThan}}"
+                aria-hidden="true"></i></li>
+            <li><i class="fa fa-star {{#greaterThan  game.total_rating 65}} blue-color {{/greaterThan}}"
+                aria-hidden="true"></i></li>
+            <li><i class="fa fa-star {{#greaterThan  game.total_rating 80}} blue-color {{/greaterThan}}"
+                aria-hidden="true"></i></li>
+            <li><i class="fa fa-star {{#greaterThan  game.total_rating 90}} blue-color {{/greaterThan}}"
+                aria-hidden="true"></i></li>
+            {{/if}}
+        </div>
+        </ul>
+      </div>
+      <hr>
+      <div class="platform-company-detail">
+        <div class="card-platform" >
+          <h5>Platforms availables</h5>
+          <div class="platforms">
+          {{#each game.platforms_logo as |platform_logo|}}
+          <div class="card-platform">
+            <img src={{platform_logo}} width="35">
+          </div>
+          {{/each}}
+          </div>
+        </div>
+        <div class="company">
+          <h5>Company</h5>
+          <a href="{{game.company.web}}" target="blank"><img src="{{game.company.logo}}" width="50" alt="company"></a>
+          <p>{{game.company.name}}</p>
+        </div>
+      </div>
+      <hr>
+      <div class="modes-genres">
+        <div class="modes" >
+          <h5>Game modes</h5>
+          <ul>
+          {{#each game.modes as |mode|}}
+          <li>{{mode}}</li>
+          {{/each}}
+          </ul>
+        </div>
+        <div class="genres">
+          <h5>Genres</h5>
+          {{#each game.genres as |genre|}}
+          <p class="badge badge-pill blue-light">{{genre}}</p>
+          {{/each}}
+        </div>
+      </div>
+      <hr>
+      <div class="sumary mt-2">
+        <h5>Description</h5>
+        <p>{{game.summary}}</p>
+      </div>
+    </div>
 
-  <h1>name => {{game.name}}</h1>
 
-  <img src="{{game.cover}}">
- 
-  <h1>release date => {{game.first_release_date}}</h1>
+  </div>
 
-  {{#each game.genres as |genre|}}
-  <h1>Genre => {{genre}}</h1>
-  {{/each}}
+  <div class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-interval="10000">
+        <div class="display-carusel" style="background: url({{game.screenshot_primay}})"></div>
+      </div>
+      {{#each game.screenshots as |screenshot|}}
+      <div class="carousel-item" data-interval="10000">
+        <div class="display-carusel" style="background: url({{screenshot}})"></div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
 
-  {{#each game.platforms_name as |platform_name|}}
-  <h1>platforms_name => {{platform_name}}</h1>
-  {{/each}}
 
-  <h1>PLATFORMS LOGO</h1>
-  {{#each game.platforms_logo as |platform_logo|}}
-  <img src={{platform_logo}}>
-  {{/each}}
 
-  <H1>SCREENSHOTS</H1>
-  {{#each game.screenshots as |screenshot|}}
-  <img src={{screenshot}}>
-  {{/each}}
+  {{!-- options  --}}
 
-  <h1>Summary => {{game.summary}}</h1>
+
+
 
   <h1>Total rating => {{game.total_rating}}</h1>
 
