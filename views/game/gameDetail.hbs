@@ -2,10 +2,8 @@
 
   <h1>name => {{game.name}}</h1>
 
-  {{#each game.cover as |cover|}}
-  <h1>Cover => {{cover}}</h1>
-  {{/each}}
-
+  <img src="{{game.cover}}">
+ 
   <h1>release date => {{game.first_release_date}}</h1>
 
   {{#each game.genres as |genre|}}

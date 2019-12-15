@@ -1,6 +1,16 @@
 <form action="/list" method="post" class="pt-3 search-form">
-    <input type="text" class="game-search game-search-text" name="searchData" placeholder="Search a Game">
+    <input type="text" class="game-search game-search-text" name="searchData" placeholder="Search a Game" {{#if search}} value="{{search}}" {{/if}} >
     <input type="submit" class="game-search game-search-button" value="Search">
+    <div class="form-group">
+    <label >Games / page</label>
+    <select class="form-control"  name="items">
+      <option {{#equals items 8}} selected {{/equals}} >8</option>
+      <option {{#equals items 12}} selected {{/equals}}>12</option>
+      <option {{#equals items 16}} selected {{/equals}} {{#if items}} {{else}} selected {{/if}}>16</option>
+      <option {{#equals items 20}} selected {{/equals}}>20</option>
+      <option {{#equals items 24}} selected {{/equals}}>24</option>
+    </select>
+  </div>
 </form>
 
 <div class="row row-cols-4 pt-3">
