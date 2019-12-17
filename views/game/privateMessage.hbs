@@ -1,0 +1,17 @@
+<div class="private-message">
+
+  <div class="message-to">
+    <h1>{{users.user1.nickName}}</h1>
+    <div class="message-to-animation">
+      <img src="/img/email.gif">
+    </div>
+    <h1>{{users.user2.nickName}}</h1>
+  </div>
+
+  <form class="message-form" action="/users/{{users.user2._id}}/privateMessage" method="POST" autocomplete="off">
+    <input class="subject-message" type="text" name="subject" placeholder="Subject...">
+    <textarea class="body-message" type="text" name="body" placeholder="Body..."></textarea>
+    <button type="submit" class="btn btn-primary">Send message</button>
+  </form>
+
+</div>

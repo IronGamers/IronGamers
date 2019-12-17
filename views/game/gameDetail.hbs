@@ -38,4 +38,7 @@
     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   {{/each}}
 
+  {{#if game.name}}
+  <a href="/games/{{game.name}}/chat">Join room</a>
+  {{/if}}
 </div>

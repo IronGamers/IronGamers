@@ -26,12 +26,12 @@ const chatSchema = new Schema({
 //   justOne: false,
 // });  
 
-chatSchema.virtual('userDetail', {
-  ref: 'User',
-  localField: 'user',
-  foreignField: '_id',
-  justOne: false,
-});
+// chatSchema.virtual('userDetail', {
+//   ref: 'User',
+//   localField: 'user',
+//   foreignField: '_id',
+//   justOne: false,
+// });
 
 //  SE EXPORTA EL MODELO
 const Chat = mongoose.model('Chat', chatSchema)

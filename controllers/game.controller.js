@@ -25,7 +25,7 @@ module.exports.createGame = (req, res, next) => {
     releaseDate: req.body.releaseDate,
     score: req.body.score,
     gender: req.body.gender
-  })       
+  })
 
   newGame.save()
     .then(game => {
@@ -67,30 +67,59 @@ module.exports.doEdit = (req, res, next) => {
 }
 
 module.exports.join = (req, res, next) => {
-  const gameID = req.params.gameID
-  ChatRoom.findOne({ game: gameID })
-    .populate('game')
+
+  const gameName = req.params.gameName
+
+  ChatRoom.findOne({ game: gameName })
+    .populate('users')
     .then(chatRoom => {
+
+      // Si no existe, se crea sala y se vuelve a cargar la página
+      if (!chatRoom) {
+        const newChatRoom = new ChatRoom({
+          game: gameName,
+          users: [req.currentUser._id]
+        })
+        newChatRoom.save()
+          .then(chatRoom => {
+            res.redirect(`/games/${gameName}/chat`)
+          })
+          .catch(error => console.log("Error joining room => ", error))
+      }
+
       Chat.find({ room: chatRoom.id, user: req.currentUser._id })
         .populate('user')
         .then(chats => {
+
+          const usersInChatRoom = chatRoom.users.map(user => user._id)
+
           // Se añade el usuario al array si no lo está ya
-          if (!chatRoom.users.includes(req.currentUser.nickName)) {
-            chatRoom.users.push(req.currentUser.nickName)
+          if (!usersInChatRoom.includes(req.currentUser._id)) {
+            chatRoom.users.push(req.currentUser._id)
             ChatRoom.findByIdAndUpdate(chatRoom.id, { users: chatRoom.users }, { new: true })
+              .populate('users')
               .then(chatRoom => {
+                getGameDetails(gameName, 0, 1)
+                  .then(game => {
+                    res.render('game/chatRoom', {
+                      chatRoom: chatRoom,
+                      chats: chats,
+                      usersCount: chatRoom.users.length,
+                      game: game[0]
+                    })
+                  })
+              })
+
+          } else {
+            getGameDetails(gameName, 0, 1)
+              .then(game => {
                 res.render('game/chatRoom', {
                   chatRoom: chatRoom,
                   chats: chats,
-                  userCount: chatRoom.users.length
+                  usersCount: chatRoom.users.length,
+                  game: game[0]
                 })
               })
-          } else {
-            res.render('game/chatRoom', {
-              chatRoom: chatRoom,
-              chats: chats,
-              userCount: chatRoom.users.length
-            })
           }
         })
     })
@@ -119,17 +148,26 @@ module.exports.like = (req, res, next) => {
     .catch(error => console.log("Error giving like => ", error))
 }
 
-
 module.exports.gameDetail = (req, res, _) => {
   const gameName = req.params.gameName
   getGameDetails(`${gameName}`, 0, 1)
-  .then(game => {
-    console.log(game)
-    res.render('game/gameDetail', {game: game[0]})
-  })
-  .catch(error => console.log("Error in getting details of game => ", error))
+    .then(game => {
+      res.render('game/gameDetail', { game: game[0] })
+    })
+    .catch(error => console.log("Error in getting details of game => ", error))
 }
 
+module.exports.genderList = (req, res, next) => {
+  const search = req.body.searchData
+  getGameDetails(search, 0, 5)
+    .then(data => {
+      res.render('game/detailGames', { games: data })
+    })
+}
+
+module.exports.gameList = (req, res, next) => {
+  res.render('game/detailGames')
+}
 
 // ===== FUNCIONES ======
 function getGameDetails(gameName, offset, limit) {
@@ -179,7 +217,7 @@ function getGameDetails(gameName, offset, limit) {
         const cover = () => {
           if (data.cover) {
             return data.cover.url
-          }else{
+          } else {
             return 'http://www.thebristolarms.com.au/wp-content/uploads/2018/03/img-not-found.png'
           }
         }
@@ -200,11 +238,14 @@ function getGameDetails(gameName, offset, limit) {
 
         // Platform logo
         const platformLogo = () => {
-          if (data.platform && data.platform.platform_logo) {
+          try {
             return data.platforms
               .map(platform => platform.platform_logo)
               .map(logo => logo.url)
+          } catch (ex) {
+            return undefined
           }
+
         }
 
         // Screenshots
@@ -261,20 +302,4 @@ function getGenres() {
       return res.data.map(data => data.name)
     })
     .catch(error => console.log(error))
-  }
-
-module.exports.genderList = (req, res, next) => {
-  const search = req.body.searchData
-  console.log(req.body, 'req.body')
-  // Tiger Woods PGA Tour 14
-  getGameDetails(search,0 ,5)
-    .then(data => {
-      console.log(data)
-      res.render('game/detailGames', {games: data})
-    })
-}
-
-
-module.exports.gameList = (req, res, next) => {
-  res.render('game/detailGames')
 }

@@ -153,40 +153,59 @@ label {
 }
 
 .users-title {
-  background-image: linear-gradient( #0039e6, #80bfff);
+  background-image: linear-gradient( #0039e6, #30A8F7);
   font-weight: bold;
   margin: 10px 0;
   padding: 2px 5px;
   border-radius: 1rem;
 }
 
-.user-detail {
+.chat-user-detail {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 2px solid #99e6ff;
+  border: 2px solid #30A8F7;
   border-radius: 1rem;
-}
-
-.user-detail:hover {
-  box-shadow: 0 0 10px black;
-}
-
-.users-message {
-  background-color: #b3fff0;
-  border-radius: 1rem;
-  padding: 5px;
 }
 
 /* Boostrap le pone un margin de 1rem. Para anularlo se usa esto */
-.user-detail p {
+.chat-user-detail p {
   margin: 0;
+}
+
+.chat-user-detail:hover {
+  box-shadow: 0 0 10px black;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.button-friend-pending {
+  border: none;
+  color: #30A8F7;
+  background-color: transparent;
+}
+
+.button-friend-accepted {
+  border: none;
+  color: green;
+  background-color: transparent;
+}
+
+.users-message {
+  background-color: rgba(230, 255, 255, 0.8);
+  color: black;
+  border-radius: 1rem;
+  padding: 1px 5px;
+  box-shadow: 0 0 5px #30A8F7;
 }
 
 .vertical-split {
   height: 100%;
-  border: 2px solid #80bfff;
-  box-shadow: 0 0 10px white;
+  border: 2px solid #30A8F7;
   margin: 5px 0;
 }
 
@@ -215,13 +234,12 @@ label {
 
 .chat-box {
   width: 80%;
-  max-height: 80%;
-  background-color: #e6faff;
-  border: 2px solid #80bfff;
+  height: 80%;
+  background-color: #4d0000;
+  border: 2px solid #30A8F7;
   border-radius: 1rem 0 0 1rem;
-  color: black;
+  color: #30A8F7;
   overflow-y: auto;
-  box-shadow: 0 0 10px white;
   padding: 10px;
 }
 
@@ -229,7 +247,7 @@ label {
   width: 80%;
   height: 90%;
   background-color: #ffffe6;
-  border: 2px solid #80bfff;
+  border: 2px solid #30A8F7;
   color: black;
   overflow-y: auto;
 }
@@ -248,6 +266,101 @@ label {
 .btn-send {
   width: 9%;
 }
+
+
+/* PRIVATE MESSAGE */
+.private-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 90%;
+  width: 100%;
+  color: white;
+}
+
+.message-to {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 15%;
+  width: 70%;
+}
+
+.message-to h1 {
+  text-align: center;
+  width: 25%;
+}
+
+.message-to-animation {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 50%;
+  animation: message 8s linear infinite;
+}
+
+.message-to-animation img{
+  height: 80%;
+  width: auto;
+}
+
+@keyframes message {
+from {
+  transform: translateX(0%);
+}
+to {
+  transform: translateX(80%);
+}
+}
+
+.message-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 70%;
+  height: 80%;
+}
+
+.subject-message {
+  width: 100%;
+  border: 3px solid #30A8F7;
+  padding: 0 10px;
+}
+
+.body-message {
+  width: 100%;
+  height: 80%;
+  resize: none;
+  border: 3px solid #30A8F7;
+  padding: 10px;
+}
+
+/* INBOX */
+.inbox-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 3px solid #30A8F7;
+  overflow-y: auto;
+  color: white;
+}
+
+.inbox-email-form {
+  display: flex;
+  align-items: center;
+  border: 3px solid #30A8F7;
+  overflow-x: auto;
+}
+
+.inbox-email-form button {
+  border: none;
+  color: #30A8F7;
+  background-color: transparent;
+}
+
+
 
 /* Configuration */
 
