@@ -1,20 +1,71 @@
-<form action="/list" method="post">
-    <input type="text" name="searchData">
-    <button type="submit">Search</button>
+<form action="/list" method="post" class="pt-3 search-form">
+    <input type="text" class="game-search game-search-text" name="searchData" placeholder="Search a Game" {{#if search}} value="{{search}}" {{/if}} >
+    <input type="submit" class="game-search game-search-button" value="Search">
+    <div class="form-group">
+    <label >Games / page</label>
+    <select class="form-control"  name="items">
+      <option {{#equals items 8}} selected {{/equals}} >8</option>
+      <option {{#equals items 12}} selected {{/equals}}>12</option>
+      <option {{#equals items 16}} selected {{/equals}} {{#if items}} {{else}} selected {{/if}}>16</option>
+      <option {{#equals items 20}} selected {{/equals}}>20</option>
+      <option {{#equals items 24}} selected {{/equals}}>24</option>
+    </select>
+  </div>
 </form>
 
-<div class="row row-cols-4">
+<div class="row row-cols-4 pt-3">
     {{#each games as |game|}}
     <div class="col-3 mb-4">
         <div class="card">
-            <img src="{{game.cover}}" class="card-img-top img-games" alt="cover">
-            <div class="card-body">
-                <h5 class="card-title">{{game.name}}</h5>
-                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                    content. This content is a little bit longer.</p>
+            <div class="img-div-gamecard" style="background: url({{game.cover}})">
             </div>
-            <a href="/games/{{game.name}}/detail" type="button"  class="btn btn-primay">View Game</a>
+             
+            <div class="card-body">
+                <div class="first-details">
+                    <h6 class="card-title tittle-games">{{game.name}}</h6>
+                    <div class="subdetails">
+                        <p class="lauched">{{game.first_release_date}} </p>
+                        <ul class="stars">
+                            {{#if game.total_rating}}
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 30}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 50}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 65}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 80}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            <li><i class="fa fa-star {{#greaterThan  game.total_rating 90}} blue-color {{/greaterThan}}"
+                                    aria-hidden="true"></i></li>
+                            {{/if}}
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="description-card-content">
+                    <p class="card-text description-game">{{game.summary}}</p>
+                </div>
+            </div>
+            <div class="games-more">
+                <a href="/games/{{game.id}}/detail" type="button" class="btn btn-game-info"><i class="fa fa-play"aria-hidden="true"></i> View Game</a>
+                <div class="links">
+                    <i class="fa fa-bookmark blue-color fa-1x" aria-hidden="true"></i>
+                    <i class="fa fa-share-alt blue-color fa-1x" aria-hidden="true"></i>
+                </div>
+            </div>
         </div>
     </div>
     {{/each}}
 </div>
+
+{{#if games}}
+<nav aria-label="Page">
+    <ul class="pagination navigation-indexes">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</nav>
+{{/if}}

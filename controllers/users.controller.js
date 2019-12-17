@@ -51,57 +51,57 @@ module.exports.create = (req, res, next) => {
 }
 
 module.exports.doLogin = (req, res, next) => {
-	const {
-		nickName,
-		password
-	} = req.body
+    const {
+        nickName,
+        password
+    } = req.body
 
-	if (!nickName || !password) {
-		return res.render('user/login', {
-			user: req.body
-		})
-	}
+    if (!nickName || !password) {
+        return res.render('user/login', {
+            user: req.body
+        })
+    }
 
-	User.findOne({
-		nickName: nickName,
-		validated: true
-	})
-		.then(user => {
-			if (!user) {
-				res.render('users/login', {
-					user: req.body,
-					error: {
-						password: 'invalid password'
-					}
-				})
-			} else {
-				return user.checkPassword(password)
-					.then(match => {
-						if (!match) {
-							res.render('user/login', {
-								user: req.body,
-								error: {
-									password: 'invalid password'
-								}
-							})
-						} else {
-							req.session.user = user
-							req.session.genericSuccess = 'Welcome!'
-							res.redirect('/')
-						}
-					})
-			}
-		})
-		.catch(error => {
-			if (error instanceof mongoose.Error.ValidationError) {
-				res.render('user/login', {
-					user: req.body,
-					error: error.error
-				})
-			} else {
-				next(error)
-			}
-		});
+    User.findOne({
+            nickName: nickName,
+            validated: true
+        })
+        .then(user => {
+            if (!user) {
+                res.render('users/login', {
+                    user: req.body,
+                    error: {
+                        password: 'invalid password'
+                    }
+                })
+            } else {
+                return user.checkPassword(password)
+                    .then(match => {
+                        if (!match) {
+                            res.render('user/login', {
+                                user: req.body,
+                                error: {
+                                    password: 'invalid password'
+                                }
+                            })
+                        } else {
+                            req.session.user = user
+                            req.session.genericSuccess = 'Welcome!'
+                            res.redirect('/games/list')
+                        }
+                    })
+            }
+        })
+        .catch(error => {
+            if (error instanceof mongoose.Error.ValidationError) {
+                res.render('user/login', {
+                    user: req.body,
+                    error: error.error
+                })
+            } else {
+                next(error)
+            }
+        });
 }
 
 module.exports.logout = (req, res, next) => {
