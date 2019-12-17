@@ -1,6 +1,7 @@
 const Chat = require('../models/chat-model')
 const Friend = require('../models/friend-model')
 const PrivateMessage = require('../models/private-message-model')
+const url = require('url')
 
 module.exports.sendMessage = (req, res) => {
   const message = req.body.message
@@ -66,6 +67,8 @@ module.exports.privateMessage = (req, res, next) => {
       .then(friend => {
         if (friend) {
           res.render('game/privateMessage', { users: friend })
+        } else {
+          res.redirect('back')
         }
       })
       .catch(error => console.log("Error in privateMessage => ", error))
@@ -86,8 +89,10 @@ module.exports.sendPrivateMessage = (req, res, next) => {
 
   newMessage.save()
     .then(message => {
-      //Falta el redirect a la página anterior
-      console.log('Message sent')
+
+       //Falta el redirect a la página anterior
+      // return window.history.back
+
     })
     .catch(error => console.log("Error sending message => ", error))
 

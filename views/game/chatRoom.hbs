@@ -13,7 +13,7 @@
         <div class="user-actions">
           {{!-- <form action="/users/{{user.id}}/friendInvitation" method="POST"> --}}
           <button id="{{user.id}}" onclick="friendInvitation('{{user.id}}')" type="submit"
-           class="button-friend-pending hp-5 fa fa-user-plus"></button>
+            class="button-friend-pending hp-5 fa fa-user-plus"></button>
           {{!-- </form> --}}
 
           <form action="#" method="POST">
@@ -64,7 +64,7 @@
         let friend = document.getElementById(id)
         friend.classList.remove('button-friend-pending')
         friend.classList.add('button-friend-accepted')
-        // console.log('Friend invitation sent')
+        console.log('Friend invitation sent')
       })
       .catch(error => console.log(error))
   }

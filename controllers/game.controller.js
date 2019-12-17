@@ -5,7 +5,7 @@ const ChatRoom = require('../models/chatRoom-model')
 const Like = require('../models/like-model')
 const Chat = require('../models/chat-model')
 const functions = require('../config/functions.api')
-
+const url = require('url')
 
 // FORMULARIO GAME
 module.exports.newGame = (_, res, next) => {
@@ -69,7 +69,7 @@ module.exports.doEdit = (req, res, next) => {
 module.exports.join = (req, res, next) => {
 
   const gameName = req.params.gameName
-
+ 
   ChatRoom.findOne({ game: gameName })
     .populate('users')
     .then(chatRoom => {
@@ -89,6 +89,8 @@ module.exports.join = (req, res, next) => {
 
       Chat.find({ room: chatRoom.id, user: req.currentUser._id })
         .populate('user')
+        // .sort()
+        .limit(20)
         .then(chats => {
 
           const usersInChatRoom = chatRoom.users.map(user => user._id)
@@ -99,7 +101,7 @@ module.exports.join = (req, res, next) => {
             ChatRoom.findByIdAndUpdate(chatRoom.id, { users: chatRoom.users }, { new: true })
               .populate('users')
               .then(chatRoom => {
-                getGameDetails(gameName, 0, 1)
+                functions.getGameList(gameName, 0, 1)
                   .then(game => {
                     res.render('game/chatRoom', {
                       chatRoom: chatRoom,
@@ -111,7 +113,7 @@ module.exports.join = (req, res, next) => {
               })
 
           } else {
-            getGameDetails(gameName, 0, 1)
+            functions.getGameList(gameName, 0, 1)
               .then(game => {
                 res.render('game/chatRoom', {
                   chatRoom: chatRoom,
@@ -151,15 +153,15 @@ module.exports.like = (req, res, next) => {
 module.exports.gameDetail = (req, res, _) => {
   const gameId = req.params.gameId
   functions.getTotalDetail(gameId)
-  .then(company => {
-    functions.getGameDetails(gameId, company)
-    .then(data => {
-      console.log(data)
-      console.log(data.company)
-      res.render('game/gameDetail', {game: data[0]})
+    .then(company => {
+      functions.getGameDetails(gameId, company)
+        .then(data => {
+          console.log(data)
+          console.log(data.company)
+          res.render('game/gameDetail', { game: data[0] })
+        })
     })
-  })
-  .catch(error => console.log("Error in getting details of game => ", error))
+    .catch(error => console.log("Error in getting details of game => ", error))
 }
 
 module.exports.genderList = (req, res, next) => {
@@ -178,18 +180,18 @@ module.exports.gameList = (req, res, next) => {
 
 module.exports.genderList = (req, res, next) => {
   const search = req.body.searchData
-  const {init, items} = req.body
+  const { init, items } = req.body
   console.log(req.body, 'req.body')
 
-  functions.getGameList(search,0 ,items)
+  functions.getGameList(search, 0, items)
     .then(data => {
       console.log(data.company)
-      res.render('game/detailGames', {games: data, items, search})
+      res.render('game/detailGames', { games: data, items, search })
     })
 }
 
 module.exports.gameList = (req, res, next) => {
 
-  
+
   res.render('game/detailGames')
 }
