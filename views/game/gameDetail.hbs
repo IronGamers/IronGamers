@@ -64,11 +64,10 @@
         <p>{{game.summary}}</p>
       </div>
     </div>
-
-
   </div>
-
-  <div class="carousel slide" data-ride="carousel">
+  <div class="carousel-items mt-4">
+    <h3>Screenshots of {{game.name}}</h3>
+    <div class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active" data-interval="10000">
         <div class="display-carusel" style="background: url({{game.screenshot_primay}})"></div>
@@ -79,7 +78,9 @@
       </div>
       {{/each}}
     </div>
+  </div>  
   </div>
+  
 
 
 

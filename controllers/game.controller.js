@@ -144,7 +144,7 @@ module.exports.genderList = (req, res, next) => {
 
   functions.getGameList(search,0 ,items)
     .then(data => {
-      console.log(data)
+      console.log(data.company)
       res.render('game/detailGames', {games: data, items, search})
     })
 }

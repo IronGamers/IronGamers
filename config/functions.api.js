@@ -281,7 +281,7 @@ function getGameDetails(gameId, companyDetail) {
 
               const companies = () => {
                   if(companyDetail){
-                      return companyDetail.slice(0,1)
+                      return companyDetail[0]
                   }
               }
       
