@@ -1,3 +1,5 @@
+{{!-- HAY QUE HAER LO DE LOS FRIENDS + MENSAJES PRIVADOS + USERINFO --}}
+
 <div class="chat-room">
 
   {{!-- USERS--}}
@@ -5,13 +7,24 @@
     <p class="users-title">Users in the room ({{usersCount}})</p>
     <div class="users-box hp-5">
       {{#each chatRoom.users as |user|}}
-      <div class="vm-10 user-detail">
-        <p class="hp-5 font-weight-bold">{{user}}</p>
-        <div>
-          <a href="#" class="hp-5 fa fa-user-plus"></a>
-          <a href="#" class="hp-5 fa fa-info-circle"></a>
-          <a href="#" class="hp-5 fa fa-envelope"></a>
+      <div class="vm-10 chat-user-detail">
+        <p class="hp-5 font-weight-bold">{{user.name}}</p>
+
+        <div class="user-actions">
+          {{!-- <form action="/users/{{user.id}}/friendInvitation" method="POST"> --}}
+          <button id="{{user.id}}" onclick="friendInvitation('{{user.id}}')" type="submit"
+            class="button-friend-pending hp-5 fa fa-user-plus"></button>
+          {{!-- </form> --}}
+
+          <form action="#" method="POST">
+            <button type="submit" class="button-friend-pending hp-5 fa fa-info-circle"></button>
+          </form>
+
+          <form action="/users/{{user.id}}/privateMessage" method="GET">
+            <button type="submit" class="button-friend-pending hp-5 fa fa-envelope"></button>
+          </form>
         </div>
+
       </div>
       {{/each}}
     </div>
@@ -22,19 +35,20 @@
   {{!-- CHAT --}}
   <div class="game-chat">
     <div class="game-title hp-10">
-      <img class="hp-10" src="{{chatRoom.game.image}}">
-      <h1 class="hp-10"> {{chatRoom.game.name}}</h1>
+      <img class="hp-10" src="{{game.cover}}">
+      <h1 class="hp-10"> {{game.name}}</h1>
     </div>
     <div class="chat-box">
       {{#each chats as |chat|}}
-      <p><span class="font-italic">({{date chat.createdAt}}) <span class="font-weight-bold">{{chat.user.nickName}}: </span></span>
+      <p><span class="font-italic font-weight-bold">({{date chat.createdAt}}) <a href="#"
+            class="font-weight-bold">{{chat.user.nickName}}: </a></span>
         <span class="users-message">{{chat.userMsg}}</span></p>
       {{/each}}
     </div>
 
     {{!-- SEND MESSAGE TO CHAT --}}
     <div class="chat-message">
-      <form class="w-100" action="/games/{{chatRoom.id}}/{{chatRoom.game._id}}/newMessage" method="POST" autocomplete="off">
+      <form class="w-100" action="/games/{{chatRoom.id}}/{{game.name}}/newMessage" method="POST" autocomplete="off">
         <input class="message" type="text" name="message" placeholder="Enter message...">
         <button class="btn-send" type="submit">Send</button>
       </form>
@@ -42,3 +56,16 @@
   </div>
 
 </div>
+
+<script>
+  function friendInvitation(id) {
+    axios.post(`/users/${id}/friendInvitation`)
+      .then(response => {
+        let friend = document.getElementById(id)
+        friend.classList.remove('button-friend-pending')
+        friend.classList.add('button-friend-accepted')
+        console.log('Friend invitation sent')
+      })
+      .catch(error => console.log(error))
+  }
+</script>

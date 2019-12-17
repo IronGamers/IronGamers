@@ -1,0 +1,10 @@
+<div class="inbox-container">
+  {{#each messages as |message|}}
+  <div class="inbox-email">
+    <form class="inbox-email-form m-10">
+      <button type="submit" class="hp-10 fa fa-eye"></button>
+      <h1 class="hp-10">{{message.myUser.nickName}} => {{message.subject}}</h1>
+    </form>
+  </div>
+  {{/each}}
+</div>

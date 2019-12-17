@@ -25,7 +25,8 @@
             <svg>
               <circle cx="32.5" cy="32.5" r="32.5">
               </circle>
-              <circle cx="32.5" cy="32.5" r="32.5" style="stroke-dashoffset: calc(205 - ((205*{{game.total_rating}}/100)" class="
+              <circle cx="32.5" cy="32.5" r="32.5"
+                style="stroke-dashoffset: calc(205 - ((205*{{game.total_rating}}/100)" class="
                 {{#greaterThan  game.total_rating 85}}
                   circle-green
                 {{else}}
@@ -97,28 +98,32 @@
   <div class="carousels-container">
     {{#if game.screenshots}}
     <div class="carousel-items mt-4">
-    <h3>Screenshots of {{game.name}}</h3>
-    <div class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active" data-interval="10000">
-          <div class="display-carusel" style="background: url({{game.screenshot_primay}})"></div>
+      <h3>Screenshots of {{game.name}}</h3>
+      <div class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-interval="10000">
+            <div class="display-carusel" style="background: url({{game.screenshot_primay}})"></div>
+          </div>
+          {{#each game.screenshots as |screenshot|}}
+          <div class="carousel-item" data-interval="10000">
+            <div class="display-carusel" style="background: url({{screenshot}})"></div>
+          </div>
+          {{/each}}
         </div>
-        {{#each game.screenshots as |screenshot|}}
-        <div class="carousel-item" data-interval="10000">
-          <div class="display-carusel" style="background: url({{screenshot}})"></div>
-        </div>
-        {{/each}}
       </div>
     </div>
-  </div>
-  {{/if}}
-  {{#if game.videos}}
+    {{/if}}
+    {{#if game.videos}}
     <h1>VIDEOS</h1>
-  {{#each game.videos as |video|}}
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video}}" frameborder="0"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  {{/each}}
-  {{/if}}
+    {{#each game.videos as |video|}}
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video}}" frameborder="0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    {{/each}}
+
+    {{#if game.name}}
+    <a href="/games/{{game.name}}/chat">Join room</a>
+    {{/if}}
+    {{/if}}
   </div>
   {{/or}}
 </div>
