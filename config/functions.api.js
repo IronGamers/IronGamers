@@ -284,6 +284,7 @@ function getGameDetails(gameId, companyDetail) {
                       return companyDetail[0]
                   }
               }
+
       
               const gameInfo = {
                 id: data.id,
@@ -293,14 +294,14 @@ function getGameDetails(gameId, companyDetail) {
                 genres: genres(),
                 platforms_name: platformNames(),
                 platforms_logo: platformLogo(),
-                screenshot_primay: screenshots().slice(0,1),
-                screenshots: screenshots().slice(1,20),
+                screenshot_primay: (screenshots()) ? screenshots().slice(0,1): undefined,
+                screenshots: (screenshots()) ? screenshots().slice(1,20): undefined,
                 summary: data.summary,
                 total_rating: Math.round(data.total_rating),
                 total_rating_count: data.total_rating_count,
                 videos: videos(),
                 modes: modes(),
-                background: screenshots().slice(0,1),
+                background: (screenshots()) ? screenshots().slice(0,1): undefined,
                 company: companies()
               }
 
