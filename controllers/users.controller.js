@@ -86,7 +86,7 @@ module.exports.doLogin = (req, res, next) => {
                         } else {
                             req.session.user = user
                             req.session.genericSuccess = 'Welcome!'
-                            res.redirect('/')
+                            res.redirect('/games/list')
                         }
                     })
             }

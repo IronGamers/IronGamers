@@ -39,7 +39,7 @@ router.get('/games/:gameID/edit', authMiddelware.isAuthenticated, gameController
 router.post('/games/:gameID/edit', authMiddelware.isAuthenticated, gameController.doEdit)
 router.get('/games/:gameID', authMiddelware.isAuthenticated, gameController.join)
 router.post('/games/:gameID/like', authMiddelware.isAuthenticated, gameController.like)
-router.get('/games/:gameName/detail', authMiddelware.isAuthenticated, gameController.gameDetail)
+router.get('/games/:gameId/detail', authMiddelware.isAuthenticated, gameController.gameDetail)
 
 // CHAT ROUTES
 router.post('/games/:chatRoomID/:gameID/newMessage', authMiddelware.isAuthenticated, chatRoomController.sendMessage)
