@@ -2,8 +2,12 @@
     {{>aside}}
     <div class="user-body">
         {{#each user.chats as |chat|}}
-            <p>{{chat.game}}</p>
-            <p>{{chat.users.length}}</p>
+        <a href="/games/{{chat.game}}/chat">
+            <div class="container-chats">
+                <p>{{chat.game}}</p>
+                <p>{{chat.users.length}}</p>
+            </div>
+        </a>
         {{/each}}
     </div>
 </div>
