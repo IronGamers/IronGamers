@@ -22,7 +22,8 @@ router.get('/admin/users', authMiddelware.isAuthenticated, usersController.userL
 router.post('/admin/delete', authMiddelware.isAuthenticated, usersController.delete)
 router.get('/user/:nickName', authMiddelware.isAuthenticated, usersController.detailUser)
 router.post('/user/:id/rol', authMiddelware.isAuthenticated, usersController.changeRol)
-
+router.get('/user/:nickName/edit', authMiddelware.isAuthenticated, usersController.editUser)
+router.get('/user/:nickName/chats', authMiddelware.isAuthenticated, usersController.chatsRooms)
 
 // GENDER ROUTES
 router.get('/genders', authMiddelware.isAuthenticated, genderController.listGenders)

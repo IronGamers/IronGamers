@@ -1,18 +1,19 @@
-<div class="game-detail pt-4 ">
-  <div class="container-card-resume mb-5">
-    <div class="left" style="background: url({{game.cover}})">
-    </div>
-    <div class="right">
-      <div class="principal-details mt-2">
-        <h4>{{game.name}}</h4>
-        <div class="launched-stars">
-          <p class="lauched"><span>Release day:</span> {{game.first_release_date}} </p>
-          <div class="rank">
-            <svg>
-              <circle cx="32.5" cy="32.5" r="32.5">
-              </circle>
-              <circle cx="32.5" cy="32.5" r="32.5"
-                style="stroke-dashoffset: calc(205 - ((205*{{game.total_rating}}/100)" class="
+<div class="container">
+  <div class="game-detail pt-4 ">
+    <div class="container-card-resume mb-5">
+      <div class="left" style="background: url({{game.cover}})">
+      </div>
+      <div class="right">
+        <div class="principal-details mt-2">
+          <h4>{{game.name}}</h4>
+          <div class="launched-stars">
+            <p class="lauched"><span>Release day:</span> {{game.first_release_date}} </p>
+            <div class="rank">
+              <svg>
+                <circle cx="32.5" cy="32.5" r="32.5">
+                </circle>
+                <circle cx="32.5" cy="32.5" r="32.5"
+                  style="stroke-dashoffset: calc(205 - ((205*{{game.total_rating}}/100)" class="
                 {{#greaterThan  game.total_rating 85}}
                   circle-green
                 {{else}}
@@ -22,95 +23,97 @@
                 {{/greaterThan}}
                 
                 "></circle>
-            </svg>
-            <p class="number  {{#greaterThan  game.total_rating 85}}
+              </svg>
+              <p class="number  {{#greaterThan  game.total_rating 85}}
                   circle-green
                 {{else}}
                   {{#greaterThan  game.total_rating 60}}
                   circle-yellow
                   {{/greaterThan}}
                 {{/greaterThan}}">{{game.total_rating}}</p>
+            </div>
+          </div>
+
+        </div>
+        <hr>
+        <div class="platform-company-detail">
+          <div class="card-platform">
+            <h5>Platforms availables</h5>
+            <div class="platforms">
+              {{#each game.platforms_logo as |platform_logo|}}
+              <div class="card-platform">
+                <img src={{platform_logo}} width="35">
+              </div>
+              {{/each}}
+            </div>
+          </div>
+          <div class="company">
+            <h5>Company</h5>
+            {{#if game.company}}
+            <a href="{{game.company.web}}" target="blank"><img src="{{game.company.logo}}" width="50" alt="company"></a>
+            <p>{{game.company.name}}</p>
+            {{else}}
+            <p>Company not found</p>
+            {{/if}}
           </div>
         </div>
-
+        <hr>
+        <div class="modes-genres">
+          <div class="modes">
+            <h5>Game modes</h5>
+            <ul>
+              {{#each game.modes as |mode|}}
+              <li>{{mode}}</li>
+              {{/each}}
+            </ul>
+          </div>
+          <div class="genres">
+            <h5>Genres</h5>
+            {{#each game.genres as |genre|}}
+            <p class="badge badge-pill blue-light">{{genre}}</p>
+            {{/each}}
+          </div>
+        </div>
+        <hr>
+        <div class="sumary mt-2">
+          <h5>Description</h5>
+          <p>{{game.summary}}</p>
+        </div>
       </div>
-      <hr>
-      <div class="platform-company-detail">
-        <div class="card-platform">
-          <h5>Platforms availables</h5>
-          <div class="platforms">
-            {{#each game.platforms_logo as |platform_logo|}}
-            <div class="card-platform">
-              <img src={{platform_logo}} width="35">
+    </div>
+    {{#or game.screenshots game.videos}}
+    <div class="carousels-container">
+      {{#if game.screenshots}}
+      <div class="carousel-items mt-4">
+        <h3>Screenshots of {{game.name}}</h3>
+        <div class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-interval="10000">
+              <div class="display-carusel" style="background: url({{game.screenshot_primay}})"></div>
+            </div>
+            {{#each game.screenshots as |screenshot|}}
+            <div class="carousel-item" data-interval="10000">
+              <div class="display-carusel" style="background: url({{screenshot}})"></div>
             </div>
             {{/each}}
           </div>
         </div>
-        <div class="company">
-          <h5>Company</h5>
-          {{#if game.company}}
-          <a href="{{game.company.web}}" target="blank"><img src="{{game.company.logo}}" width="50" alt="company"></a>
-          <p>{{game.company.name}}</p>
-          {{else}}
-          <p>Company not found</p>
-          {{/if}}
-        </div>
       </div>
-      <hr>
-      <div class="modes-genres">
-        <div class="modes">
-          <h5>Game modes</h5>
-          <ul>
-            {{#each game.modes as |mode|}}
-            <li>{{mode}}</li>
-            {{/each}}
-          </ul>
-        </div>
-        <div class="genres">
-          <h5>Genres</h5>
-          {{#each game.genres as |genre|}}
-          <p class="badge badge-pill blue-light">{{genre}}</p>
-          {{/each}}
-        </div>
-      </div>
-      <hr>
-      <div class="sumary mt-2">
-        <h5>Description</h5>
-        <p>{{game.summary}}</p>
-      </div>
-    </div>
-  </div>
-  {{#or game.screenshots game.videos}}
-  <div class="carousels-container">
-    {{#if game.screenshots}}
-    <div class="carousel-items mt-4">
-      <h3>Screenshots of {{game.name}}</h3>
-      <div class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active" data-interval="10000">
-            <div class="display-carusel" style="background: url({{game.screenshot_primay}})"></div>
-          </div>
-          {{#each game.screenshots as |screenshot|}}
-          <div class="carousel-item" data-interval="10000">
-            <div class="display-carusel" style="background: url({{screenshot}})"></div>
-          </div>
-          {{/each}}
-        </div>
-      </div>
-    </div>
-    {{/if}}
-    {{#if game.videos}}
-    <h1>VIDEOS</h1>
-    {{#each game.videos as |video|}}
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video}}" frameborder="0"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    {{/each}}
+      {{/if}}
+      {{#if game.videos}}
+      <h1>VIDEOS</h1>
+      {{#each game.videos as |video|}}
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video}}" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      {{/each}}
 
 
+      {{/if}}
+    </div>
+    {{/or}}
+    {{#if game.name}}
+    <a href="/games/{{game.name}}/chat">Join room</a>
     {{/if}}
   </div>
-  {{/or}}
-  {{#if game.name}}
-  <a href="/games/{{game.name}}/chat">Join room</a>
-  {{/if}}
+
 </div>

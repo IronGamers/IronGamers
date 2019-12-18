@@ -785,7 +785,7 @@ to {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin:12px 0 0 0;
+  margin:10px 0 0 0;
 }
 
 span{
@@ -794,7 +794,7 @@ span{
 }
 
 .platform-company-detail{
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
   justify-content: space-evenly;
   height: 80px;
@@ -841,7 +841,7 @@ hr{
 
 .sumary{
   height: 120px;
-  max-height: 120px;
+  max-height: 105px;
   margin-top: 10px;
   width: 80%;
   margin: auto;

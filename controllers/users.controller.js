@@ -1,4 +1,5 @@
 const User = require('../models/user.model')
+const Chat = require('../models/chatRoom-model')
 const mongoose = require('mongoose')
 const PrivateMessage = require('../models/private-message-model')
 
@@ -16,7 +17,31 @@ module.exports.detailUser = (req, res, next) =>{
 	.then(user => {
 		res.render('user/userDetail', {user})
 	})
-	
+	.catch(error => next(error))
+}
+
+module.exports.editUser = (req, res, next) => {
+	const nickName = req.params.nickName
+	User.findOne({nickName: nickName})
+	.then(user => {
+		res.render('user/editUser', {user, aside: 'edit'})
+	})
+	.catch(error => next(error))
+}
+
+module.exports.chatsRooms = (req, res, next) => {
+	const nickName = req.params.nickName
+	User.findOne({nickName: nickName})
+	.then(user => {
+		Chat.find({users: user.id})
+		.then(chats => {
+			console.log(chats)
+			user.chats = chats
+			res.render('user/chatsUsers', {user, aside: 'chats'})
+		})
+		.catch(error => next(error))
+	})
+	.catch(error => next(error))
 }
 
 module.exports.create = (req, res, next) => {

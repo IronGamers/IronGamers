@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
 const SALT_WORK_FACTOR = 10
+require('./chatRoom-model')
 
 // Patterns
 const EMAIL_PATTERN = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -87,6 +88,13 @@ userSchema.pre('save', function (next) {
         next();
     }
 });
+
+userSchema.virtual('chats', {
+    ref: 'ChatRoom',
+    localField: '_id',
+    foreignField: 'users',
+    justOne: false,
+  });
 
 
 userSchema.methods.checkPassword = function (password) {
