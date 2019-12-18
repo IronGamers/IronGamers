@@ -141,7 +141,7 @@ module.exports.changeRol = (req, res, next) => {
 module.exports.showInbox = (req, res, next) => {
 
 	const myID = req.currentUser._id
-	PrivateMessage.find({ destinationUser: "5df7b83e0e5c141e2cca12a6" })
+	PrivateMessage.find({ destinationUser: myID })
 		.populate('myUser')
 		.populate('destinationUser')
 		.then(messages => {

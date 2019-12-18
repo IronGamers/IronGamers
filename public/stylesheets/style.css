@@ -196,14 +196,6 @@ label {
   background-color: transparent;
 }
 
-.users-message {
-  background-color: rgba(230, 255, 255, 0.8);
-  color: black;
-  border-radius: 1rem;
-  padding: 1px 5px;
-  box-shadow: 0 0 5px #30A8F7;
-}
-
 .vertical-split {
   height: 100%;
   border: 2px solid #30A8F7;
@@ -236,12 +228,74 @@ label {
 .chat-box {
   width: 80%;
   height: 80%;
-  background-color: #4d0000;
+  background-color: white;
   border: 2px solid #30A8F7;
   border-radius: 1rem 0 0 1rem;
-  color: #30A8F7;
   overflow-y: auto;
   padding: 10px;
+}
+
+.chat-box-message {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  border: 2px solid #d9d9d9;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  height: 15%;
+  overflow-y: auto;
+}
+
+.my-chat-box-message {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  border: 2px solid #d9d9d9;
+  border-radius: 5px;
+  height: 15%;
+  overflow-y: auto;
+  transform: translateX(20%);
+  background-color: #ccffeb;
+}
+
+.chat-box-message-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #30A8F7;
+  padding: 0 5px;
+  height: 50%;
+}
+
+.chat-box-message-info-user {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 40%;
+}
+
+.chat-box-message-info-user img{
+  border-radius: 50%;
+  height: 80%;
+  width: auto;
+}
+
+.user-message {
+  height: 50%;
+  background-color: transparent;
+  color: black;
+  padding: 0 5px;
+  font-size: 0.7rem;
+  font-weight: normal;
+  padding: 5px;
+}
+
+.my-message {
+  background-color: #ccffeb;
+  color: black;
+  padding: 0 5px;
+  font-size: 0.7rem;
+  font-weight: normal;
 }
 
 .users-box {
@@ -286,11 +340,10 @@ label {
   justify-content: space-evenly;
   height: 15%;
   width: 70%;
-}
-
-.message-to h1 {
-  text-align: center;
-  width: 25%;
+  box-shadow: 0 0 10px #30A8F7;
+  border-radius: 10px;
+  background-image: linear-gradient(90deg, white, #30A8F7) ;
+  color: black;
 }
 
 .message-to-animation {
@@ -299,6 +352,25 @@ label {
   height: 100%;
   width: 50%;
   animation: message 8s linear infinite;
+
+}
+
+.message-user-info {
+  display: flex;
+  width: 25%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.message-user-info h1 {
+    font-size: 2em;
+}
+
+.message-user-info img{
+  height: 80%;
+  width: auto;
+  border-radius: 50%;
 }
 
 .message-to-animation img{
@@ -307,12 +379,12 @@ label {
 }
 
 @keyframes message {
-from {
-  transform: translateX(0%);
-}
-to {
-  transform: translateX(80%);
-}
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(80%);
+  }
 }
 
 .message-form {

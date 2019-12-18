@@ -94,21 +94,21 @@ module.exports.join = (req, res, next) => {
       Friend.find({ $or: [{ user1: myID }, { user2: myID }], state: 'pending' })
         .then(friendsPending => {
           const userFriendsPending = friendsPending.map(users => {
-            return users.user1 === myID ? users.user1 : users.user2
+            return users.user1.toString() === myID.toString() ? users.user2 : users.user1
           })
           Friend.find({ $or: [{ user1: myID }, { user2: myID }], state: 'accepted' })
             .then(friends => {
               const userFriends = friends.map(users => {
-                return users.user1 === myID ? users.user1 : users.user2
+                return users.user1.toString() === myID.toString() ? users.user2 : users.user1
               })
 
               // SE SACAN LOS CHATS
-              Chat.find({ room: chatRoom.id, user: req.currentUser._id })
+              Chat.find({ room: chatRoom.id })
                 .populate('user')
                 .sort({ createdAt: -1 })
                 .limit(15)
                 .then(chats => {
-                  
+
                   const usersInChatRoom = chatRoom.users.map(user => user._id)
 
                   // Se añade el usuario al array si no lo está ya
@@ -122,10 +122,11 @@ module.exports.join = (req, res, next) => {
                             res.render('game/chatRoom', {
                               chatRoom: chatRoom,
                               chats: chats.reverse(),
-                              usersCount: chatRoom.users.length,
+                              usersCount: chatRoom.users.length - 1,
                               game: game[0],
                               friendsPending: userFriendsPending,
-                              friends: userFriends
+                              friends: userFriends,
+                              myID: req.currentUser._id
                             })
                           })
                       })
@@ -136,10 +137,11 @@ module.exports.join = (req, res, next) => {
                         res.render('game/chatRoom', {
                           chatRoom: chatRoom,
                           chats: chats.reverse(),
-                          usersCount: chatRoom.users.length,
+                          usersCount: chatRoom.users.length - 1,
                           game: game[0],
                           friendsPending: userFriendsPending,
-                          friends: userFriends
+                          friends: userFriends,
+                          myID: req.currentUser._id
                         })
                       })
                   }

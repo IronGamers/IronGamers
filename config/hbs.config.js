@@ -40,3 +40,7 @@ hbs.registerHelper('isNotFriend', function (friends, user, options) {
   const bolleanFriend = friends.some(friend => friend.toString() === user.toString())
   return bolleanFriend ? new hbs.SafeString(options.inverse(this)) : new hbs.SafeString(options.fn(this))
 })
+
+hbs.registerHelper('itsNotMe', function (user, me, options) {
+  return user.toString() === me.toString() ? new hbs.SafeString(options.inverse(this)) : new hbs.SafeString(options.fn(this))
+})

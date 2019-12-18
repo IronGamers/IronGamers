@@ -45,7 +45,7 @@ module.exports.friendInvitation = (req, res) => {
               // Se hace por axios
               console.log('Invitation sent')
               res.json({})
-              
+
             })
         }
       })
@@ -66,7 +66,22 @@ module.exports.privateMessage = (req, res, next) => {
       .populate('user2')
       .then(friend => {
         if (friend) {
-          res.render('game/privateMessage', { users: friend, gameName: gameName })
+          // HAY QUE VER CUÁL ES CUÁL
+          console.log(myUser)
+          console.log(friend)
+          if (friend.user1.id.toString() === myUser.toString()) {
+            res.render('game/privateMessage', {
+              myUser: friend.user1,
+              destinationUser: friend.user2,
+              gameName: gameName
+            })
+          } else {
+            res.render('game/privateMessage', {
+              myUser: friend.user2,
+              destinationUser: friend.user1,
+              gameName: gameName
+            })
+          }
         }
         // else {
         //   res.redirect('back')
