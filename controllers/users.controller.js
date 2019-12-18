@@ -1,6 +1,7 @@
 const User = require('../models/user.model')
 const ChatGames = require('../models/chatRoom-model')
 const Chat = require('../models/chat-model')
+const Friend = require('../models/friend-model')
 const mongoose = require('mongoose')
 const PrivateMessage = require('../models/private-message-model')
 
@@ -36,7 +37,7 @@ module.exports.chatsRooms = (req, res, next) => {
 	.then(user => {
 		ChatGames.find({users: user.id})
 		.then(chats => {
-			user.chats = chats
+			user.chatrooms = chats
 			res.render('user/chatsUsers', {user, aside: 'chats'})
 		})
 		.catch(error => next(error))
@@ -52,6 +53,20 @@ module.exports.messages = (req, res, next) => {
 		.then(chats => {
 			user.chats = chats
 			res.render('user/userMessage', {user, aside: 'messages'})
+		})
+		.catch(error => next(error))
+	})
+	.catch(error => next(error))
+}
+
+module.exports.friends = (req, res, next) => {
+	const nickName = req.params.nickName
+	User.findOne({nickName: nickName})
+	.then(user => {
+		Friend.find({ $or : [ { user1: user._id }, { user2: user._id } ] })
+		.then(friend => {
+			user.friends = friend
+			res.render('user/userFriends', {user, aside: 'friends'})
 		})
 		.catch(error => next(error))
 	})

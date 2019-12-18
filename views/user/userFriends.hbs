@@ -1,0 +1,21 @@
+<div class="container-fluid user-resume">
+    {{>aside}}
+    <div class="user-body">
+        {{#each user.friends as |friend|}}
+            <div class="container-chats">
+                {{#equals friend.user1 ../user.id}}
+                <p>{{friend.user2}}</p>
+                {{/equals}}
+                {{#equals friend.user2 ../user.id}}
+                <p>{{friend.user1}}</p>
+                {{/equals}}
+                <p>{{friend.state}}</p>
+                <p>{{friend.createdAt}}</p>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+
+{{!-- falta popular para tener los datos de los amigos en la vista reusmen --}}
+   

@@ -1,26 +1,13 @@
 <div class="container-fluid user-resume">
- {{>aside}}
-<div class="user-body">
-   <div class="container">
-    <div class="avatar">
-        <img src="{{user.avatar}}" alt="img">
-        <a class="btn btn-warning" href="">Change Image</a>
+    {{>aside}}
+    <div class="user-body">
+        {{#each user.chats as |chat|}}
+        <a href="/games/{{chat.game}}/chat">
+            <div class="container-chats">
+                <p>{{chat.game}}</p>
+                <p>{{chat.users.length}}</p>
+            </div>
+        </a>
+        {{/each}}
     </div>
-    <div class="user-info">
-        <div class="item">
-            messages
-            <p>Name: {{user.name}}</p>
-            <p>Lastname: {{user.lastName}}</p>
-            <p>Nickname: {{user.nickName}}</p>
-            <p>createdAt: {{user.createdAt}}</p>
-            {{#equals user.rol 'Admin'}}
-            <p>Rol: {{user.rol}}</p>
-            <p>Banned: {{user.banned}}</p>
-            {{/equals}}
-        </div>
-    </div>
-</div>
-</div>
-   
-</div>
 </div>

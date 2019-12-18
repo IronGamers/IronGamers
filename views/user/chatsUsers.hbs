@@ -1,7 +1,7 @@
 <div class="container-fluid user-resume">
     {{>aside}}
     <div class="user-body">
-        {{#each user.chats as |chat|}}
+        {{#each user.chatrooms as |chat|}}
         <a href="/games/{{chat.game}}/chat">
             <div class="container-chats">
                 <p>{{chat.game}}</p>

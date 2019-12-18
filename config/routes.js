@@ -25,6 +25,7 @@ router.post('/user/:id/rol', authMiddelware.isAuthenticated, usersController.cha
 router.get('/user/:nickName/edit', authMiddelware.isAuthenticated, usersController.editUser)
 router.get('/user/:nickName/chats', authMiddelware.isAuthenticated, usersController.chatsRooms)
 router.get('/user/:nickName/messages', authMiddelware.isAuthenticated, usersController.messages)
+router.get('/user/:nickName/friends', authMiddelware.isAuthenticated, usersController.friends)
 router.post('/user/:nickName/edit', authMiddelware.isAuthenticated, usersController.doEdit)
 
 
