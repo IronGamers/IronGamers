@@ -23,10 +23,20 @@ hbs.registerHelper('includes', function (arg1, arg2, options) {
   return arg2.includes(arg1) ? options.fn(this) : options.inverse(this);
 });
 
-hbs.registerHelper('greaterThan', function(arg1, arg2, options) {
+hbs.registerHelper('greaterThan', function (arg1, arg2, options) {
   return (arg1 > arg2) ? options.fn(this) : options.inverse(this)
 })
 
-hbs.registerHelper('or', function(arg1, arg2, options) {
+hbs.registerHelper('or', function (arg1, arg2, options) {
   return (arg1 || arg2) ? options.fn(this) : options.inverse(this)
-}) 
+})
+
+hbs.registerHelper('isFriend', function (friends, user, options) {
+  const bolleanFriend = friends.some(friend => friend.toString() === user.toString())
+  return bolleanFriend ? new hbs.SafeString(options.fn(this)) : new hbs.SafeString(options.inverse(this))
+})
+
+hbs.registerHelper('isNotFriend', function (friends, user, options) {
+  const bolleanFriend = friends.some(friend => friend.toString() === user.toString())
+  return bolleanFriend ? new hbs.SafeString(options.inverse(this)) : new hbs.SafeString(options.fn(this))
+})

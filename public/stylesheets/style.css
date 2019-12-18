@@ -184,13 +184,13 @@ label {
   justify-content: space-evenly;
 }
 
-.button-friend-pending {
+.button-friend {
   border: none;
   color: #30A8F7;
   background-color: transparent;
 }
 
-.button-friend-accepted {
+.button-friend-pending {
   border: none;
   color: green;
   background-color: transparent;

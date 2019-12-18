@@ -45,6 +45,7 @@ module.exports.friendInvitation = (req, res) => {
               // Se hace por axios
               console.log('Invitation sent')
               res.json({})
+              
             })
         }
       })
@@ -57,19 +58,19 @@ module.exports.privateMessage = (req, res, next) => {
   // SOLO SE PUEDEN ENVIAR MENSAJES SI SON AMIGOS
   const myUser = req.currentUser._id
   const destinationUser = req.params.userID
-
+  const gameName = req.params.gameName
   // Que no sean el mismo usuario
   if (myUser !== destinationUser) {
-    // Habría que cambiar el state a "accepted"
-    Friend.findOne({ user1: myUser, user2: destinationUser, state: "pending" })
+    Friend.findOne({ $or: [{ user1: myUser, user2: destinationUser }, { user1: destinationUser, user2: myUser }], state: "accepted" })
       .populate('user1')
       .populate('user2')
       .then(friend => {
         if (friend) {
-          res.render('game/privateMessage', { users: friend })
-        } else {
-          res.redirect('back')
+          res.render('game/privateMessage', { users: friend, gameName: gameName })
         }
+        // else {
+        //   res.redirect('back')
+        // }
       })
       .catch(error => console.log("Error in privateMessage => ", error))
   }
@@ -78,6 +79,7 @@ module.exports.privateMessage = (req, res, next) => {
 module.exports.sendPrivateMessage = (req, res, next) => {
   const myUser = req.currentUser._id
   const destinationUser = req.params.userID
+  const gameName = req.params.gameName
 
   const newMessage = new PrivateMessage({
     myUser: myUser,
@@ -89,13 +91,9 @@ module.exports.sendPrivateMessage = (req, res, next) => {
 
   newMessage.save()
     .then(message => {
-
-       //Falta el redirect a la página anterior
-      // return window.history.back
-
+      res.redirect(`/games/${gameName}/chat`)
     })
     .catch(error => console.log("Error sending message => ", error))
-
 }
 
 /*

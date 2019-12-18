@@ -47,8 +47,8 @@ router.post('/users/:userID/inbox', authMiddelware.isAuthenticated, usersControl
 
 // CHATROOM ROUTES
 router.post('/users/:userID/friendInvitation', authMiddelware.isAuthenticated, chatRoomController.friendInvitation)
-router.get('/users/:userID/privateMessage', authMiddelware.isAuthenticated, chatRoomController.privateMessage)
-router.post('/users/:userID/privateMessage', authMiddelware.isAuthenticated, chatRoomController.sendPrivateMessage)
+router.get('/users/:userID/:gameName/privateMessage', authMiddelware.isAuthenticated, chatRoomController.privateMessage)
+router.post('/users/:userID/:gameName/privateMessage', authMiddelware.isAuthenticated, chatRoomController.sendPrivateMessage)
 router.post('/games/:chatRoomID/:gameName/newMessage', authMiddelware.isAuthenticated, chatRoomController.sendMessage)
 
 
