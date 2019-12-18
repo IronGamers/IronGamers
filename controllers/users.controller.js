@@ -10,6 +10,10 @@ module.exports.new = (_, res) => {
 	res.render('user/new')
 }
 
+module.exports.detailUser = (req, res, next) =>{
+	res.render('user/userDetail')
+}
+
 module.exports.create = (req, res, next) => {
 	const user = new User({
 		name: req.body.name,
@@ -87,7 +91,7 @@ module.exports.doLogin = (req, res, next) => {
                         } else {
                             req.session.user = user
                             req.session.genericSuccess = 'Welcome!'
-                            res.redirect('/games/list')
+                            res.redirect(`/user/${user._id}`)
                         }
                     })
             }

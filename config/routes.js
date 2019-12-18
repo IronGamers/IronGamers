@@ -20,7 +20,9 @@ router.post('/user/new', authMiddelware.isNotAuthenticated, usersController.crea
 router.post('/user/logout', authMiddelware.isAuthenticated, usersController.logout)
 router.get('/admin/users', authMiddelware.isAuthenticated, usersController.userList)
 router.post('/admin/delete', authMiddelware.isAuthenticated, usersController.delete)
+router.get('/user/:nickName', authMiddelware.isAuthenticated, usersController.detailUser)
 router.post('/user/:id/rol', authMiddelware.isAuthenticated, usersController.changeRol)
+
 
 // GENDER ROUTES
 router.get('/genders', authMiddelware.isAuthenticated, genderController.listGenders)

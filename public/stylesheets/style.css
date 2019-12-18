@@ -912,3 +912,51 @@ svg circle:nth-child(2){
   background-color: #4e4d5059;
 }
 
+
+/* user details */
+
+.aside{
+  width: 250px;
+  min-height: 100vh;
+  background-color: #807f84a2;
+}
+
+.resume-user{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100px;
+  border-bottom: 1px solid #1e1b26;
+}
+.img-user{
+  width: 30%;
+}
+
+.img-user>img{
+  width: 100%;
+  border-radius: 50%;
+}
+
+.user-detail{
+  background-color: transparent;
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.item-aside{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 5px 0;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.item-aside p{
+  font-size: 1.2rem;
+  margin:0;
+  padding-top: 5px;
+}
