@@ -915,10 +915,21 @@ svg circle:nth-child(2){
 
 /* user details */
 
+.user-resume{
+  display: flex;
+  justify-content: start;
+}
+
 .aside{
   width: 250px;
   min-height: 100vh;
+  margin-left: -15px;
   background-color: #807f84a2;
+}
+
+.user-body{
+  width: 100%;
+  min-height: 100vh;
 }
 
 .resume-user{

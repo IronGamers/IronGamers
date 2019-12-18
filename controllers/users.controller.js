@@ -11,7 +11,12 @@ module.exports.new = (_, res) => {
 }
 
 module.exports.detailUser = (req, res, next) =>{
-	res.render('user/userDetail')
+	const nickName = req.params.nickName
+	User.findOne({nickName: nickName})
+	.then(user => {
+		res.render('user/userDetail', {user})
+	})
+	
 }
 
 module.exports.create = (req, res, next) => {

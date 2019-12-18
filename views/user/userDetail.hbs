@@ -1,24 +1,27 @@
-
-<div class="aside">
-    <div class="resume-user pt-3 pb-3">
-        <div class="img-user">
-            <img src="{{currentUser.avatar}}" alt="img">
-        </div>
-        <div class="user-detail mt-2">
-            <h6>{{currentUser.name}} {{currentUser.lastName}}</h6>
-            <p><span>@{{currentUser.nickName}}</span></p>
-        </div>
-    </div>
-    <div class="chatrooms item-aside">
-        <i class="fa fa-comments fa-2x" aria-hidden="true"></i>
-        <p>Chat Rooms</p>
-    </div>
-    <div class="messages item-aside">
-        <i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
-        <p>Messages</p>
-    </div>
-</div>
+<div class="container-fluid user-resume">
+ {{>aside}}
 <div class="user-body">
-    {{>detailUser}}
+   <div class="container">
+    <div class="avatar">
+        <img src="{{user.avatar}}" alt="img">
+        <a class="btn btn-warning" href="">Change Image</a>
+    </div>
+    <div class="user-info">
+        <div class="item">
+            <p>Name: {{user.name}}</p>
+            <p>Lastname: {{user.lastName}}</p>
+            <p>Nickname: {{user.nickName}}</p>
+            <p>createdAt: {{user.createdAt}}</p>
+            {{#equals user.rol 'Admin'}}
+            <p>Rol: {{user.rol}}</p>
+            <p>Banned: {{user.banned}}</p>
+            {{/equals}}
+        </div>
+    </div>
 </div>
+</div>
+   
+</div>
+</div>
+
 
