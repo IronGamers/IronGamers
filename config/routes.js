@@ -24,6 +24,9 @@ router.get('/user/:nickName', authMiddelware.isAuthenticated, usersController.de
 router.post('/user/:id/rol', authMiddelware.isAuthenticated, usersController.changeRol)
 router.get('/user/:nickName/edit', authMiddelware.isAuthenticated, usersController.editUser)
 router.get('/user/:nickName/chats', authMiddelware.isAuthenticated, usersController.chatsRooms)
+router.get('/user/:nickName/messages', authMiddelware.isAuthenticated, usersController.messages)
+router.post('/user/:nickName/edit', authMiddelware.isAuthenticated, usersController.doEdit)
+
 
 // GENDER ROUTES
 router.get('/genders', authMiddelware.isAuthenticated, genderController.listGenders)

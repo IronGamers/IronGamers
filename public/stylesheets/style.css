@@ -924,7 +924,7 @@ svg circle:nth-child(2){
   width: 250px;
   min-height: 100vh;
   margin-left: -15px;
-  background-color: #807f84a2;
+  background-color: #807f843f;
 }
 
 .user-body{
@@ -968,6 +968,23 @@ svg circle:nth-child(2){
 
 .item-aside p{
   font-size: 1.2rem;
+  width: 110px;
   margin:0;
   padding-top: 5px;
+}
+
+
+.avatar2 {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: absolute;
+  top: -100px;
+  left: calc(50% - 400px);
+}
+
+.create-box h1{
+  font-size: 2rem;
+    margin-top: -30px;
+    margin-bottom: 30px;
 }

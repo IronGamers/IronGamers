@@ -1,4 +1,4 @@
 
 module.exports.home = (_, res) => {
-    res.render('default')
+    res.redirect(`/user/${currentUser.nickName}`)
 }

@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
-const Chat = require('../models/chatRoom-model')
+const ChatGames = require('../models/chatRoom-model')
+const Chat = require('../models/chat-model')
 const mongoose = require('mongoose')
 const PrivateMessage = require('../models/private-message-model')
 
@@ -33,11 +34,24 @@ module.exports.chatsRooms = (req, res, next) => {
 	const nickName = req.params.nickName
 	User.findOne({nickName: nickName})
 	.then(user => {
-		Chat.find({users: user.id})
+		ChatGames.find({users: user.id})
 		.then(chats => {
-			console.log(chats)
 			user.chats = chats
 			res.render('user/chatsUsers', {user, aside: 'chats'})
+		})
+		.catch(error => next(error))
+	})
+	.catch(error => next(error))
+}
+
+module.exports.messages = (req, res, next) => {
+	const nickName = req.params.nickName
+	User.findOne({nickName: nickName})
+	.then(user => {
+		Chat.find({users: user.id})
+		.then(chats => {
+			user.chats = chats
+			res.render('user/userMessage', {user, aside: 'messages'})
 		})
 		.catch(error => next(error))
 	})
@@ -121,7 +135,7 @@ module.exports.doLogin = (req, res, next) => {
                         } else {
                             req.session.user = user
                             req.session.genericSuccess = 'Welcome!'
-                            res.redirect(`/user/${user._id}`)
+                            res.redirect(`/user/${user.nickName}`)
                         }
                     })
             }
@@ -136,6 +150,22 @@ module.exports.doLogin = (req, res, next) => {
                 next(error)
             }
         });
+}
+
+module.exports.doEdit = (req, res, next) => {
+	const usertoEdit = new User({
+		name: req.body.name,
+		lastname: req.body.lastname,
+		nickName: req.body.nickname,
+		email: req.body.email,
+	})
+	
+	User.findOneAndUpdate({nickName: req.params.nickName}, {$set: {name: usertoEdit.name,lastname: usertoEdit.lastname, nickName: usertoEdit.nickName, email: usertoEdit.email}} ,{new: true})
+	.then(user => {
+		console.log(user)
+		res.render('user/userDetail', {user})
+	})
+	.catch(error => next(error))
 }
 
 module.exports.logout = (req, res, next) => {
