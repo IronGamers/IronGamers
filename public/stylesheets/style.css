@@ -404,6 +404,7 @@ label {
   width: 100%;
   border: 3px solid #30A8F7;
   padding: 0 10px;
+  border-radius: 5px;
 }
 
 .body-message {
@@ -412,6 +413,7 @@ label {
   resize: none;
   border: 3px solid #30A8F7;
   padding: 10px;
+  border-radius: 5px;
 }
 
 /* INBOX */

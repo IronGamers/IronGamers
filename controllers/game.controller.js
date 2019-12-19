@@ -70,22 +70,23 @@ module.exports.doEdit = (req, res, next) => {
 
 module.exports.join = (req, res, next) => {
 
-  const gameName = req.params.gameName
+  // const gameName = req.params.gameName
   const myID = req.currentUser._id
+  const gameID = req.params.gameID
 
-  ChatRoom.findOne({ game: gameName })
+  ChatRoom.findOne({ game: gameID })
     .populate('users')
     .then(chatRoom => {
 
       // Si no existe, se crea sala y se vuelve a cargar la página
       if (!chatRoom) {
         const newChatRoom = new ChatRoom({
-          game: gameName,
+          game: gameID,
           users: [req.currentUser._id]
         })
         newChatRoom.save()
           .then(chatRoom => {
-            res.redirect(`/games/${gameName}/chat`)
+            res.redirect(`/games/${gameID}/chat`)
           })
           .catch(error => console.log("Error joining room => ", error))
       }
@@ -117,7 +118,10 @@ module.exports.join = (req, res, next) => {
                     ChatRoom.findByIdAndUpdate(chatRoom.id, { users: chatRoom.users }, { new: true })
                       .populate('users')
                       .then(chatRoom => {
-                        functions.getGameList(gameName, 0, 1)
+
+                        // *** HAY QUE COGER EL GAME ID! ***
+
+                        functions.getGameDetails(gameID)
                           .then(game => {
                             res.render('game/chatRoom', {
                               chatRoom: chatRoom,
@@ -126,13 +130,14 @@ module.exports.join = (req, res, next) => {
                               game: game[0],
                               friendsPending: userFriendsPending,
                               friends: userFriends,
-                              myID: req.currentUser._id
+                              myID: req.currentUser._id,
+                              gameID: gameID
                             })
                           })
                       })
 
                   } else {
-                    functions.getGameList(gameName, 0, 1)
+                    functions.getGameDetails(gameID)
                       .then(game => {
                         res.render('game/chatRoom', {
                           chatRoom: chatRoom,
@@ -141,7 +146,8 @@ module.exports.join = (req, res, next) => {
                           game: game[0],
                           friendsPending: userFriendsPending,
                           friends: userFriends,
-                          myID: req.currentUser._id
+                          myID: req.currentUser._id,
+                          gameID: gameID
                         })
                       })
                   }
@@ -182,7 +188,7 @@ module.exports.gameDetail = (req, res, _) => {
         .then(data => {
           console.log(data)
           console.log(data.company)
-          res.render('game/gameDetail', { game: data[0] })
+          res.render('game/gameDetail', { game: data[0], gameID: gameId })
         })
     })
     .catch(error => console.log("Error in getting details of game => ", error))

@@ -158,12 +158,12 @@ module.exports.showOutbox = (req, res, next) => {
 		.populate('myUser')
 		.populate('destinationUser')
 		.then(messages => {
-			res.render('user/inbox', { messages: messages, myID: myID })
+			res.render('user/outbox', { messages: messages, myID: myID })
 		})
 		.catch(error => console.log("Error showing messages => ", error))
 }
 
-module.exports.showMessage = (req, res, next) => {
+module.exports.showMessageInbox = (req, res, next) => {
 
 	const messageID = req.params.messageID
 	const myID = req.currentUser._id
@@ -171,7 +171,20 @@ module.exports.showMessage = (req, res, next) => {
 		.populate('myUser')
 		.populate('destinationUser')
 		.then(message => {
-			res.render('user/message', { message: message, myID: myID })
+			res.render('user/message', { message: message, myID: myID, type:'inbox' })
+		})
+		.catch(error => console.log("Error showing messages => ", error))
+}
+
+module.exports.showMessageOutbox = (req, res, next) => {
+
+	const messageID = req.params.messageID
+	const myID = req.currentUser._id
+	PrivateMessage.findOne({_id: messageID})
+		.populate('myUser')
+		.populate('destinationUser')
+		.then(message => {
+			res.render('user/message', { message: message, myID: myID, type: 'outbox' })
 		})
 		.catch(error => console.log("Error showing messages => ", error))
 }

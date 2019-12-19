@@ -20,7 +20,7 @@
           </form>
 
           {{#isFriend ../friends user.id}}
-          <form action="/users/{{user.id}}/{{../game.name}}/privateMessage" method="GET">
+          <form action="/users/{{user.id}}/{{../gameID}}/privateMessage" method="GET">
             <button id="{{user.id}}" type="submit" class="button-friend hp-5 fa fa-envelope"></button>
           </form>
           {{/isFriend}}
@@ -57,7 +57,7 @@
 
     {{!-- SEND MESSAGE TO CHAT --}}
     <div class="chat-message">
-      <form class="w-100" action="/games/{{chatRoom.id}}/{{game.name}}/newMessage" method="POST" autocomplete="off">
+      <form class="w-100" action="/games/{{chatRoom.id}}/{{gameID}}/newMessage" method="POST" autocomplete="off">
         <input class="message" type="text" name="message" placeholder="Enter message...">
         <button class="btn-send" type="submit">Send</button>
       </form>

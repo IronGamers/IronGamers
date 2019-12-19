@@ -10,19 +10,27 @@
     <p class="answer-message-body">{{message.body}}</p>
   </div>
 
-{{!-- MYUSER / DESTINATIONUSER / SUBJECT / BODY / STATE PENDING --}}
 
   <div class="message-container">
     <div class="answer-message-user-info">
-      <img src="{{message.destinationUser.avatar}}" alt="Avatar">
-      <h1 class="answer-message-nick">{{message.destinationUser.nickName}}</h1>
+      <img src="{{#isInbox type}}{{message.destinationUser.avatar}}{{else}}{{message.myUser.avatar}}{{/isInbox}}"
+        alt="Avatar">
+      <h1 class="answer-message-nick">
+        {{#isInbox type}}{{message.destinationUser.nickName}}{{else}}{{message.myUser.nickName}}{{/isInbox}}</h1>
     </div>
 
-    <form action="/users/{{message.destinationUser._id}}/inbox/{{message.myUser._id}}/answer" method="POST" class="answer-message-form">
-      <input name="subject" class="answer-message-form-subject hp-5" type="text" value="RE: {{message.subject}}">
-      <textarea name="body" class="answer-message-form-body"></textarea>
-      <button type="submit" class="btn-send-answer btn btn-primary">Send answer</button>
-    </form>
+    {{#isInbox type}}
+    <form action="/users/{{message.destinationUser._id}}/inbox/{{message.myUser._id}}/answer" method="POST"
+      class="answer-message-form">
+      {{else}}
+      <form action="/users/{{message.myUser._id}}/inbox/{{message.destinationUser._id}}/answer" method="POST"
+        class="answer-message-form">
+        {{/isInbox}}
+
+        <input name="subject" class="answer-message-form-subject hp-5" type="text" value="RE: {{message.subject}}">
+        <textarea name="body" class="answer-message-form-body"></textarea>
+        <button type="submit" class="btn-send-answer btn btn-primary">Send answer</button>
+      </form>
   </div>
 
 </div>

@@ -48,3 +48,7 @@ hbs.registerHelper('itsNotMe', function (user, me, options) {
 hbs.registerHelper('messageRead', function (state, options) {
   return state === "read" ? new hbs.SafeString(options.fn(this)) : new hbs.SafeString(options.inverse(this))
 })
+
+hbs.registerHelper('isInbox', function (type, options) {
+  return type === "inbox" ? new hbs.SafeString(options.fn(this)) : new hbs.SafeString(options.inverse(this))
+})
