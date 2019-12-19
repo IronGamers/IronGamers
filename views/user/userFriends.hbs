@@ -1,0 +1,25 @@
+<div class="container-fluid user-resume">
+    {{>aside}}
+    <div class="user-body">
+        {{#each user.friends as |friend|}}
+            <div class="container-friends">
+                <img src="{{friend.avatar}}" alt="">
+                <p>{{friend.name}}</p>
+                <p>{{friend.lastName}}</p>
+                <p>{{friend.nickName}}</p>
+                <p>{{friend.state}}</p>
+                {{#equals friend.state 'pending'}}
+                {{#itsNotMe friend.principalUser ../currentUser._id}}
+                <a href="" class="btn btn-warning">acept</a>
+                <a href="" class="btn btn-warning">decline</a>
+                {{/itsNotMe}}
+                {{/equals}}
+                <p>{{friend.updatedAt}}</p>
+            </div>
+        {{/each}}
+    </div>
+</div>
+
+
+{{!-- falta popular para tener los datos de los amigos en la vista reusmen --}}
+   

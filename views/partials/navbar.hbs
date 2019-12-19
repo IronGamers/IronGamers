@@ -2,13 +2,10 @@
 
   <ul class="nav">
 
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="/user/{{currentUser.nickName}}">
       <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
       IronGames
     </a>
-    <li class="nav-item">
-      <a class="nav-link hover-blue-dark" href="/genders">Genders</a>
-    </li>
     <li class="nav-item">
       <a class="nav-link hover-blue-dark" href="/games/list">Games</a>
     </li>
@@ -17,17 +14,19 @@
       <a class="nav-link hover-blue-dark" href="/admin/users">Users</a>
     </li>
     {{/equals}}
+    <li>{{currentUser.id}}</li>
   </ul>
 
-  <form method="GET" action="/users/{{currentUser._id}}/inbox">
+  {{!-- <form method="GET" action="/users/{{currentUser._id}}/inbox">
     <button type="submit">Test messages</button>
   </form>
- 
+  --}}
 
   <div class="user-tips">
     {{#if currentUser}}
     
-    <img class="rounded-circle" width="35" height="35" src="{{currentUser.avatar}}" alt="avatar">
+    <a href="/user/{{currentUser.nickName}}"><img class="rounded-circle" width="35" height="35" src="{{currentUser.avatar}}" alt="avatar"></a>
+    <p>{{currentUser.nickName}}</p>
     <form action="/user/logout" method="post">
       <button type="submit" class="btn btn-danger btn-sm ml-4">Logout</button>
     </form>

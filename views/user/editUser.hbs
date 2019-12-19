@@ -1,0 +1,31 @@
+<div class="container-fluid user-resume">
+ {{>aside}}
+<div class="user-body">
+  <div class="create-box border-blue-light mt-20">
+      <img src="{{user.avatar}}" class="avatar2 border-blue-light" alt="Avatar Image">
+      <h1>Edit User</h1>
+      <form method="post" action="/user/{{currentUser.nickName}}/edit" autocomplete="off">
+        
+        <label for="username" >Name</label>
+        <input type="text" placeholder="{{user.name}}" name="name" class="input-style input-100" value="{{user.name}}">
+
+        <label for="username" >Last name</label>
+        <input type="text" placeholder="{{user.lastName}}" name="lastname" class="input-style input-100" value="{{user.lastName}}">
+
+        <label for="username" >Username</label>
+        <input type="text" placeholder="{{user.nickName}}" name="nickName" class="input-style input-100" autocomplete="false" value="{{user.nickName}}">
+
+        <label for="username" >Email</label>
+        <input type="text" placeholder="{{user.email}}" name="email" class="input-style input-100" value="{{user.email}}">
+        
+        <label for="password">Password</label>
+        <input type="password" placeholder="{{user.password}}" name="password" class="input-style input-100" value="{{user.password}}">
+
+        <button type="submit" class="login-submit blue-light hover-blue-dark">Edir User</button>
+      </form>
+    </div>
+</div>
+</div>
+   
+</div>
+</div>
