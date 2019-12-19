@@ -146,7 +146,7 @@ module.exports.showInbox = (req, res, next) => {
 		.populate('myUser')
 		.populate('destinationUser')
 		.then(messages => {
-			res.render('user/inbox', { messages: messages, myID: myID })
+			res.render('user/inbox', { messages: messages.reverse(), myID: myID })
 		})
 		.catch(error => console.log("Error showing messages => ", error))
 }
@@ -158,7 +158,7 @@ module.exports.showOutbox = (req, res, next) => {
 		.populate('myUser')
 		.populate('destinationUser')
 		.then(messages => {
-			res.render('user/outbox', { messages: messages, myID: myID })
+			res.render('user/outbox', { messages: messages.reverse(), myID: myID })
 		})
 		.catch(error => console.log("Error showing messages => ", error))
 }
