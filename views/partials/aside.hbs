@@ -1,0 +1,35 @@
+<div class="aside">
+    <div class="resume-user pt-3 pb-3">
+        <div class="img-user">
+            <img src="{{user.avatar}}" alt="img">
+        </div>
+        <div class="user-detail mt-2">
+            <h6>{{user.name}} {{user.lastName}}</h6>
+            <p><span>@{{user.nickName}}</span></p>
+        </div>
+    </div>
+    <a href="/user/{{user.nickName}}/edit">
+        <div class="edituser item-aside">
+            <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
+            <p>Edit User</p>
+        </div>
+    </a>
+    <a href="/user/{{user.nickName}}/friends">
+        <div class="chatrooms item-aside">
+            <i class="fa fa-users fa-2x" aria-hidden="true"></i>
+            <p>Friends</p>
+        </div>
+    </a>
+    <a href="/user/{{user.nickName}}/chats">
+        <div class="chatrooms item-aside">
+            <i class="fa fa-comments fa-2x" aria-hidden="true"></i>
+            <p>Chat Rooms</p>
+        </div>
+    </a>
+    <a href="/users/{{currentUser._id}}/inbox">
+        <div class="messages item-aside">
+            <i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
+            <p>Messages</p>
+        </div>
+    </a>
+</div>

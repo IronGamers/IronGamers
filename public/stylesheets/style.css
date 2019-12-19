@@ -624,6 +624,11 @@ label {
 .user-tips {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.user-tips  p{
+  margin:10px 0 10px 10px;
 }
 
 .blue-light {
@@ -1041,7 +1046,7 @@ label {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin:12px 0 0 0;
+  margin:10px 0 0 0;
 }
 
 span{
@@ -1050,7 +1055,7 @@ span{
 }
 
 .platform-company-detail{
-  margin-top: 10px;
+  margin-top: 8px;
   display: flex;
   justify-content: space-evenly;
   height: 80px;
@@ -1097,7 +1102,7 @@ hr{
 
 .sumary{
   height: 120px;
-  max-height: 120px;
+  max-height: 105px;
   margin-top: 10px;
   width: 80%;
   margin: auto;
@@ -1168,3 +1173,85 @@ svg circle:nth-child(2){
   background-color: #4e4d5059;
 }
 
+
+/* user details */
+
+.user-resume{
+  display: flex;
+  justify-content: start;
+}
+
+.aside{
+  width: 250px;
+  min-height: 100vh;
+  margin-left: -15px;
+  background-color: #807f843f;
+}
+
+.user-body{
+  width: 100%;
+  min-height: 100vh;
+}
+
+.resume-user{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100px;
+  border-bottom: 1px solid #1e1b26;
+}
+.img-user{
+  width: 30%;
+}
+
+.img-user>img{
+  width: 100%;
+  border-radius: 50%;
+}
+
+.user-detail{
+  background-color: transparent;
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.item-aside{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 5px 0;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.item-aside p{
+  font-size: 1.2rem;
+  width: 110px;
+  margin:0;
+  padding-top: 5px;
+}
+
+
+.avatar2 {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: absolute;
+  top: -100px;
+  left: calc(50% - 400px);
+}
+
+.create-box h1{
+  font-size: 2rem;
+    margin-top: -30px;
+    margin-bottom: 30px;
+}
+
+/* friends view  */
+
+.container-friends{
+  color: white;
+}
