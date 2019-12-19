@@ -368,6 +368,11 @@ to {
 .user-tips {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.user-tips  p{
+  margin:10px 0 10px 10px;
 }
 
 .blue-light {
@@ -987,4 +992,10 @@ svg circle:nth-child(2){
   font-size: 2rem;
     margin-top: -30px;
     margin-bottom: 30px;
+}
+
+/* friends view  */
+
+.container-friends{
+  color: white;
 }

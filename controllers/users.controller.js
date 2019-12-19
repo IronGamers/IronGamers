@@ -63,10 +63,30 @@ module.exports.friends = (req, res, next) => {
 	const nickName = req.params.nickName
 	User.findOne({nickName: nickName})
 	.then(user => {
+		user.friends = []
 		Friend.find({ $or : [ { user1: user._id }, { user2: user._id } ] })
 		.then(friend => {
-			user.friends = friend
-			res.render('user/userFriends', {user, aside: 'friends'})
+			const friends = friend.map(friendship => {
+					if(user.id === friendship.user1){
+						console.log('entra en 1')
+					return	User.findById(friendship.user2)
+						.then(detail => {
+							detail.state = friendship.state
+							user.friends.push(detail)
+							return detail
+						})
+					}else{
+						console.log('entra en 2')
+						return	User.findById(friendship.user1)
+						.then(detail => {
+							detail.state = friendship.state
+							user.friends.push(detail)
+							return detail
+						})
+					}
+				})
+				console.log(user.friends)
+				res.render('user/userFriends', {user, aside: 'friends'})
 		})
 		.catch(error => next(error))
 	})

@@ -26,6 +26,7 @@
     {{#if currentUser}}
     
     <a href="/user/{{currentUser.nickName}}"><img class="rounded-circle" width="35" height="35" src="{{currentUser.avatar}}" alt="avatar"></a>
+    <p>{{currentUser.nickName}}</p>
     <form action="/user/logout" method="post">
       <button type="submit" class="btn btn-danger btn-sm ml-4">Logout</button>
     </form>

@@ -2,15 +2,16 @@
     {{>aside}}
     <div class="user-body">
         {{#each user.friends as |friend|}}
-            <div class="container-chats">
-                {{#equals friend.user1 ../user.id}}
-                <p>{{friend.user2}}</p>
-                {{/equals}}
-                {{#equals friend.user2 ../user.id}}
-                <p>{{friend.user1}}</p>
-                {{/equals}}
+            <div class="container-friends">
+                <img src="{{friend.avatar}}" alt="">
+                <p>{{friend.name}}</p>
+                <p>{{friend.lastName}}</p>
+                <p>{{friend.nickName}}</p>
                 <p>{{friend.state}}</p>
-                <p>{{friend.createdAt}}</p>
+                {{#equals friend.state 'pending'}}
+                <a href="" class="btn btn-warning">acept</a>
+                {{/equals}}
+                <p>{{friend.updatedAt}}</p>
             </div>
         {{/each}}
     </div>
