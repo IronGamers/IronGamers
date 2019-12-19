@@ -7,22 +7,22 @@
       <form method="post" action="/user/{{currentUser.nickName}}/edit" autocomplete="off">
         
         <label for="username" >Name</label>
-        <input type="text" placeholder="Enter name" name="name" class="input-style input-100" value="{{user.name}}">
+        <input type="text" placeholder="{{user.name}}" name="name" class="input-style input-100" value="{{user.name}}">
 
         <label for="username" >Last name</label>
-        <input type="text" placeholder="Enter Last name" name="lastname" class="input-style input-100" value="{{user.lastName}}" >
+        <input type="text" placeholder="{{user.lastName}}" name="lastname" class="input-style input-100" value="{{user.lastName}}">
 
         <label for="username" >Username</label>
-        <input type="text" placeholder="Enter Username" name="nickname" class="input-style input-100" value="{{user.nickName}}">
+        <input type="text" placeholder="{{user.nickName}}" name="nickName" class="input-style input-100" autocomplete="false" value="{{user.nickName}}">
 
         <label for="username" >Email</label>
-        <input type="text" placeholder="Enter email" name="email" class="input-style input-100" value="{{user.email}}">
+        <input type="text" placeholder="{{user.email}}" name="email" class="input-style input-100" value="{{user.email}}">
         
         <label for="password">Password</label>
-        <input type="password" placeholder="Enter Password" name="password" class="input-style input-100">
+        <input type="password" placeholder="{{user.password}}" name="password" class="input-style input-100" value="{{user.password}}">
 
         <label for="username" >Avatar</label>
-        <input type="file" class="input-100" name="avatar">
+        <input type="file" placeholder="{{user.avatar}}" class="input-100">
 
         <button type="submit" class="login-submit blue-light hover-blue-dark">Edir User</button>
       </form>

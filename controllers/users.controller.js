@@ -153,6 +153,8 @@ module.exports.create = (req, res, next) => {
 		})
 }
 
+// POSTS 
+
 module.exports.doLogin = (req, res, next) => {
     const {
         nickName,
@@ -208,14 +210,18 @@ module.exports.doLogin = (req, res, next) => {
 }
 
 module.exports.doEdit = (req, res, next) => {
-	const usertoEdit = new User({
-		name: req.body.name,
-		lastname: req.body.lastname,
-		nickName: req.body.nickname,
-		email: req.body.email,
-	})
+	const {name, lastname, nickName, email} = req.body
 	
-	User.findOneAndUpdate({nickName: req.params.nickName}, {$set: {name: usertoEdit.name,lastname: usertoEdit.lastname, nickName: usertoEdit.nickName, email: usertoEdit.email}} ,{new: true})
+	const newUser = {
+		...req.currentUser,
+		name: name,
+		lastName: lastname,
+		email: email,
+		nickName: nickName
+	}
+	console.log(newUser)
+
+	User.findOneAndUpdate({nickName: req.params.nickName}, newUser, {new: true})
 	.then(user => {
 		console.log(user)
 		res.render('user/userDetail', {user})
