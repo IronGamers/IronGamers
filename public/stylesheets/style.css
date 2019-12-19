@@ -36,6 +36,10 @@ label {
   margin: 10px 0;
 }
 
+.vm-5 {
+  margin: 5px 0;
+}
+
 .c-pointer {
   cursor: pointer;
 }
@@ -199,7 +203,7 @@ label {
 .vertical-split {
   height: 100%;
   border: 2px solid #30A8F7;
-  margin: 5px 0;
+  /* margin: 5px 0; */
 }
 
 .game-chat {
@@ -411,29 +415,202 @@ label {
 }
 
 /* INBOX */
+.inbox {
+  height: 100%;
+}
+.inbox-functions {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px auto;
+  /* background-color: white; */
+  height: 10%;
+  width: 40%;
+}
+
+.inbox-functions a {
+  color: #30A8F7;
+  font-size: large;
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 0 0 20px #30A8F7;
+}
+
 .inbox-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  border: 3px solid #30A8F7;
+  height: 85%;
   overflow-y: auto;
-  color: white;
+  color: black;
+  width: 80%;
+  background-color: #d9d9d9;
+  margin: 0 auto;
+  border: 2px solid #30A8F7;
 }
 
-.inbox-email-form {
+.inbox-email {
   display: flex;
   align-items: center;
-  border: 3px solid #30A8F7;
+  justify-content: space-evenly;
+  border: 2px solid #30A8F7;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  margin: 5px;
+  padding: 5px;
+}
+
+.inbox-email p {
+  margin: 0;
+}
+
+.inbox-email:hover {
+  box-shadow: 0 0 10px black;
+}
+
+.inbox-email-nick {
+  width: 10%;
+  font-size: 1rem;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* DUDA, NO FUNCIONA! */
+.inbox-email-info {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 60%;
+}
+
+.inbox-email-subject {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.inbox-email-body {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #807f84;
+}
+
+.inbox-email-date {
+  margin: 0;
+  width: 10%;
+  font-size: 1rem;
+}
+
+.message-read {
+  background-color: #ccffe5;
+}
+
+/* ANSWER MESSAGE */
+.answer-message-container {
+  display: flex;
+  height: 100%;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50%;
+  height: 100%;
+  /* border: 3px solid red; */
+  color: black;
+  background-color: #d9d9d9;
+}
+
+.answer-message-user-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 50%;
+  height: 10%;
+  margin: 0 auto;
+}
+
+.answer-message-nick {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.answer-message-user-info img {
+  height: 80%;
+  width: auto;
+  border-radius: 50%;
+}
+
+.answer-message-date {
+  color: #6c757d;
+  font-size: 0.7rem;
+  margin: 0;
+  padding: 0;
+}
+
+.answer-message-subject {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5%;
+  width: 80%;
+  margin: 0 auto;
   overflow-x: auto;
+  border-radius: 5px;
+  border: 2px solid #807f84;
+  font-weight: bold;
+  font-size: 0.9rem;
+  background-color: #80bfff;
 }
 
-.inbox-email-form button {
-  border: none;
-  color: #30A8F7;
-  background-color: transparent;
+.answer-message-body {
+  height: 80%;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 5px;
+  border: 2px solid #807f84;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #e6fff2;
 }
 
+.answer-message-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 85%;
+}
 
+.answer-message-form-subject {
+  width: 80%;
+  height: 5%;
+  margin: 0 auto;
+  border-radius: 5px;
+  border: 2px solid #807f84;
+}
+
+.answer-message-form-body {
+  width: 90%;
+  height: 85%;
+  margin: 0 auto;
+  border-radius: 5px;
+  border: 2px solid #807f84;
+  resize: none;
+  padding: 10px;
+}
+
+.btn-send-answer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  height: 5%;
+  width: 20%;
+  margin: 0 auto;
+}
 
 /* Configuration */
 

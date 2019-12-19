@@ -42,8 +42,11 @@ router.post('/games/:gameID/like', authMiddelware.isAuthenticated, gameControlle
 router.get('/games/:gameId/detail', authMiddelware.isAuthenticated, gameController.gameDetail)
 
 // PRIVATE MESSAGES
-router.post('/users/:userID/inbox', authMiddelware.isAuthenticated, usersController.showInbox)
-
+router.get('/users/:userID/inbox', authMiddelware.isAuthenticated, usersController.showInbox)
+router.get('/users/:userID/outbox', authMiddelware.isAuthenticated, usersController.showOutbox)
+router.get('/users/:userID/inbox/:messageID/show', authMiddelware.isAuthenticated, usersController.showMessage)
+router.get('/users/:userID/inbox/:messageID/delete', authMiddelware.isAuthenticated, usersController.deleteMessage)
+router.post('/users/:myUserID/inbox/:destinationUserID/answer', authMiddelware.isAuthenticated, usersController.sendAnswer)
 
 // CHATROOM ROUTES
 router.post('/users/:userID/friendInvitation', authMiddelware.isAuthenticated, chatRoomController.friendInvitation)

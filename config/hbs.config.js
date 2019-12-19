@@ -44,3 +44,7 @@ hbs.registerHelper('isNotFriend', function (friends, user, options) {
 hbs.registerHelper('itsNotMe', function (user, me, options) {
   return user.toString() === me.toString() ? new hbs.SafeString(options.inverse(this)) : new hbs.SafeString(options.fn(this))
 })
+
+hbs.registerHelper('messageRead', function (state, options) {
+  return state === "read" ? new hbs.SafeString(options.fn(this)) : new hbs.SafeString(options.inverse(this))
+})
