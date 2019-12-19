@@ -4,8 +4,10 @@ const Gender = require('../models/gender-model')
 const ChatRoom = require('../models/chatRoom-model')
 const Like = require('../models/like-model')
 const Chat = require('../models/chat-model')
+const Friend = require('../models/friend-model')
+
 const functions = require('../config/functions.api')
-const url = require('url')
+// const url = require('url')
 
 // FORMULARIO GAME
 module.exports.newGame = (_, res, next) => {
@@ -68,61 +70,89 @@ module.exports.doEdit = (req, res, next) => {
 
 module.exports.join = (req, res, next) => {
 
-  const gameName = req.params.gameName
- 
-  ChatRoom.findOne({ game: gameName })
+  // const gameName = req.params.gameName
+  const myID = req.currentUser._id
+  const gameID = req.params.gameID
+
+  ChatRoom.findOne({ game: gameID })
     .populate('users')
     .then(chatRoom => {
 
       // Si no existe, se crea sala y se vuelve a cargar la página
       if (!chatRoom) {
         const newChatRoom = new ChatRoom({
-          game: gameName,
+          game: gameID,
           users: [req.currentUser._id]
         })
         newChatRoom.save()
           .then(chatRoom => {
-            res.redirect(`/games/${gameName}/chat`)
+            res.redirect(`/games/${gameID}/chat`)
           })
           .catch(error => console.log("Error joining room => ", error))
       }
 
-      Chat.find({ room: chatRoom.id, user: req.currentUser._id })
-        .populate('user')
-        // .sort()
-        .limit(20)
-        .then(chats => {
-
-          const usersInChatRoom = chatRoom.users.map(user => user._id)
-
-          // Se añade el usuario al array si no lo está ya
-          if (!usersInChatRoom.includes(req.currentUser._id)) {
-            chatRoom.users.push(req.currentUser._id)
-            ChatRoom.findByIdAndUpdate(chatRoom.id, { users: chatRoom.users }, { new: true })
-              .populate('users')
-              .then(chatRoom => {
-                functions.getGameList(gameName, 0, 1)
-                  .then(game => {
-                    res.render('game/chatRoom', {
-                      chatRoom: chatRoom,
-                      chats: chats,
-                      usersCount: chatRoom.users.length,
-                      game: game[0]
-                    })
-                  })
+      // SE SACAN LOS AMIGOS
+      Friend.find({ $or: [{ user1: myID }, { user2: myID }], state: 'pending' })
+        .then(friendsPending => {
+          const userFriendsPending = friendsPending.map(users => {
+            return users.user1.toString() === myID.toString() ? users.user2 : users.user1
+          })
+          Friend.find({ $or: [{ user1: myID }, { user2: myID }], state: 'accepted' })
+            .then(friends => {
+              const userFriends = friends.map(users => {
+                return users.user1.toString() === myID.toString() ? users.user2 : users.user1
               })
 
-          } else {
-            functions.getGameList(gameName, 0, 1)
-              .then(game => {
-                res.render('game/chatRoom', {
-                  chatRoom: chatRoom,
-                  chats: chats,
-                  usersCount: chatRoom.users.length,
-                  game: game[0]
+              // SE SACAN LOS CHATS
+              Chat.find({ room: chatRoom.id })
+                .populate('user')
+                .sort({ createdAt: -1 })
+                .limit(15)
+                .then(chats => {
+
+                  const usersInChatRoom = chatRoom.users.map(user => user._id)
+
+                  // Se añade el usuario al array si no lo está ya
+                  if (!usersInChatRoom.includes(req.currentUser._id)) {
+                    chatRoom.users.push(req.currentUser._id)
+                    ChatRoom.findByIdAndUpdate(chatRoom.id, { users: chatRoom.users }, { new: true })
+                      .populate('users')
+                      .then(chatRoom => {
+
+                        // *** HAY QUE COGER EL GAME ID! ***
+
+                        functions.getGameDetails(gameID)
+                          .then(game => {
+                            res.render('game/chatRoom', {
+                              chatRoom: chatRoom,
+                              chats: chats.reverse(),
+                              usersCount: chatRoom.users.length - 1,
+                              game: game[0],
+                              friendsPending: userFriendsPending,
+                              friends: userFriends,
+                              myID: req.currentUser._id,
+                              gameID: gameID
+                            })
+                          })
+                      })
+
+                  } else {
+                    functions.getGameDetails(gameID)
+                      .then(game => {
+                        res.render('game/chatRoom', {
+                          chatRoom: chatRoom,
+                          chats: chats.reverse(),
+                          usersCount: chatRoom.users.length - 1,
+                          game: game[0],
+                          friendsPending: userFriendsPending,
+                          friends: userFriends,
+                          myID: req.currentUser._id,
+                          gameID: gameID
+                        })
+                      })
+                  }
                 })
-              })
-          }
+            })
         })
     })
     .catch(error => console.log("Error in joining room => ", error))
@@ -158,7 +188,7 @@ module.exports.gameDetail = (req, res, _) => {
         .then(data => {
           console.log(data)
           console.log(data.company)
-          res.render('game/gameDetail', { game: data[0] })
+          res.render('game/gameDetail', { game: data[0], gameID: gameId })
         })
     })
     .catch(error => console.log("Error in getting details of game => ", error))

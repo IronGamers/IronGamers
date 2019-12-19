@@ -1,0 +1,36 @@
+<div class="answer-message-container">
+
+  <div class="message-container">
+    <div class="answer-message-user-info">
+      <img src="{{message.myUser.avatar}}" alt="Avatar">
+      <h1 class="answer-message-nick">{{message.myUser.nickName}}</h1>
+      <h1 class="answer-message-date">{{date message.createdAt}}</h1>
+    </div>
+    <p class="answer-message-subject hp-5">{{message.subject}}</p>
+    <p class="answer-message-body">{{message.body}}</p>
+  </div>
+
+
+  <div class="message-container">
+    <div class="answer-message-user-info">
+      <img src="{{#isInbox type}}{{message.destinationUser.avatar}}{{else}}{{message.myUser.avatar}}{{/isInbox}}"
+        alt="Avatar">
+      <h1 class="answer-message-nick">
+        {{#isInbox type}}{{message.destinationUser.nickName}}{{else}}{{message.myUser.nickName}}{{/isInbox}}</h1>
+    </div>
+
+    {{#isInbox type}}
+    <form action="/users/{{message.destinationUser._id}}/inbox/{{message.myUser._id}}/answer" method="POST"
+      class="answer-message-form">
+      {{else}}
+      <form action="/users/{{message.myUser._id}}/inbox/{{message.destinationUser._id}}/answer" method="POST"
+        class="answer-message-form">
+        {{/isInbox}}
+
+        <input name="subject" class="answer-message-form-subject hp-5" type="text" value="RE: {{message.subject}}">
+        <textarea name="body" class="answer-message-form-body"></textarea>
+        <button type="submit" class="btn-send-answer btn btn-primary">Send answer</button>
+      </form>
+  </div>
+
+</div>
