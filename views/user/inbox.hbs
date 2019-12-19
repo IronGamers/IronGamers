@@ -8,15 +8,16 @@
     {{#each messages as |message|}}
     <div class="inbox-email {{#messageRead message.msgState}}message-read{{/messageRead}}">
       <div>
-        <a href="/users/{{../myID}}/inbox/{{message._id}}/show" class="hp-10 fa fa-eye"></a>
+        <a onclick="updateMessage(event)" data-msg="{{message.id}}" data-state="{{message.msgState}}"
+          data-user="{{../myID}}" class="hp-10 fa fa-eye {{#messageRead message.msgState}} c-read {{/messageRead}}"></a>
         <a href="/users/{{../myID}}/inbox/{{message._id}}/delete" class="hp-10 fa fa-trash"></a>
       </div>
       <p class="inbox-email-nick">{{message.myUser.nickName}}</p>
       <div class="vertical-split"></div>
       <div class="inbox-email-info">
         <p>
-          <span class="inbox-email-subject">{{message.subject}} - </span>
-          <span class="inbox-email-body"> {{message.body}}</span>
+          <span class="inbox-email-subject">{{message.subject}} -&nbsp;</span>
+          <p class="inbox-email-body"> {{message.body}}</p>
         </p>
       </div>
       <div class="vertical-split"></div>
@@ -26,3 +27,15 @@
   </div>
 
 </div>
+<script>
+  function updateMessage(event) {
+    const idMessage = event.target.getAttribute('data-msg')
+    const idUser = event.target.getAttribute('data-user')
+
+    axios.post(`/users/${idUser}/inbox/${idMessage}/show`)
+      .then(response => {
+        window.location = `/users/${idUser}/inbox/${idMessage}/show`
+      })
+  }
+
+</script>

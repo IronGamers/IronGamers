@@ -481,8 +481,6 @@ label {
 .inbox-email-info {
   display: flex;
   align-items: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   width: 60%;
 }
@@ -493,6 +491,9 @@ label {
 }
 
 .inbox-email-body {
+   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 1rem;
   font-weight: normal;
   color: #807f84;
@@ -506,6 +507,10 @@ label {
 
 .message-read {
   background-color: #ccffe5;
+}
+
+.c-read {
+  color: green !important;
 }
 
 /* ANSWER MESSAGE */

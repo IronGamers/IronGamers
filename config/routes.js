@@ -45,7 +45,8 @@ router.get('/games/:gameId/detail', authMiddelware.isAuthenticated, gameControll
 // PRIVATE MESSAGES
 router.get('/users/:userID/inbox', authMiddelware.isAuthenticated, usersController.showInbox)
 router.get('/users/:userID/outbox', authMiddelware.isAuthenticated, usersController.showOutbox)
-router.get('/users/:userID/inbox/:messageID/show', authMiddelware.isAuthenticated, usersController.showMessageInbox)
+router.post('/users/:userID/inbox/:messageID/show', authMiddelware.isAuthenticated, usersController.showMessageInbox)
+router.get('/users/:userID/inbox/:messageID/show', authMiddelware.isAuthenticated, usersController.detailMessageInbox)
 router.get('/users/:userID/outbox/:messageID/show', authMiddelware.isAuthenticated, usersController.showMessageOutbox)
 router.get('/users/:userID/inbox/:messageID/delete', authMiddelware.isAuthenticated, usersController.deleteMessage)
 router.post('/users/:myUserID/inbox/:destinationUserID/answer', authMiddelware.isAuthenticated, usersController.sendAnswer)
