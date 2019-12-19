@@ -5,7 +5,7 @@ const url = require('url')
 
 module.exports.sendMessage = (req, res) => {
   const message = req.body.message
-  const gameName = req.params.gameName
+  const gameID = req.params.gameID
   const chatRoomID = req.params.chatRoomID
 
   if (message) {
@@ -17,7 +17,7 @@ module.exports.sendMessage = (req, res) => {
 
     newChat.save()
       .then(chat => {
-        res.redirect(`/games/${gameName}/chat`)
+        res.redirect(`/games/${gameID}/chat`)
       })
       .catch(error => console.log("Error saving new chat => ", error))
   }
@@ -57,19 +57,35 @@ module.exports.privateMessage = (req, res, next) => {
   // SOLO SE PUEDEN ENVIAR MENSAJES SI SON AMIGOS
   const myUser = req.currentUser._id
   const destinationUser = req.params.userID
+  // const gameName = req.params.gameName
+  const gameID = req.params.gameID
 
   // Que no sean el mismo usuario
   if (myUser !== destinationUser) {
-    // Habría que cambiar el state a "accepted"
-    Friend.findOne({ user1: myUser, user2: destinationUser, state: "pending" })
+    Friend.findOne({ $or: [{ user1: myUser, user2: destinationUser }, { user1: destinationUser, user2: myUser }], state: "accepted" })
       .populate('user1')
       .populate('user2')
       .then(friend => {
         if (friend) {
-          res.render('game/privateMessage', { users: friend })
-        } else {
-          res.redirect('back')
+
+          // HAY QUE VER CUÁL ES CUÁL
+          if (friend.user1.id.toString() === myUser.toString()) {
+            res.render('game/privateMessage', {
+              myUser: friend.user1,
+              destinationUser: friend.user2,
+              gameID: gameID
+            })
+          } else {
+            res.render('game/privateMessage', {
+              myUser: friend.user2,
+              destinationUser: friend.user1,
+              gameID: gameID
+            })
+          }
         }
+        // else {
+        //   res.redirect('back')
+        // }
       })
       .catch(error => console.log("Error in privateMessage => ", error))
   }
@@ -78,6 +94,8 @@ module.exports.privateMessage = (req, res, next) => {
 module.exports.sendPrivateMessage = (req, res, next) => {
   const myUser = req.currentUser._id
   const destinationUser = req.params.userID
+  // const gameName = req.params.gameName
+  const gameID = req.params.gameID
 
   const newMessage = new PrivateMessage({
     myUser: myUser,
@@ -89,13 +107,9 @@ module.exports.sendPrivateMessage = (req, res, next) => {
 
   newMessage.save()
     .then(message => {
-
-       //Falta el redirect a la página anterior
-      // return window.history.back
-
+      res.redirect(`/games/${gameID}/chat`)
     })
     .catch(error => console.log("Error sending message => ", error))
-
 }
 
 /*

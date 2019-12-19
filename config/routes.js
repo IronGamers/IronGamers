@@ -44,19 +44,28 @@ router.post('/games/new', authMiddelware.isAuthenticated, upload.single('image')
 router.get('/games/list', authMiddelware.isAuthenticated, gameController.gameList)
 router.get('/games/:gameID/edit', authMiddelware.isAuthenticated, gameController.edit)
 router.post('/games/:gameID/edit', authMiddelware.isAuthenticated, gameController.doEdit)
-router.get('/games/:gameName/chat', authMiddelware.isAuthenticated, gameController.join)
+// router.get('/games/:gameName/chat', authMiddelware.isAuthenticated, gameController.join)
+router.get('/games/:gameID/chat', authMiddelware.isAuthenticated, gameController.join)
 router.post('/games/:gameID/like', authMiddelware.isAuthenticated, gameController.like)
 router.get('/games/:gameId/detail', authMiddelware.isAuthenticated, gameController.gameDetail)
 
 // PRIVATE MESSAGES
-router.post('/users/:userID/inbox', authMiddelware.isAuthenticated, usersController.showInbox)
-
+router.get('/users/:userID/inbox', authMiddelware.isAuthenticated, usersController.showInbox)
+router.get('/users/:userID/outbox', authMiddelware.isAuthenticated, usersController.showOutbox)
+router.post('/users/:userID/inbox/:messageID/show', authMiddelware.isAuthenticated, usersController.showMessageInbox)
+router.get('/users/:userID/inbox/:messageID/show', authMiddelware.isAuthenticated, usersController.detailMessageInbox)
+router.get('/users/:userID/outbox/:messageID/show', authMiddelware.isAuthenticated, usersController.showMessageOutbox)
+router.get('/users/:userID/inbox/:messageID/delete', authMiddelware.isAuthenticated, usersController.deleteMessage)
+router.post('/users/:myUserID/inbox/:destinationUserID/answer', authMiddelware.isAuthenticated, usersController.sendAnswer)
 
 // CHATROOM ROUTES
 router.post('/users/:userID/friendInvitation', authMiddelware.isAuthenticated, chatRoomController.friendInvitation)
-router.get('/users/:userID/privateMessage', authMiddelware.isAuthenticated, chatRoomController.privateMessage)
-router.post('/users/:userID/privateMessage', authMiddelware.isAuthenticated, chatRoomController.sendPrivateMessage)
-router.post('/games/:chatRoomID/:gameName/newMessage', authMiddelware.isAuthenticated, chatRoomController.sendMessage)
+router.get('/users/:userID/:gameID/privateMessage', authMiddelware.isAuthenticated, chatRoomController.privateMessage)
+router.post('/users/:userID/:gameID/privateMessage', authMiddelware.isAuthenticated, chatRoomController.sendPrivateMessage)
+router.post('/games/:chatRoomID/:gameID/newMessage', authMiddelware.isAuthenticated, chatRoomController.sendMessage)
+// router.get('/users/:userID/:gameName/privateMessage', authMiddelware.isAuthenticated, chatRoomController.privateMessage)
+// router.post('/users/:userID/:gameName/privateMessage', authMiddelware.isAuthenticated, chatRoomController.sendPrivateMessage)
+// router.post('/games/:chatRoomID/:gameName/newMessage', authMiddelware.isAuthenticated, chatRoomController.sendMessage)
 
 
 // API TEST

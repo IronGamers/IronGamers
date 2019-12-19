@@ -1,5 +1,3 @@
-{{!-- HAY QUE HAER LO DE LOS FRIENDS + MENSAJES PRIVADOS + USERINFO --}}
-
 <div class="chat-room">
 
   {{!-- USERS--}}
@@ -7,25 +5,29 @@
     <p class="users-title">Users in the room ({{usersCount}})</p>
     <div class="users-box hp-5">
       {{#each chatRoom.users as |user|}}
-      <div class="vm-10 chat-user-detail">
-        <p class="hp-5 font-weight-bold">{{user.name}}</p>
+      {{#itsNotMe user.id ../myID}}
 
+      <div class="vm-10 chat-user-detail">
+        <p class="hp-5 font-weight-bold">{{user.nickName}}</p>
         <div class="user-actions">
-          {{!-- <form action="/users/{{user.id}}/friendInvitation" method="POST"> --}}
-          <button id="{{user.id}}" onclick="friendInvitation('{{user.id}}')" type="submit"
-            class="button-friend-pending hp-5 fa fa-user-plus"></button>
-          {{!-- </form> --}}
+          {{#isNotFriend ../friends user.id}}
+          <button id="{{user.id}}" onclick="friendInvitation('{{user.id}}')" type="submit" class="{{#isFriend ../friendsPending user.id}}button-friend-pending{{else}}button-friend{{/isFriend}}
+            hp-5 fa fa-user-plus"></button>
+          {{/isNotFriend}}
 
           <form action="#" method="POST">
-            <button type="submit" class="button-friend-pending hp-5 fa fa-info-circle"></button>
+            <button type="submit" class="button-friend hp-5 fa fa-info-circle"></button>
           </form>
 
-          <form action="/users/{{user.id}}/privateMessage" method="GET">
-            <button type="submit" class="button-friend-pending hp-5 fa fa-envelope"></button>
+          {{#isFriend ../friends user.id}}
+          <form action="/users/{{user.id}}/{{../gameID}}/privateMessage" method="GET">
+            <button id="{{user.id}}" type="submit" class="button-friend hp-5 fa fa-envelope"></button>
           </form>
+          {{/isFriend}}
         </div>
-
       </div>
+
+      {{/itsNotMe}}
       {{/each}}
     </div>
   </div>
@@ -40,15 +42,22 @@
     </div>
     <div class="chat-box">
       {{#each chats as |chat|}}
-      <p><span class="font-italic font-weight-bold">({{date chat.createdAt}}) <a href="#"
-            class="font-weight-bold">{{chat.user.nickName}}: </a></span>
-        <span class="users-message">{{chat.userMsg}}</span></p>
+      <div class="{{#itsNotMe chat.user.id ../myID}}chat-box-message{{else}}my-chat-box-message{{/itsNotMe}} vm-10">
+        <div class="chat-box-message-info">
+          <div class="chat-box-message-info-user">
+            <img class="hp-5" src="{{chat.user.avatar}}" alt="Avatar">
+            <span class="hp-5">{{chat.user.nickName}}</span>
+          </div>
+          <span>{{date chat.createdAt}}</span>
+        </div>
+        <span class="user-message">{{chat.userMsg}}</span>
+      </div>
       {{/each}}
     </div>
 
     {{!-- SEND MESSAGE TO CHAT --}}
     <div class="chat-message">
-      <form class="w-100" action="/games/{{chatRoom.id}}/{{game.name}}/newMessage" method="POST" autocomplete="off">
+      <form class="w-100" action="/games/{{chatRoom.id}}/{{gameID}}/newMessage" method="POST" autocomplete="off">
         <input class="message" type="text" name="message" placeholder="Enter message...">
         <button class="btn-send" type="submit">Send</button>
       </form>
@@ -62,9 +71,8 @@
     axios.post(`/users/${id}/friendInvitation`)
       .then(response => {
         let friend = document.getElementById(id)
-        friend.classList.remove('button-friend-pending')
-        friend.classList.add('button-friend-accepted')
-        console.log('Friend invitation sent')
+        friend.classList.remove('button-friend')
+        friend.classList.add('button-friend-pending')
       })
       .catch(error => console.log(error))
   }

@@ -89,10 +89,11 @@ module.exports.friends = (req, res, next) => {
 		Friend.find({ $or : [ { user1: user._id }, { user2: user._id } ] })
 		.then(friend => {
 			const friends = friend.map(friendship => {
-					if(user.id === friendship.user1){
+					if(user.id.toString() === friendship.user1.toString()){
 					return	User.findById(friendship.user2)
 						.then(detail => {
 							detail.state = friendship.state
+							detail.principalUser = friendship.user1
 							user.friends.push(detail)
 							return detail
 						})
@@ -100,12 +101,13 @@ module.exports.friends = (req, res, next) => {
 						return	User.findById(friendship.user1)
 						.then(detail => {
 							detail.state = friendship.state
+							detail.principalUser = friendship.user1
 							user.friends.push(detail)
 							return detail
 						})
 					}
 				})
-				console.log(user.friends)
+				console.log(friends)
 				res.render('user/userFriends', {user, aside: 'friends'})
 		})
 		.catch(error => next(error))
@@ -263,15 +265,99 @@ module.exports.changeRol = (req, res, next) => {
 
 }
 
+// MESSAGES
 module.exports.showInbox = (req, res, next) => {
 
 	const myID = req.currentUser._id
-	PrivateMessage.find({ destinationUser: "5df7b83e0e5c141e2cca12a6" })
+	PrivateMessage.find({ destinationUser: myID })
 		.populate('myUser')
 		.populate('destinationUser')
 		.then(messages => {
-			res.render('user/inbox', { messages })
+			res.render('user/inbox', { messages: messages.reverse(), myID: myID })
 		})
 		.catch(error => console.log("Error showing messages => ", error))
+}
 
+module.exports.showOutbox = (req, res, next) => {
+
+	const myID = req.currentUser._id
+	PrivateMessage.find({ myUser: myID })
+		.populate('myUser')
+		.populate('destinationUser')
+		.then(messages => {
+			res.render('user/outbox', { messages: messages.reverse(), myID: myID })
+		})
+		.catch(error => console.log("Error showing messages => ", error))
+}
+
+
+module.exports.detailMessageInbox = (req, res, next) => {
+	const messageID = req.params.messageID
+	const myID = req.currentUser._id
+
+	PrivateMessage.findOne({ _id: messageID })
+		.populate('myUser')
+		.populate('destinationUser')
+		.then(message => {
+			res.render('user/message', { message: message, myID: myID, type: 'inbox' })
+		})
+		.catch(error => console.log("Error showing messages => ", error))
+}
+
+
+module.exports.showMessageInbox = (req, res, next) => {
+
+	const messageID = req.params.messageID
+
+	PrivateMessage.findByIdAndUpdate(messageID, { msgState: "read" })
+		.then(message => {
+			res.json({})
+		})
+		.catch(error => console.log("Error showing messages => ", error))
+}
+
+module.exports.showMessageOutbox = (req, res, next) => {
+
+	const messageID = req.params.messageID
+	const myID = req.currentUser._id
+	PrivateMessage.findOne({ _id: messageID })
+		.populate('myUser')
+		.populate('destinationUser')
+		.then(message => {
+			res.render('user/message', { message: message, myID: myID, type: 'outbox' })
+		})
+		.catch(error => console.log("Error showing messages => ", error))
+}
+
+module.exports.deleteMessage = (req, res, next) => {
+
+	const messageID = req.params.messageID
+	const myID = req.currentUser._id
+	PrivateMessage.findByIdAndDelete(messageID)
+		.populate('myUser')
+		.populate('destinationUser')
+		.then(message => {
+			res.redirect('back')
+		})
+		.catch(error => console.log("Error showing messages => ", error))
+}
+
+module.exports.sendAnswer = (req, res, next) => {
+
+	const myUser = req.currentUser._id
+	const destinationUser = req.params.destinationUserID
+
+	const newMessage = new PrivateMessage({
+		myUser: myUser,
+		destinationUser: destinationUser,
+		subject: req.body.subject,
+		body: req.body.body,
+		state: "pending"
+	})
+
+	newMessage.save()
+		.then(message => {
+			res.redirect(`/users/${myUser}/inbox`)
+		})
+		.catch(error => console.log("Error sending message => ", error))
 }

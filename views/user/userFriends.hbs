@@ -9,8 +9,10 @@
                 <p>{{friend.nickName}}</p>
                 <p>{{friend.state}}</p>
                 {{#equals friend.state 'pending'}}
+                {{#itsNotMe friend.principalUser ../currentUser._id}}
                 <a href="" class="btn btn-warning">acept</a>
                 <a href="" class="btn btn-warning">decline</a>
+                {{/itsNotMe}}
                 {{/equals}}
                 <p>{{friend.updatedAt}}</p>
             </div>
