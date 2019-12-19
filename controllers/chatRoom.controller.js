@@ -45,7 +45,6 @@ module.exports.friendInvitation = (req, res) => {
               // Se hace por axios
               console.log('Invitation sent')
               res.json({})
-
             })
         }
       })
