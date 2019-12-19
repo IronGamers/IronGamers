@@ -122,10 +122,10 @@ module.exports.create = (req, res, next) => {
 		nickName: req.body.nickname,
 		email: req.body.email,
 		password: req.body.password,
-		avatar: req.body.avatar
+		avatar: req.file.url
 	})
 
-	if (!req.body.avatar) {
+	if (!user.avatar) {
 		user.avatar = 'https://picsum.photos/200'
 	}
 
