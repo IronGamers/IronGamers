@@ -4,8 +4,10 @@
         {{#each user.chatrooms as |chat|}}
         <a href="/games/{{chat.game}}/chat">
             <div class="container-chats">
+                <img src="{{chat.cover}}" alt="image">
                 <p>{{chat.game}}</p>
-                <p>{{chat.users.length}}</p>
+                <p>{{chat.createdAt}}</p>
+                <p>{{chat.users}}</p>
             </div>
         </a>
         {{/each}}

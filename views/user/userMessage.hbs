@@ -1,9 +1,9 @@
 <div class="container-fluid user-resume">
     {{>aside}}
     <div class="user-body">
+        hla entro en mensajes
         {{#each user.chats as |chat|}}
-        <a href="/games/{{chat.game}}/chat">
-            <div class="container-chats">
+            <div class="container-messages">
                 <p>{{chat.game}}</p>
                 <p>{{chat.users.length}}</p>
             </div>

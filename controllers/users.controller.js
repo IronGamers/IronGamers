@@ -1,9 +1,10 @@
 const User = require('../models/user.model')
 const ChatGames = require('../models/chatRoom-model')
-const Chat = require('../models/chat-model')
+const Messages = require('../models/chat-model')
 const Friend = require('../models/friend-model')
 const mongoose = require('mongoose')
 const PrivateMessage = require('../models/private-message-model')
+const functions = require('../config/functions.api')
 
 module.exports.login = (_, res) => {
 	res.render('user/login')
@@ -31,27 +32,48 @@ module.exports.editUser = (req, res, next) => {
 	.catch(error => next(error))
 }
 
+
+// pendiente conseguir los datos del cover modificar ya esta obsoleta
 module.exports.chatsRooms = (req, res, next) => {
-	const nickName = req.params.nickName
-	User.findOne({nickName: nickName})
-	.then(user => {
-		ChatGames.find({users: user.id})
-		.then(chats => {
-			user.chatrooms = chats
-			res.render('user/chatsUsers', {user, aside: 'chats'})
-		})
-		.catch(error => next(error))
-	})
-	.catch(error => next(error))
+
+	res.redirect('/')
+	// const nickName = req.params.nickName
+	// User.findOne({nickName: nickName})
+	// .then(user => {
+	// 	let chatRoom = []
+	// 	ChatGames.find({users: user.id})
+	// 	.then(chats => {
+	// 		chats.map(chat => {
+	// 			functions.getGameList(chat.game)
+	// 			.then(data => {
+	// 				const chatInfo = {
+	// 					cover: data[0].cover,
+	// 					game: chat.game,
+	// 					users: chat.users.length,
+	// 					createdAt: chat.createdAt
+	// 				}
+	// 				chatRoom.push(chatInfo)
+	// 			})
+	// 			.then(done => {
+	// 				user.chatrooms = chatRoom
+	// 				console.log(user.chatrooms)
+	// 				res.render('user/chatsUsers', {user, aside: 'chats'})
+	// 			})
+	// 		})
+			
+	// 	})
+	// })
+	
 }
 
 module.exports.messages = (req, res, next) => {
 	const nickName = req.params.nickName
 	User.findOne({nickName: nickName})
 	.then(user => {
-		Chat.find({users: user.id})
+		Messages.find({ $or : [ { myUser: user._id }, { destinationUser: user._id } ] })
 		.then(chats => {
 			user.chats = chats
+			console.log(chats)
 			res.render('user/userMessage', {user, aside: 'messages'})
 		})
 		.catch(error => next(error))
@@ -68,7 +90,6 @@ module.exports.friends = (req, res, next) => {
 		.then(friend => {
 			const friends = friend.map(friendship => {
 					if(user.id === friendship.user1){
-						console.log('entra en 1')
 					return	User.findById(friendship.user2)
 						.then(detail => {
 							detail.state = friendship.state
@@ -76,7 +97,6 @@ module.exports.friends = (req, res, next) => {
 							return detail
 						})
 					}else{
-						console.log('entra en 2')
 						return	User.findById(friendship.user1)
 						.then(detail => {
 							detail.state = friendship.state
