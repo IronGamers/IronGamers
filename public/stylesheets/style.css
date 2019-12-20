@@ -1315,12 +1315,15 @@ svg circle:nth-child(2){
 }
 
 .chat-cards{
-  height: 310px !important
+  height: 310px !important;
+  color: #fff !important;
 }
 
 .chat-cards p{
   font-size: 0.8rem;
+  color: #fff;
 }
+
 .friends-container{
   margin-top: 15px;
   display: flex;
@@ -1364,4 +1367,8 @@ svg circle:nth-child(2){
 
 .aside-select{
   background-color: rgb(10, 68, 108);
+}
+
+.user-detail h6{
+  text-align: center;
 }

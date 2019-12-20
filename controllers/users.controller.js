@@ -57,6 +57,7 @@ module.exports.chatsRooms = (req, res, next) => {
 				})
 				.then(ok2 => {
 					user.chatrooms = chats
+					console.log(chats)
 					res.render('user/chatsUsers', {user, aside: 'chats'})
 				})
 			})
