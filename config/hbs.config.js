@@ -52,3 +52,12 @@ hbs.registerHelper('messageRead', function (state, options) {
 hbs.registerHelper('isInbox', function (type, options) {
   return type === "inbox" ? new hbs.SafeString(options.fn(this)) : new hbs.SafeString(options.inverse(this))
 })
+
+hbs.registerHelper('get_length', function (obj) {
+  return obj.length;
+ })
+
+ hbs.registerHelper('get_date', function (obj) {
+   const date = `${obj.getDate()}/${obj.getMonth()+1}/${obj.getFullYear()}` 
+  return obj.length;
+ })

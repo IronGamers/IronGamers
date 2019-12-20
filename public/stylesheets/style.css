@@ -1306,3 +1306,41 @@ svg circle:nth-child(2){
   top: -100px;
   left: calc(50% - 100px);
 }
+
+.chatsRooms{
+  margin: 10px 0 0 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.chat-cards{
+  height: 310px !important
+}
+
+.chat-cards p{
+  font-size: 0.8rem;
+}
+.friends-container{
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.friends-cards{
+  padding: 5px;
+  width: 180px;
+  min-height: 300px;
+  border: 1px solid #94a1ac;
+}
+
+.acepts{
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.friends-body{
+  height: 50px !important;
+}

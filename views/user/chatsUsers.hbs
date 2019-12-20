@@ -1,16 +1,19 @@
 <div class="container-fluid user-resume">
     {{>aside}}
     <div class="user-body">
-        {{#each user.chatrooms as |chat|}}
-        <a href="/games/{{chat.game}}/chat">
-            <div class="container-chats">
-                <img src="{{chat.image}}" alt="image">
-                <p>{{chat.game}}</p>
-                <p>{{chat.name}}</p>
-                <p>{{chat.createdAt}}</p>
-                <p>{{chat.users}}</p>
+        <div class="container chatsRooms">
+            {{#each user.chatrooms as |chat|}}
+            <div class="card chat-cards" style="width: 10rem;">
+                <a style="text-decoration: none;" href="/games/{{chat.game}}/chat">
+                    <img src="{{chat.image}}" class="card-img-top" alt="cover">
+                    <div class="card-body">
+                        <p>{{chat.name}}</p>
+                        <p>{{ chat.date}}</p>
+                        <p><i class="fa fa-user-circle" aria-hidden="true"></i> {{get_length chat.users}} users</p>
+                    </div>
+                </a>
             </div>
-        </a>
-        {{/each}}
+            {{/each}}
+        </div>
     </div>
 </div>

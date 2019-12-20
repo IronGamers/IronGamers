@@ -18,6 +18,7 @@ module.exports.detailUser = (req, res, next) =>{
 	const nickName = req.params.nickName
 	User.findOne({nickName: nickName})
 	.then(user => {
+
 		user.date = `${user.createdAt.getDate()}/${user.createdAt.getMonth() +1}/${user.createdAt.getFullYear()}`
 		res.render('user/userDetail', {user})
 	})
@@ -49,6 +50,7 @@ module.exports.chatsRooms = (req, res, next) => {
 				.then(ok => {
 					room.image = ok.url
 					room.name = ok.name
+					room.date = `${room.createdAt.getDate()}/${room.createdAt.getMonth() +1}/${room.createdAt.getFullYear()}`
 					// chats[i].image = ok
 					// console.log(room.image)
 					return
@@ -63,35 +65,7 @@ module.exports.chatsRooms = (req, res, next) => {
 		.catch(error => next(error))
 	})
 	.catch(error => next(error))
-	
-	
-	// const nickName = req.params.nickName
-	// User.findOne({nickName: nickName})
-	// .then(user => {
-	// 	let chatRoom = []
-	// 	ChatGames.find({users: user.id})
-	// 	.then(chats => {
-	// 		chats.map(chat => {
-	// 			functions.getGameList(chat.game)
-	// 			.then(data => {
-	// 				const chatInfo = {
-	// 					cover: data[0].cover,
-	// 					game: chat.game,
-	// 					users: chat.users.length,
-	// 					createdAt: chat.createdAt
-	// 				}
-	// 				chatRoom.push(chatInfo)
-	// 			})
-	// 			.then(done => {
-	// 				user.chatrooms = chatRoom
-	// 				console.log(user.chatrooms)
-	// 				res.render('user/chatsUsers', {user, aside: 'chats'})
-	// 			})
-	// 		})
-			
-	// 	})
-	// })
-	
+
 }
 
 module.exports.messages = (req, res, next) => {
