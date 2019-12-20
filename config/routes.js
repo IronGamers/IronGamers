@@ -29,6 +29,8 @@ router.get('/user/:nickName/chats', authMiddelware.isAuthenticated, usersControl
 router.get('/user/:nickName/messages', authMiddelware.isAuthenticated, usersController.messages)
 router.get('/user/:nickName/friends', authMiddelware.isAuthenticated, usersController.friends)
 router.post('/user/:nickName/edit', authMiddelware.isAuthenticated, usersController.doEdit)
+router.post('/users/:relation/accept', authMiddelware.isAuthenticated, usersController.acceptFriend)
+router.post('/users/:relation/decline', authMiddelware.isAuthenticated, usersController.declineFriend)
 
 
 // GENDER ROUTES

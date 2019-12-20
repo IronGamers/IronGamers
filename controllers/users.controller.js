@@ -18,6 +18,8 @@ module.exports.detailUser = (req, res, next) =>{
 	const nickName = req.params.nickName
 	User.findOne({nickName: nickName})
 	.then(user => {
+
+		user.date = `${user.createdAt.getDate()}/${user.createdAt.getMonth() +1}/${user.createdAt.getFullYear()}`
 		res.render('user/userDetail', {user})
 	})
 	.catch(error => next(error))
@@ -36,34 +38,35 @@ module.exports.editUser = (req, res, next) => {
 // pendiente conseguir los datos del cover modificar ya esta obsoleta
 module.exports.chatsRooms = (req, res, next) => {
 
-	res.redirect('/')
-	// const nickName = req.params.nickName
-	// User.findOne({nickName: nickName})
-	// .then(user => {
-	// 	let chatRoom = []
-	// 	ChatGames.find({users: user.id})
-	// 	.then(chats => {
-	// 		chats.map(chat => {
-	// 			functions.getGameList(chat.game)
-	// 			.then(data => {
-	// 				const chatInfo = {
-	// 					cover: data[0].cover,
-	// 					game: chat.game,
-	// 					users: chat.users.length,
-	// 					createdAt: chat.createdAt
-	// 				}
-	// 				chatRoom.push(chatInfo)
-	// 			})
-	// 			.then(done => {
-	// 				user.chatrooms = chatRoom
-	// 				console.log(user.chatrooms)
-	// 				res.render('user/chatsUsers', {user, aside: 'chats'})
-	// 			})
-	// 		})
-			
-	// 	})
-	// })
+	const nickName = req.params.nickName
+	User.findOne({nickName: nickName})
+	.then(user => {
+		const chatRooms = []
+		ChatGames.find({users: user.id})
+		.then(chats => {
+			console.log(chats)
+			chats.forEach((room, i) => {
+				functions.coverGame(room.game)
+				.then(ok => {
+					room.image = ok.url
+					room.name = ok.name
+					room.date = `${room.createdAt.getDate()}/${room.createdAt.getMonth() +1}/${room.createdAt.getFullYear()}`
+					// chats[i].image = ok
+					// console.log(room.image)
+					return
+				})
+				.then(ok2 => {
+					user.chatrooms = chats
+					console.log(chats)
+					res.render('user/chatsUsers', {user, aside: 'chats'})
+				})
+			})
 	
+		})
+		.catch(error => next(error))
+	})
+	.catch(error => next(error))
+
 }
 
 module.exports.messages = (req, res, next) => {
@@ -87,6 +90,7 @@ module.exports.friends = (req, res, next) => {
 	.then(user => {
 		user.friends = []
 		Friend.find({ $or : [ { user1: user._id }, { user2: user._id } ] })
+		.sort({state: -1})
 		.then(friend => {
 			const friends = friend.map(friendship => {
 					if(user.id.toString() === friendship.user1.toString()){
@@ -107,7 +111,7 @@ module.exports.friends = (req, res, next) => {
 						})
 					}
 				})
-				console.log(friends)
+				console.log(user)
 				res.render('user/userFriends', {user, aside: 'friends'})
 		})
 		.catch(error => next(error))
@@ -212,14 +216,13 @@ module.exports.doLogin = (req, res, next) => {
 }
 
 module.exports.doEdit = (req, res, next) => {
-	const {name, lastname, nickName, email} = req.body
+	const {name, lastname, email} = req.body
 	
 	const newUser = {
 		...req.currentUser,
 		name: name,
 		lastName: lastname,
-		email: email,
-		nickName: nickName
+		email: email
 	}
 	console.log(newUser)
 
@@ -360,4 +363,28 @@ module.exports.sendAnswer = (req, res, next) => {
 			res.redirect(`/users/${myUser}/inbox`)
 		})
 		.catch(error => console.log("Error sending message => ", error))
+}
+
+module.exports.acceptFriend = (req, res, next) => {
+
+	const user = req.currentUser._id
+	const friend = req.params.relation
+	console.log(user, friend)
+	Friend.findOneAndUpdate({user1: friend, user2: user}, {state: 'accepted'}, {new: true})
+	.then(ok => {
+		res.json({})
+	})
+	.catch(error => next(error))
+
+}
+
+module.exports.declineFriend = (req, res, next ) => {
+	const user = req.currentUser._id
+	const friend = req.params.relation
+	console.log(user, friend)
+	Friend.findOneAndDelete({user1: friend, user2: user})
+	.then(ok => {
+		res.json({})
+	})
+	.catch(error => next(error))
 }

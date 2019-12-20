@@ -314,21 +314,26 @@ function getGameDetails(gameId, companyDetail) {
           .catch(error => console.log(error))
       }
 
-      function characterData(gameId) {
+      function coverGame(gameId) {
         return IGDB
-          .fields(`name, games, url, description`)
-        //   .where(`url > 0`)
-        .limit(20)
-          .request('/characters')
+          .fields(`name, cover.url`)
+          .where(`id = ${gameId}`)
+          .request('/games')
           .then(res => {
-              console.log(res.data)
+            response = {
+              name: res.data[0].name,
+              url: res.data[0].cover.url
+            }
+             return response
           })
       }
+
+
 
     module.exports = {
         getGameDetails,
         getGenres,
         getTotalDetail,
         getGameList,
-        characterData
+        coverGame
     }

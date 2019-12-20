@@ -1,25 +1,44 @@
 <div class="container-fluid user-resume">
     {{>aside}}
     <div class="user-body">
-        {{#each user.friends as |friend|}}
-            <div class="container-friends">
-                <img src="{{friend.avatar}}" alt="">
-                <p>{{friend.name}}</p>
-                <p>{{friend.lastName}}</p>
-                <p>{{friend.nickName}}</p>
-                <p>{{friend.state}}</p>
-                {{#equals friend.state 'pending'}}
-                {{#itsNotMe friend.principalUser ../currentUser._id}}
-                <a href="" class="btn btn-warning">acept</a>
-                <a href="" class="btn btn-warning">decline</a>
-                {{/itsNotMe}}
-                {{/equals}}
-                <p>{{friend.updatedAt}}</p>
+        <div class="container friends-container">
+            {{#each user.friends as |friend|}}
+            <div class="friends-cards">
+                <img src="{{friend.avatar}}" class="card-img-top" alt="image">
+                <div class="friends-body">
+                    <h5 class="card-title">{{friend.nickName}}</h5>
+                    <p class="card-text">{{friend.name}} {{friend.lastName}}</p>
+                    {{#equals friend.state 'pending'}}
+                    {{#itsNotMe friend.principalUser ../currentUser._id}}
+                    <div class="acepts" id="{{friend.id}}">
+                        <button class="btn btn-warning" onclick="friendAccept('{{friend.id}}')">Accept</button>
+                        <button class="btn btn-danger" onclick="declineFriend('{{friend.id}}')">Decline</button>
+                    </div>
+                    {{/itsNotMe}}
+                    {{/equals}}
+                </div>
             </div>
-        {{/each}}
+            {{/each}}
+        </div>
     </div>
 </div>
 
+<script>
+    function friendAccept(user) {
+        axios.post(`/users/${user}/accept`)
+            .then(response => {
+                location.reload(true)
+            })
+            .catch(error => console.log(error))
+    }
+    function declineFriend(user) {
+        axios.post(`/users/${user}/decline`)
+            .then(response => {
+                location.reload(true)
+            })
+            .catch(error => console.log(error))
+    }
+</script>
+
 
 {{!-- falta popular para tener los datos de los amigos en la vista reusmen --}}
-   

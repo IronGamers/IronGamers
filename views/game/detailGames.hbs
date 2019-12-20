@@ -3,8 +3,8 @@
     <input type="text" class="game-search game-search-text" name="searchData" placeholder="Search a Game" {{#if search}} value="{{search}}" {{/if}} >
     <input type="submit" class="game-search game-search-button" value="Search">
     <div class="form-group">
-    <label >Games / page</label>
-    <select class="form-control"  name="items">
+    {{!-- <label >Games / page</label> --}}
+    <select class="form-control pages-num"  name="items">
       <option {{#equals items 8}} selected {{/equals}} >8</option>
       <option {{#equals items 12}} selected {{/equals}}>12</option>
       <option {{#equals items 16}} selected {{/equals}} {{#if items}} {{else}} selected {{/if}}>16</option>

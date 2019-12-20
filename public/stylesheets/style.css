@@ -10,6 +10,7 @@ body {
   font-weight: 200;
   height: 100%;
   background-color: black;
+  color: white;
 }
 
 strong {
@@ -729,7 +730,7 @@ label {
   border-top: 1px solid grey;
   padding-top: 10px;
   max-height: 150px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .img-div-gamecard {
@@ -1107,7 +1108,7 @@ hr{
   width: 80%;
   margin: auto;
   text-align: justify;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .sumary>p{
@@ -1169,8 +1170,17 @@ svg circle:nth-child(2){
 
 .carousels-container{
   width: 100%;
+  border-radius: 25px;
+  border: 1px solid #30A8F7;
   padding: 20px;
   background-color: #4e4d5059;
+  margin-bottom: 20px;
+}
+
+.carousels-container h3{
+  text-align: center;
+  margin-top: 15px;
+  color: #94a1ac;
 }
 
 
@@ -1222,7 +1232,7 @@ svg circle:nth-child(2){
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin: 5px 0;
+  /* margin: 5px 0; */
   padding: 10px 0;
   text-align: center;
 }
@@ -1254,4 +1264,111 @@ svg circle:nth-child(2){
 
 .container-friends{
   color: white;
+}
+
+.join-room{
+  width: 300px;
+  margin: 0 0 15px 40%;
+}
+
+.videos{
+  display: flex;
+  justify-content: space-around;
+}
+
+.pages-num{
+  width: 50px;
+  margin-top: 5px;
+  border: 1px solid #80bfff;
+  color: #fff;
+  background-color: #807f84;
+}
+
+/* users detail  */
+
+.container-user{
+  width: 400px;
+  padding-top: 25px;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.container-user .avatar{
+  width: 150px;
+}
+
+.avatar3{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: absolute;
+  top: -100px;
+  left: calc(50% - 100px);
+}
+
+.chatsRooms{
+  margin: 10px 0 0 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.chat-cards{
+  height: 310px !important;
+  color: #fff !important;
+}
+
+.chat-cards p{
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+.friends-container{
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.friends-cards{
+  padding: 5px;
+  width: 180px;
+  min-height: 300px;
+  border: 1px solid #94a1ac;
+}
+
+.acepts{
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.friends-body{
+  height: 50px !important;
+}
+
+
+/* items aside */
+
+.decoration {
+  text-decoration: none !important;
+  color: white;
+}
+
+.item-aside{
+  border-top: 1px solid #30A8F7;
+  font-weight: bold;
+}
+
+.item-aside i{
+  zoom: .7;
+}
+
+.aside-select{
+  background-color: rgb(10, 68, 108);
+}
+
+.user-detail h6{
+  text-align: center;
 }

@@ -1,21 +1,25 @@
 <div class="container-fluid user-resume">
  {{>aside}}
 <div class="user-body">
-   <div class="container">
-    <div class="avatar">
-        <img src="{{user.avatar}}" alt="img">
-    </div>
-    <div class="user-info">
-        <div class="item">
-            <p>Name: {{user.name}}</p>
-            <p>Lastname: {{user.lastName}}</p>
-            <p>Nickname: {{user.nickName}}</p>
-            <p>createdAt: {{user.createdAt}}</p>
-            {{#equals user.rol 'Admin'}}
-            <p>Rol: {{user.rol}}</p>
-            <p>Banned: {{user.banned}}</p>
-            {{/equals}}
-        </div>
+  <div class="create-box border-blue-light mt-1">
+      <img src="{{user.avatar}}" class="avatar3 border-blue-light" alt="Avatar Image">
+      <form method="post" action="/user/{{currentUser.nickName}}/edit" autocomplete="off">
+        
+        <label for="username" >Name</label>
+        <input type="text" placeholder="{{user.name}}" name="name" class="input-style input-100" value="{{user.name}}">
+
+        <label for="username" >Last name</label>
+        <input type="text" placeholder="{{user.lastName}}" name="lastname" class="input-style input-100" value="{{user.lastName}}">
+
+        <label for="username" >Email</label>
+        <input type="text" placeholder="{{user.email}}" name="email" class="input-style input-100" value="{{user.email}}">
+        
+        <label for="username" >nickName</label>
+        <input type="text" placeholder="{{user.nickName}}" name="nickName" class="input-style input-100" value="{{user.nickName}}">
+        
+        <label for="username" >Created</label>
+        <input type="text" placeholder="{{user.date}}" name="date" class="input-style input-100" value="{{user.date}}">
+      </form>
     </div>
 </div>
 </div>

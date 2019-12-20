@@ -81,10 +81,16 @@
         </div>
       </div>
     </div>
+
+    {{#if game.name}}
+    
+    <a href="/games/{{gameID}}/chat" class="btn blue-light join-room"><i class="fa fa-commenting" aria-hidden="true"></i> Join room</a>
+    {{/if}}
+    
     {{#or game.screenshots game.videos}}
     <div class="carousels-container">
       {{#if game.screenshots}}
-      <div class="carousel-items mt-4">
+      <div class="carousel-items mt-4 mb-4">
         <h3>Screenshots of {{game.name}}</h3>
         <div class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
@@ -100,21 +106,22 @@
         </div>
       </div>
       {{/if}}
+      <hr>
       {{#if game.videos}}
-      <h1>VIDEOS</h1>
+      <h3>Videos of {{game.name}}</h3>
+      <div class="videos">
       {{#each game.videos as |video|}}
       <iframe width="560" height="315" src="https://www.youtube.com/embed/{{video}}" frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
       {{/each}}
 
+      </div>
+
 
       {{/if}}
     </div>
     {{/or}}
-    {{#if game.name}}
-    {{!-- <a href="/games/{{game.name}}/chat">Join room</a> --}}
-    <a href="/games/{{gameID}}/chat">Join room</a>
-    {{/if}}
+    
 
   </div>
 </div>
