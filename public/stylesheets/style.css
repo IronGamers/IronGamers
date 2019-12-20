@@ -10,6 +10,7 @@ body {
   font-weight: 200;
   height: 100%;
   background-color: black;
+  color: white;
 }
 
 strong {
@@ -1281,4 +1282,27 @@ svg circle:nth-child(2){
   border: 1px solid #80bfff;
   color: #fff;
   background-color: #807f84;
+}
+
+/* users detail  */
+
+.container-user{
+  width: 400px;
+  padding-top: 25px;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.container-user .avatar{
+  width: 150px;
+}
+
+.avatar3{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: absolute;
+  top: -100px;
+  left: calc(50% - 100px);
 }

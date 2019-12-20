@@ -18,6 +18,7 @@ module.exports.detailUser = (req, res, next) =>{
 	const nickName = req.params.nickName
 	User.findOne({nickName: nickName})
 	.then(user => {
+		user.date = `${user.createdAt.getDate()}/${user.createdAt.getMonth() +1}/${user.createdAt.getFullYear()}`
 		res.render('user/userDetail', {user})
 	})
 	.catch(error => next(error))
