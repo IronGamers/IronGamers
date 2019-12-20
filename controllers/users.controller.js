@@ -36,7 +36,34 @@ module.exports.editUser = (req, res, next) => {
 // pendiente conseguir los datos del cover modificar ya esta obsoleta
 module.exports.chatsRooms = (req, res, next) => {
 
-	res.redirect('/')
+	const nickName = req.params.nickName
+	User.findOne({nickName: nickName})
+	.then(user => {
+		const chatRooms = []
+		ChatGames.find({users: user.id})
+		.then(chats => {
+			console.log(chats)
+			chats.forEach((room, i) => {
+				functions.coverGame(room.game)
+				.then(ok => {
+					room.image = ok.url
+					room.name = ok.name
+					// chats[i].image = ok
+					// console.log(room.image)
+					return
+				})
+				.then(ok2 => {
+					user.chatrooms = chats
+					res.render('user/chatsUsers', {user, aside: 'chats'})
+				})
+			})
+	
+		})
+		.catch(error => next(error))
+	})
+	.catch(error => next(error))
+	
+	
 	// const nickName = req.params.nickName
 	// User.findOne({nickName: nickName})
 	// .then(user => {

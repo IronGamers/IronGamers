@@ -729,7 +729,7 @@ label {
   border-top: 1px solid grey;
   padding-top: 10px;
   max-height: 150px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .img-div-gamecard {
@@ -1107,7 +1107,7 @@ hr{
   width: 80%;
   margin: auto;
   text-align: justify;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .sumary>p{
