@@ -1232,7 +1232,7 @@ svg circle:nth-child(2){
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  margin: 5px 0;
+  /* margin: 5px 0; */
   padding: 10px 0;
   text-align: center;
 }
@@ -1343,4 +1343,25 @@ svg circle:nth-child(2){
 
 .friends-body{
   height: 50px !important;
+}
+
+
+/* items aside */
+
+.decoration {
+  text-decoration: none !important;
+  color: white;
+}
+
+.item-aside{
+  border-top: 1px solid #30A8F7;
+  font-weight: bold;
+}
+
+.item-aside i{
+  zoom: .7;
+}
+
+.aside-select{
+  background-color: rgb(10, 68, 108);
 }

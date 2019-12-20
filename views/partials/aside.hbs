@@ -8,26 +8,26 @@
             <p><span>@{{user.nickName}}</span></p>
         </div>
     </div>
-    <a href="/user/{{user.nickName}}/edit">
-        <div class="edituser item-aside">
+    <a class="decoration " href="/user/{{user.nickName}}/edit">
+        <div class="edituser item-aside {{#equals aside 'edit'}} aside-select {{/equals}}">
             <i class="fa fa-pencil fa-2x" aria-hidden="true"></i>
             <p>Edit User</p>
         </div>
     </a>
-    <a href="/user/{{user.nickName}}/friends">
-        <div class="chatrooms item-aside">
+    <a class="decoration" href="/user/{{user.nickName}}/friends">
+        <div class="chatrooms item-aside {{#equals aside 'friends'}} aside-select {{/equals}}">
             <i class="fa fa-users fa-2x" aria-hidden="true"></i>
             <p>Friends</p>
         </div>
     </a>
-    <a href="/user/{{user.nickName}}/chats">
-        <div class="chatrooms item-aside">
+    <a class="decoration" href="/user/{{user.nickName}}/chats">
+        <div class="chatrooms item-aside {{#equals aside 'chats'}} aside-select {{/equals}}">
             <i class="fa fa-comments fa-2x" aria-hidden="true"></i>
             <p>Chat Rooms</p>
         </div>
     </a>
-    <a href="/users/{{currentUser._id}}/inbox">
-        <div class="messages item-aside">
+    <a class="decoration" href="/users/{{currentUser._id}}/inbox">
+        <div class="messages item-aside {{#equals aside 'messages'}} aside-select {{/equals}}">
             <i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
             <p>Messages</p>
         </div>
