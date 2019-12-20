@@ -10,8 +10,10 @@
                 <p>{{friend.state}}</p>
                 {{#equals friend.state 'pending'}}
                 {{#itsNotMe friend.principalUser ../currentUser._id}}
-                <a href="" class="btn btn-warning">acept</a>
-                <a href="" class="btn btn-warning">decline</a>
+                <div class="acepts" id="{{friend.id}}">
+                    <button class="btn btn-warning" onclick="friendAccept('{{friend.id}}')">Accept</button>
+                    <button class="btn btn-danger" onclick="declineFriend('{{friend.id}}')">Decline</button>
+                </div>
                 {{/itsNotMe}}
                 {{/equals}}
                 <p>{{friend.updatedAt}}</p>
@@ -19,6 +21,27 @@
         {{/each}}
     </div>
 </div>
+
+<script>
+  function friendAccept(user) {
+    axios.post(`/users/${user}/accept`)
+      .then(response => {
+        let friend = document.getElementById(user)
+        friend.classList.add('none')
+        console.log('hola')
+      })
+      .catch(error => console.log(error))
+  }
+   function declineFriend(user) {
+    axios.post(`/users/${user}/decline`)
+      .then(response => {
+        let friend = document.getElementById(user)
+        friend.classList.add('none')
+        console.log('hola')
+      })
+      .catch(error => console.log(error))
+  }
+</script>
 
 
 {{!-- falta popular para tener los datos de los amigos en la vista reusmen --}}

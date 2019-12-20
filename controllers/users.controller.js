@@ -114,6 +114,7 @@ module.exports.friends = (req, res, next) => {
 	.then(user => {
 		user.friends = []
 		Friend.find({ $or : [ { user1: user._id }, { user2: user._id } ] })
+		.sort({state: -1})
 		.then(friend => {
 			const friends = friend.map(friendship => {
 					if(user.id.toString() === friendship.user1.toString()){
@@ -134,7 +135,7 @@ module.exports.friends = (req, res, next) => {
 						})
 					}
 				})
-				console.log(friends)
+				console.log(user)
 				res.render('user/userFriends', {user, aside: 'friends'})
 		})
 		.catch(error => next(error))
@@ -387,4 +388,28 @@ module.exports.sendAnswer = (req, res, next) => {
 			res.redirect(`/users/${myUser}/inbox`)
 		})
 		.catch(error => console.log("Error sending message => ", error))
+}
+
+module.exports.acceptFriend = (req, res, next) => {
+
+	const user = req.currentUser._id
+	const friend = req.params.relation
+	console.log(user, friend)
+	Friend.findOneAndUpdate({user1: friend, user2: user}, {state: 'accepted'}, {new: true})
+	.then(ok => {
+		console.log(ok)
+	})
+	.catch(error => next(error))
+
+}
+
+module.exports.declineFriend = (req, res, next ) => {
+	const user = req.currentUser._id
+	const friend = req.params.relation
+	console.log(user, friend)
+	Friend.findOneAndDelete({user1: friend, user2: user})
+	.then(ok => {
+		console.log(ok)
+	})
+	.catch(error => next(error))
 }

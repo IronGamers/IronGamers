@@ -1255,3 +1255,6 @@ svg circle:nth-child(2){
 .container-friends{
   color: white;
 }
+.none {
+  display: none;
+}
