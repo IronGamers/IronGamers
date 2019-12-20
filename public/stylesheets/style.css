@@ -1169,8 +1169,17 @@ svg circle:nth-child(2){
 
 .carousels-container{
   width: 100%;
+  border-radius: 25px;
+  border: 1px solid #30A8F7;
   padding: 20px;
   background-color: #4e4d5059;
+  margin-bottom: 20px;
+}
+
+.carousels-container h3{
+  text-align: center;
+  margin-top: 15px;
+  color: #94a1ac;
 }
 
 
@@ -1255,6 +1264,13 @@ svg circle:nth-child(2){
 .container-friends{
   color: white;
 }
-.none {
-  display: none;
+
+.join-room{
+  width: 300px;
+  margin: 0 0 15px 40%;
+}
+
+.videos{
+  display: flex;
+  justify-content: space-around;
 }

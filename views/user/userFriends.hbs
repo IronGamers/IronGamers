@@ -26,9 +26,7 @@
   function friendAccept(user) {
     axios.post(`/users/${user}/accept`)
       .then(response => {
-        let friend = document.getElementById(user)
-        friend.classList.add('none')
-        console.log('hola')
+        location.reload(true)
       })
       .catch(error => console.log(error))
   }

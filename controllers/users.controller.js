@@ -240,14 +240,13 @@ module.exports.doLogin = (req, res, next) => {
 }
 
 module.exports.doEdit = (req, res, next) => {
-	const {name, lastname, nickName, email} = req.body
+	const {name, lastname, email} = req.body
 	
 	const newUser = {
 		...req.currentUser,
 		name: name,
 		lastName: lastname,
-		email: email,
-		nickName: nickName
+		email: email
 	}
 	console.log(newUser)
 
