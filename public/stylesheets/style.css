@@ -1274,3 +1274,11 @@ svg circle:nth-child(2){
   display: flex;
   justify-content: space-around;
 }
+
+.pages-num{
+  width: 50px;
+  margin-top: 5px;
+  border: 1px solid #80bfff;
+  color: #fff;
+  background-color: #807f84;
+}
