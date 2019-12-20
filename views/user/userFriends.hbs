@@ -35,9 +35,7 @@
    function declineFriend(user) {
     axios.post(`/users/${user}/decline`)
       .then(response => {
-        let friend = document.getElementById(user)
-        friend.classList.add('none')
-        console.log('hola')
+        location.reload(true)
       })
       .catch(error => console.log(error))
   }

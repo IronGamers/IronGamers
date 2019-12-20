@@ -397,7 +397,7 @@ module.exports.acceptFriend = (req, res, next) => {
 	console.log(user, friend)
 	Friend.findOneAndUpdate({user1: friend, user2: user}, {state: 'accepted'}, {new: true})
 	.then(ok => {
-		console.log(ok)
+		res.json({})
 	})
 	.catch(error => next(error))
 
@@ -409,7 +409,7 @@ module.exports.declineFriend = (req, res, next ) => {
 	console.log(user, friend)
 	Friend.findOneAndDelete({user1: friend, user2: user})
 	.then(ok => {
-		console.log(ok)
+		res.json({})
 	})
 	.catch(error => next(error))
 }
