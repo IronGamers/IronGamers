@@ -11,8 +11,15 @@
                     {{#equals friend.state 'pending'}}
                     {{#itsNotMe friend.principalUser ../currentUser._id}}
                     <div class="acepts" id="{{friend.id}}">
-                        <button class="btn btn-warning" onclick="friendAccept('{{friend.id}}')">Accept</button>
-                        <button class="btn btn-danger" onclick="declineFriend('{{friend.id}}')">Decline</button>
+                        {{!-- <button class="btn btn-warning" onclick="friendAccept('{{friend.id}}')">Accept</button>
+                        <button class="btn btn-danger" onclick="declineFriend('{{friend.id}}')">Decline</button> --}}
+                        <form action="/users/{{friend.id}}/accept" method="post">
+                            <button  class="btn btn-warning" type="submit">Accept</button>
+                        </form>
+                        <form action="/users/{{friend.id}}/decline" method="post">
+                            <button class="btn btn-danger" type="submit">Decline</button>
+                        </form>
+                        
                     </div>
                     {{/itsNotMe}}
                     {{/equals}}

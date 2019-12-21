@@ -1,34 +1,37 @@
 <div class="container">
     <div class="container">
-        {{#each users as |user|}}
-        <div class="row user-detail mt-4 border-blue-light">
-            <img src="{{user.avatar}}" alt="avatar">
-            <div class="user-info ">
-                <h5 class="card-title">{{user.nickName}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{user.name}} {{user.lastname}}</h6>
-                <p>User created: {{date user.createdAt}}</p>
+        <div class="user-admin-list row row-cols-4">
+            {{#each users as |user|}}
+            <div class="row user-detail mt-4 mr-2 border-blue-light col-3">
+                <img src="{{user.avatar}}" alt="avatar">
+                <div class="user-info ">
+                    <h5 class="card-title">{{user.nickName}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{user.name}} {{user.lastname}}</h6>
+                    <p>User created: {{date user.createdAt}}</p>
+                </div>
+                {{!-- <div class="ban">
+                    <label class="light-text">Banned</label>
+                    <input type="checkbox" name="banned" id="">
+                </div>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary blue-light {{#equals user.rol 'Admin'}} active {{/equals}}">
+                        <input type="radio" name="options" id="option1"> Admin
+                    </label>
+                    <label class="btn btn-secondary blue-light {{#equals user.rol 'Moderator'}} active {{/equals}}">
+                        <input type="radio" name="options" id="option2">
+                        Moderator
+                    </label>
+                    <label class="btn btn-secondary blue-light {{#equals user.rol 'User'}} active {{/equals}}">
+                        <input type="radio" name="options" id="option3"> User
+                    </label>
+                </div> --}}
+                <form action="/admin/delete" method="post">
+                    <input class="secret" type="text" name="nickName" value="{{user.nickName}}">
+                    <button type="submit" class="btn btn-danger btn-sm ml-4">Delete</button>
+                </form>
             </div>
-            <div class="ban">
-                <label class="light-text">Banned</label>
-                <input type="checkbox" name="banned" id="">
-            </div>
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-secondary blue-light {{#equals user.rol 'Admin'}} active {{/equals}}">
-                    <input type="radio" name="options" id="option1"> Admin
-                </label>
-                <label class="btn btn-secondary blue-light {{#equals user.rol 'Moderator'}} active {{/equals}}">
-                    <input type="radio" name="options" id="option2">
-                    Moderator
-                </label>
-                <label class="btn btn-secondary blue-light {{#equals user.rol 'User'}} active {{/equals}}">
-                    <input type="radio" name="options" id="option3"> User
-                </label>
-            </div>
-            <form action="/admin/delete" method="post">
-                <input class="secret" type="text" name="nickName" value="{{user.nickName}}">
-                <button type="submit" class="btn btn-danger btn-sm ml-4">Delete</button>
-            </form>
+            {{/each}}
         </div>
-        {{/each}}
+
     </div>
 </div>
