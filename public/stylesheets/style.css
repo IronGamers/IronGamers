@@ -948,6 +948,7 @@ label {
   justify-content: space-around;
   align-items: center;
   padding: 15px 0;
+  margin: 0 10px;
   background: rgb(70, 69, 69);
   color: #fff;
 }
@@ -1371,4 +1372,9 @@ svg circle:nth-child(2){
 
 .user-detail h6{
   text-align: center;
+}
+
+.user-admin-list{
+  display: flex;
+  justify-content: space-around;
 }

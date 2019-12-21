@@ -1,4 +1,4 @@
 
-module.exports.home = (_, res) => {
-    res.redirect(`/user/${currentUser.nickName}`)
+module.exports.home = (req, res) => {
+    res.redirect(`/user/${req.currentUser.nickName}`)
 }

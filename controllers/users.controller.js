@@ -93,12 +93,15 @@ module.exports.friends = (req, res, next) => {
 		.sort({state: -1})
 		.then(friend => {
 			const friends = friend.map(friendship => {
+				console.log(friendship)
 					if(user.id.toString() === friendship.user1.toString()){
 					return	User.findById(friendship.user2)
 						.then(detail => {
 							detail.state = friendship.state
 							detail.principalUser = friendship.user1
+							console.log(detail.principalUser)
 							user.friends.push(detail)
+							console.log(user.friends)
 							return detail
 						})
 					}else{
@@ -106,12 +109,14 @@ module.exports.friends = (req, res, next) => {
 						.then(detail => {
 							detail.state = friendship.state
 							detail.principalUser = friendship.user1
+							console.log(detail.principalUser)
 							user.friends.push(detail)
+							console.log(user.friends)
 							return detail
 						})
 					}
 				})
-				console.log(user)
+				console.log(user.friends)
 				res.render('user/userFriends', {user, aside: 'friends'})
 		})
 		.catch(error => next(error))
@@ -122,7 +127,7 @@ module.exports.friends = (req, res, next) => {
 module.exports.create = (req, res, next) => {
 	const user = new User({
 		name: req.body.name,
-		lastname: req.body.lastname,
+		lastName: req.body.lastname,
 		nickName: req.body.nickname,
 		email: req.body.email,
 		password: req.body.password,
@@ -372,7 +377,7 @@ module.exports.acceptFriend = (req, res, next) => {
 	console.log(user, friend)
 	Friend.findOneAndUpdate({user1: friend, user2: user}, {state: 'accepted'}, {new: true})
 	.then(ok => {
-		res.json({})
+		res.redirect('back')
 	})
 	.catch(error => next(error))
 
@@ -384,7 +389,7 @@ module.exports.declineFriend = (req, res, next ) => {
 	console.log(user, friend)
 	Friend.findOneAndDelete({user1: friend, user2: user})
 	.then(ok => {
-		res.json({})
+		res.redirect('back')
 	})
 	.catch(error => next(error))
 }
